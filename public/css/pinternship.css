@@ -21,20 +21,33 @@ body {
 }
 
 
-.pint-ui-frame
-{
+.pint-ui-frame {
 	width: 200%;
+	transition: all 0.3s;
+	height:100%;
 }
-.pint-ui-view-left
-{
+
+.pint-ui-frame.pullLeft {
+	margin-left:-100%;
+}
+.pint-ui-frame.pullLeft .pint-ui-view-left {
+	height:0px;
+	overflow-y:hidden;
+}
+
+
+
+.pint-ui-view-left {
 	width: 50%;
 	float: left;
+	height:auto;
 }
 
 .pint-ui-view-right
 {
 	width: 50%;
-	float: right;
+	float: left;
+	height:auto;
 }
 
 .pint-search-form.navbar-form {
@@ -72,7 +85,8 @@ body {
 	left: 100%;
 	top: 0px;
 }
-.pint-search-result.list-group .container {
+.pint-search-result.list-group .container,
+.pint-item-view .container {
 	max-width: 800px;
 	padding: 0;
 }

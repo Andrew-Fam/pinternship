@@ -139,8 +139,12 @@
 				</article>
 			</div>
 		</section>
-		<section class="pint-ui-view-left pint-item-view">
-			THIZ IS THE MODAFUKIN ITEM VIEW BITCH!
+		<section class="pint-ui-view-right pint-item-view">
+			<div class="container">
+				<button class="back-to-list">
+					Back
+				</button>
+			</div>
 		</section>
 	</div>
    	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
