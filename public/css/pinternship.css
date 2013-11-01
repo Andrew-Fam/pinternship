@@ -1,0 +1,143 @@
+html {
+	width: 100%;
+}
+body {
+	padding-top: 50px;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+
+
+.pint-navbar .navbar-toggle {
+	height: 34px;
+	background: none;
+	border: none;
+}
+.pint-navbar {
+	border-radius: 0px;
+	border: none;
+	margin: 0;
+}
+
+
+.pint-ui-frame
+{
+	width: 200%;
+}
+.pint-search-result
+{
+	width: 50%;
+	float: left;
+}
+
+.pint-job-detail-view
+{
+	width: 50%;
+	float: right;
+}
+
+.pint-search-form.navbar-form {
+	border: none;
+	margin: 8px -15px;
+	padding: 0px;
+	width: 100%;
+	position: relative;
+}
+
+.pint-search-form.navbar-form .form-group {
+	width: 100%;
+}
+
+.pint-search-form.navbar-form .form-control {
+	width: 100%;
+	border: none;
+}
+
+.pint-search-form.navbar-form [type="submit"],
+.pint-search-form.navbar-form button {
+	
+	height: 100%;
+	background: none;
+	border: none;
+}
+
+.pint-search-form.navbar-form [type="submit"] {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+.pint-search-form.navbar-form [type="button"] {
+	position: absolute;
+	left: 100%;
+	top: 0px;
+}
+.pint-search-result.list-group .container {
+	max-width: 800px;
+	padding: 0;
+}
+.pint-search-result .list-group-item {
+	border-radius: 0;
+	padding: 0;
+	border: none;
+}
+
+.pint-job-item {
+	padding-right:60px;
+	position: relative;
+	width: 100%;
+	display: table;
+	min-height: 100px;
+}
+.pint-job-item-selector {
+	display: table-cell;
+	width: 70px;
+	max-width: 70px;
+	cursor: pointer;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.pint-job-item-selector:hover {
+	background-color: rgb(248, 248, 248);
+	color: white;
+}
+
+.pint-job-item-selector i {
+	font-size: 40px;
+}
+
+.pint-job-item-thumbnail {
+	display: table-cell;
+	vertical-align: top;
+	padding: 15px;
+	width: 40px;
+}
+.pint-job-item-thumbnail img {
+	margin-top: 15px;
+	width: 40px!important;
+	height: auto!important;
+}
+.pint-job-item-content {
+	font-size: 12px;
+	display: table-cell;
+	vertical-align: middle;
+	padding: 15px;
+}
+.pint-job-item-content h1 {
+	font-size: 20px;
+}
+
+.pint-job-item-tags .tag {
+	font-weight: 400;
+	cursor: pointer;
+}
+
+@media screen and ( min-width: 768px ){
+	.pint-job-item-thumbnail img {
+		margin-top: 15px;
+		width: 100px!important;
+		height: auto!important;
+	}
+}
