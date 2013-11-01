@@ -25,13 +25,13 @@ body {
 {
 	width: 200%;
 }
-.pint-search-result
+.pint-ui-view-left
 {
 	width: 50%;
 	float: left;
 }
 
-.pint-job-detail-view
+.pint-ui-view-right
 {
 	width: 50%;
 	float: right;

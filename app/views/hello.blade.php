@@ -34,7 +34,7 @@
 		</div>
 	</nav>
 	<div class="pint-ui-frame">
-		<section class="pint-search-result list-group">
+		<section class="pint-search-result list-group pint-ui-view-left">
 			<div class="container">
 				<article class="pint-job-item list-group-item center-block">
 					<div class="pint-job-item-thumbnail">
@@ -138,6 +138,9 @@
 					<a class="pint-job-item-selector"><i class="fa fa-chevron-right fa-fw"></i></a>
 				</article>
 			</div>
+		</section>
+		<section class="pint-ui-view-left pint-item-view">
+			THIZ IS THE MODAFUKIN ITEM VIEW BITCH!
 		</section>
 	</div>
    	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
