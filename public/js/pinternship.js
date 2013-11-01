@@ -12,6 +12,14 @@ $(document).ready(function(){
 		
 		$('html, body').scrollTop( currentListPosition );
 	});
+	$(window).scroll(function(){
+		if($('html, body').scrollTop()>50){
+			$('.back-to-list').css('margin-top', $('html, body').scrollTop() - 50 );
+		}else{
+			$('.back-to-list').css('margin-top', $('html, body').scrollTop());
+		}
+	});
+
 });
 
 $.fn.openSideBar = function()

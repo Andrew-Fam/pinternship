@@ -141,9 +141,49 @@
 		</section>
 		<section class="pint-ui-view-right pint-item-view">
 			<div class="container">
-				<button class="back-to-list">
-					Back
-				</button>
+			
+				<article class="pint-job-item-view">
+					<button class="back-to-list fa fa-chevron-left">
+					
+					</button>
+					<div class="pint-job-item-logo">
+						<img data-src="holder.js/120x120" alt="pint-job-item logo" class="img-circle"/>
+					</div>
+					<h1 class="pint-job-item-title">
+						We need interns at any level for this job!
+					</h1>
+					<p class="pint-job-item-date"> this job was posted 2 days ago </p>
+					<p class="pint-job-item-description center-block">
+						<img data-src="holder.js/480x320" class="pint-job-item-media img-responsive img-rounded"/>
+						These are the types of Angular elements and element attributes you can use in a template: Directive — An attribute or element that augments an existing DOM ...
+						Those two sites look great, right? Of course they do! ;) There can't be any issues then, right? Wrong. Those two sites took much longer than anticipated to build because I felt all the grids out there were missing some things that I felt NEEDED to be in a Responsive grid. 
+
+
+					</p>
+					<h2>
+						This position requires the following skills 
+					</h2>
+					<p>
+						(you got 4 out of 6)
+					</p>
+					<p class="pint-job-item-tags">
+						<a class="tag">Photoshop</a> 
+						<a class="tag has">Responsive design</a> 
+						<a class="tag has">Mobile first design</a> 
+						<a class="tag has">Laravel</a> 
+						<a class="tag">Composer</a> 
+						<a class="tag has">Node.js</a>
+					</p>
+					
+					<div class="pint-job-item-contact">
+						<h2>
+							Apply now by
+						</h2>
+						<p>
+							Calling <a class="phone">+619483950</a> or sending an email to <a class="email">we.got.jobs@enterprise.hire</a>
+						</p>
+					</div>
+				</article>
 			</div>
 		</section>
 	</div>
