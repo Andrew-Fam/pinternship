@@ -19,7 +19,12 @@ $(document).ready(function(){
 			$('.back-to-list').css('margin-top', $('html, body').scrollTop());
 		}
 	});
-
+	$("#btn-expand-search-options").click(function(){
+		$('.pint-ui-view-top').addClass('expanded animated fadeInDownBig');
+	});
+	$("#btn-collapse-search-options").click(function(){
+		$('.pint-ui-view-top').removeClass('expanded animated fadeInDownBig');
+	});
 });
 
 $.fn.openSideBar = function()
