@@ -2,7 +2,7 @@ var currentListPosition;
 
 $(document).ready(function(){
 	$('.pint-job-item-selector').click(function(){
-		currentListPosition = $('html, body').scrollTop();
+		currentListPosition = $(document).scrollTop();
 
 		$('.pint-ui-frame').openSideBar();
 		$(document).scrollTop(0);
