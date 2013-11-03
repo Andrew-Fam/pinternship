@@ -81,6 +81,7 @@ body {
 	padding-top: 50px;
 	width: 100%;
 	overflow-x: hidden;
+	position:relative;
 }
 
 .center {

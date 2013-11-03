@@ -39,6 +39,7 @@
 			</div>
 		</div>
 	</nav>
+
 	<section class="pint-ui-frame-wrapper">
 		<div class="pint-ui-frame">
 			<section class="pint-search-options pint-ui-view-top">

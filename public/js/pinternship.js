@@ -20,10 +20,13 @@ $(document).ready(function(){
 		}
 	});
 	$("#btn-expand-search-options").click(function(){
-		
+
 		currentListPosition = $(document).scrollTop();
 
 		$('.pint-ui-view-top').addClass('expanded animated fadeInDownBig');
+
+		$(document).scrollTop(0);
+	
 	});
 	$("#btn-collapse-search-options").click(function(){
 
