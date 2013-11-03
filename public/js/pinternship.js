@@ -20,10 +20,16 @@ $(document).ready(function(){
 		}
 	});
 	$("#btn-expand-search-options").click(function(){
+		
+		currentListPosition = $(document).scrollTop();
+
 		$('.pint-ui-view-top').addClass('expanded animated fadeInDownBig');
 	});
 	$("#btn-collapse-search-options").click(function(){
+
 		$('.pint-ui-view-top').removeClass('expanded animated fadeInDownBig');
+
+		$(document).scrollTop( currentListPosition );
 	});
 });
 
