@@ -5,18 +5,18 @@ $(document).ready(function(){
 		currentListPosition = $('html, body').scrollTop();
 
 		$('.pint-ui-frame').openSideBar();
-		$('html, body').scrollTop(0);
+		$(document).scrollTop(0);
 	});
 	$('.back-to-list').click(function(){
 		$('.pint-ui-frame').closeSideBar();
 		
-		$('html, body').scrollTop( currentListPosition );
+		$(document).scrollTop( currentListPosition );
 	});
 	$(window).scroll(function(){
-		if($('html, body').scrollTop()>50){
-			$('.back-to-list').css('margin-top', $('html, body').scrollTop() - 50 );
+		if($(document).scrollTop()>50){
+			$('.back-to-list').css('margin-top', $(document).scrollTop() - 50 );
 		}else{
-			$('.back-to-list').css('margin-top', $('html, body').scrollTop());
+			$('.back-to-list').css('margin-top', $(document).scrollTop());
 		}
 	});
 	$("#btn-expand-search-options").click(function(){
@@ -27,11 +27,15 @@ $(document).ready(function(){
 	});
 });
 
-$.fn.openSideBar = function()
-{
-	$(this).addClass('pullLeft');
+$.fn.openTopBar = function() {
+	$(this).addClass();
 }
-$.fn.closeSideBar = function()
-{
+
+$.fn.openSideBar = function() {
+	$(this).addClass('pullLeft');
+	return $(this);
+}
+$.fn.closeSideBar = function() {
 	$(this).removeClass('pullLeft');
+	return $(this);
 }
