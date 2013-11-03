@@ -30,16 +30,77 @@
 				    </form>
 			  	</div>
 			  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-			  		<div class="navbar-form">
-			  			<div class="form-group">
-			  				<button type="button" class="btn btn-default fa  fa-thumb-tack"></button>
-			  			</div>
-			  		</div>
+			  		<div class="navbar-form navbar-left">			    
+					    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#post-job-form" id="btn-post-job">post job</button>
+				    </div>
 			  	</div>
 			</div>
 		</div>
 	</nav>
+	<div class="modal fade" id="post-job-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+			    <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">Pin a job</h4>
+			    </div>
+			    <div class="modal-body">
+			        <form class="form-horizontal" role="form">
+						<div class="form-group">
+						    <label for="job-title" class="col-sm-2 control-label">Title</label>
+						    <div class="col-sm-10">
+						        <input type="text" class="form-control" id="post-job-title" placeholder="eg. Web designer internship available">
+						    </div>
+						</div>
+						<div class="form-group">
+						    <label for="post-email" class="col-sm-2 control-label">Email</label>
+						    <div class="col-sm-10">
+						        <input type="email" class="form-control" id="post-email" placeholder="browse file">
+						    </div>
+					    </div>
+					    <div class="form-group">
+						    <label for="post-phone" class="col-sm-2 control-label">Phone</label>
+						    <div class="col-sm-10">
+						        <input type="phone" class="form-control" id="post-phone" placeholder="browse file">
+						    </div>
+					    </div>
+					    <div class="form-group">
+						    <label for="logo" class="col-sm-2 control-label">Logo</label>
+						    <div class="col-sm-10">
+						        <input type="text" class="form-control" id="post-logo" placeholder="browse file">
+						        <button type="button">upload</button>
+						    </div>
+					    </div>
+					    
+						<div class="form-group">
+						    <label for="post-description" class="col-sm-2 control-label">Description (&lt;=250 characters)</label>
+						    <div class="col-sm-10">
+						        <textarea id="post-description" class="form-control" rows="3"></textarea>
+						    </div>
+						</div>
+						<div class="form-group">
+						    <label for="post-skills-required" class="col-sm-2 control-label">Skills required</label>
+						    <div class="col-sm-10">
+						        <textarea id="post-skills-required" class="form-control" rows="3" placeholder="eg. Photoshop"></textarea>
+						    </div>
+						</div>
+						<div class="form-group">
+					    	<label for="media" class="col-sm-2 control-label">Additional media (video/photo)</label>
+						    <div class="col-sm-10">
+						         <input type="text" class="form-control" id="post-logo" placeholder="browse file">
+						        <button type="button">upload</button>
+						    </div>
+					    </div>
+					</form>
 
+			    </div>
+			    <div class="modal-footer">
+			       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			       	<button type="button" class="btn btn-primary">Pin it</button>
+			    </div>
+		    </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 	<section class="pint-ui-frame-wrapper">
 		<div class="pint-ui-frame">
 			<section class="pint-search-options pint-ui-view-top">
