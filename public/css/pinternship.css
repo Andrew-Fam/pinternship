@@ -301,7 +301,7 @@ body {
 	height: 64px;
 	padding: 16px;
 	border: none;
-	transition: margin 0.3s;
+	transition: margin 0.15s;
 }
 @media screen and ( min-width: 768px ){
 	.pint-job-item-thumbnail img {
