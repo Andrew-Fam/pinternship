@@ -1,12 +1,14 @@
 var currentListPosition;
 
 $(document).ready(function(){
+	
 	$('.pint-job-item-selector').click(function(){
 		currentListPosition = $(document).scrollTop();
 
 		$('.pint-ui-frame').openSideBar();
 		$(document).scrollTop(0);
 	});
+
 	$('.back-to-list').click(function(){
 		$('.pint-ui-frame').closeSideBar();
 		

@@ -88,6 +88,10 @@ body {
 	text-align:center;
 }
 
+.pint-navbar {
+	height: 50px;
+}
+
 .pint-navbar .navbar-toggle {
 	height: 34px;
 	background: none;
@@ -132,20 +136,25 @@ body {
 	z-index: 1000;
 }
 
-.pint-ui-frame.pullLeft {
+.pint-ui-frame.viewingJob {
 	margin-left: -100%;
 }
 
-.pint-ui-frame.pullLeft .pint-ui-view-top {
+.pint-ui-frame.viewingJob .pint-ui-view-top {
 	margin-left: 50%;
 }
 
-.pint-ui-frame.pullLeft .pint-ui-view-left {
+.pint-ui-frame.viewingJob .pint-ui-view-left {
 	height: 0px;
 	overflow-y: hidden;
 }
 
-
+.pint-search-result.list-group .container,
+.pint-item-view .container,
+.pint-ui-view-top .container  {
+	max-width: 800px;
+	padding: 0;
+}
 
 .pint-ui-view-left {
 	width: 50%;
@@ -187,7 +196,10 @@ body {
 	background: none;
 	border: none;
 }
-
+.pint-search-options .container {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 .pint-search-form.navbar-form [type="submit"] {
 	position: absolute;
 	right: 0px;
@@ -217,12 +229,7 @@ body {
 .modal-dialog {
 	margin-top: 50px;
 }
-.pint-search-result.list-group .container,
-.pint-item-view .container,
-.pint-ui-view-top .container  {
-	max-width: 800px;
-	padding: 0;
-}
+
 .pint-search-result .list-group-item {
 	border-radius: 0;
 	padding: 0;
@@ -340,4 +347,9 @@ body {
 		padding-top: 25px;
 		padding-bottom: 25px;
 	}
+}
+
+
+[ng-cloak] {
+	display: none!important;
 }
