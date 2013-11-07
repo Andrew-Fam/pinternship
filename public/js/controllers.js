@@ -29,7 +29,7 @@ pinternshipApp.controller('JobListCtrl', function JobListCtrl($scope, $http, $ti
 
 	//select job function
 	$scope.viewJob = function(job){
-		$scope.selectedJob = $scope.jobs[job];
+		$scope.selectedJob = $scope.selectedIndustry.jobs[job];
 		//console.log($scope.selectedJob);
 		$scope.isViewingJob = true;
 		//console.log($scope.isViewingJob);
