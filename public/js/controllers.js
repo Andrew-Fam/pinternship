@@ -1,7 +1,6 @@
-var pinternshipApp = angular.module('pinternshipApp', ['ui.bootstrap','angularMoment']);
+var pinternshipApp = angular.module('pinternshipApp', ['ui.bootstrap','angularMoment','tags-input']);
 
-pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window', function JobListCtrl(scope, http, timeout, window){
-
+pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','$modal', function JobListCtrl(scope, http, timeout, window, modal){
 
 	scope.selectedIndustry = undefined;
 
@@ -92,6 +91,47 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window', 
 			return false;
 		}
 	}
+
+	//open skillList modal window
+
+	scope.viewSkillList = function () {
+		var skillListModalInstance = modal.open({
+			templateUrl: 'skillListTpl.html',
+			controller: ModalInstanceCtrl,
+			resolve: {
+				skillList: function (){
+					console.log(scope.skillList);
+					return scope.skillList;
+				}
+			}
+		});
+		
+		scope.modalOpened = true;
+
+		skillListModalInstance.result.then(function(){
+			scope.modalOpened = false;
+		}, function(){
+			scope.modalOpened = false;
+		});
+	};
+
+
+	var ModalInstanceCtrl = ['$scope','$modalInstance','skillList', function (scope, modal, skillList) {
+
+	  scope.skillList = skillList;
+	  console.log('HAHA CONTROLLER SKILL LIST:'+skillList);
+	  scope.ok = function () {
+	    modal.close(scope.skillList);
+	  };
+
+	  scope.cancel = function () {
+	    modal.dismiss('cancel');
+	  };
+	}];
+
+	scope.close  = function () {
+		alert("AAAAAAAAAAAAAAAAAAAAAA");
+	};
 
 	scope.fetchJob();
 }]);

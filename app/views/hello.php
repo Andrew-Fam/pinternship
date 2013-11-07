@@ -6,11 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo asset('bootstrap/css/bootstrap.css')?>"/>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo asset('css/bootstrap-tagsinput.css')?>"/>
+    <link rel="stylesheet" href="<?php echo asset('css/ng-tags-input.min.css')?>"/>
+    <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/theme.css')?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
+
 </head>
-<body ng-controller="JobListCtrl">
+<body ng-controller="JobListCtrl" ng-class="{'modal-open':modalOpened}">
+	<script type="text/ng-template" id="skillListTpl.html">
+		<div class="modal-background-click-handler" ng-click="$close($event)">
+		</div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+		        <div class="modal-header">
+		            <h3>Your skill list: </h3>
+		        </div>
+		        <div class="modal-body">
+		            <tags-input ng-model="skillList"></tags-input>
+		        </div>
+		        <div class="modal-footer">
+		            <button class="btn btn-primary" ng-click="ok()">OK</button>
+		            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		        </div>
+		    </div>
+	    </div>
+    </script>
 	<nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
 		<div class="container">
 		  <!-- Brand and toggle get grouped for better mobile display -->
@@ -25,7 +45,7 @@
 					        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.name for industry in industries | filter:{name: $viewValue} | limitTo:8" typeahead-editable="false" placeholder="Search">
 					    </div>
 					    <button type="submit" class="btn btn-default fa fa-search"></button>
-					    <button type="button" class="btn btn-default fa fa-cog" id="btn-expand-search-options"></button>
+					    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
 				    </form>
 			  	</div>
 			  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
@@ -39,30 +59,7 @@
 	
 	<section class="pint-ui-frame-wrapper">
 		<div class="ng-class: {viewingJob : isViewingJob,'pint-ui-frame': true};"  ng-cloak >
-			<section class="pint-search-options pint-ui-view-top">
-				<div class="container">
-
-					<div class="center-block">
-						<div class="form-group">
-					    	<label for="skills-filter" class="col-sm-2 control-label">Skills you have</label>
-						    <div class="col-sm-10">
-						       	<select multiple data-role="tagsinput" id="skills-filter">
-									<option value="Photoshop">Photoshop</option> 
-									<option value="Responsive design">Responsive design</option> 
-									<option value="Mobile first design">Mobile first design</option> 
-									<option value="Laravel">Laravel</option> 
-									<option value="Composer">Composer</option> 
-									<option value="Node.js">Node.js</option>
-								</select>
-						    </div>
-					    </div>
-						
-					</div>
-					<div class="center">
-						<button type="button" class="btn fa fa-chevron-up" id="btn-collapse-search-options"></button>
-					</div>
-				</div>
-			</section>
+			
 			<section class="pint-search-result list-group pint-ui-view-left" >
 				<div class="container">
 					<article ng-repeat="job in getJobs()" class="pint-job-item list-group-item center-block" >
@@ -116,10 +113,10 @@
 						
 						<div class="pint-job-item-contact">
 							<h2>
-								Apply now by
+								Apply now
 							</h2>
 							<p>
-								Calling <a class="phone">+619483950</a> or sending an email to <a class="email">we.got.jobs@enterprise.hire</a>
+								Call <a class="phone">{{selectedJob.phone}}</a> or send an email to <a class="email">{{selectedJob.email}}</a>
 							</p>
 						</div>
 					</article>
@@ -139,6 +136,8 @@
     <script src="<?php echo asset('js/moment.min.js')?>"></script>
 	
 	<script src="<?php echo asset('js/angular-moment.min.js')?>"></script>
+
+	<script src="<?php echo asset('js/ng-tags-input.min.js')?>"></script>
 
     <script src="<?php echo asset('js/app.js')?>"></script>
 

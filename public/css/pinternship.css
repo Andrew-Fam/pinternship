@@ -106,7 +106,7 @@ body {
 	border-radius: 0px;
 	border: none;
 	margin: 0;
-	z-index: 10000;
+	z-index: 1001;
 }
 
 .pint-ui-frame-wrapper {
@@ -211,13 +211,6 @@ body {
 	top: 0px;
 }
 
-.pint-ui-modal-light-box {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	
-	z-index: 30000;
-}
 .pint-ui-modal-background {
 	position: fixed;
 	width: 100%;
@@ -229,6 +222,7 @@ body {
 .modal-dialog {
 	margin-top: 50px;
 }
+
 
 .pint-search-result .list-group-item {
 	border-radius: 0;
@@ -352,4 +346,19 @@ body {
 
 [ng-cloak] {
 	display: none!important;
+}
+
+
+/* special class to workaround angular-ui/bootstrap modal incompatibility with BS 3.0 */
+.modal {
+	display: block!important;
+}
+.modal-dialog {
+	padding: 0px!important;
+}
+.modal-background-click-handler {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
 }
