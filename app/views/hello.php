@@ -14,7 +14,7 @@
 </head>
 <body ng-controller="JobListCtrl" ng-class="{'modal-open':modalOpened}">
 	<script type="text/ng-template" id="skillListTpl.html">
-		<div class="modal-background-click-handler" ng-click="$close($event)">
+		<div class="modal-background-click-handler" ng-click="cancel()">
 		</div>
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -22,7 +22,30 @@
 		            <h3>Your skill list: </h3>
 		        </div>
 		        <div class="modal-body">
-		            <tags-input ng-model="skillList"></tags-input>
+		            <tags-input ng-model="mySkillList"></tags-input>
+		        </div>
+		        <div class="modal-footer">
+		            <button class="btn btn-primary" ng-click="ok()">OK</button>
+		            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		        </div>
+		    </div>
+	    </div>
+    </script>
+    <script type="text/ng-template" id="addJob.html">
+		<div class="modal-background-click-handler" ng-click="$close($event)">
+		</div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+		        <div class="modal-header">
+		            <h3>Post a job: </h3>
+		        </div>
+		        <div class="modal-body">
+		        	<div class="form-group">
+			        	<input class="form-control" ng-model="newJob.title" placeholder="title"/>
+			        	<textarea class="form-control" ng-model="newJob.description" placeholder="description"></textarea>
+			        	<input class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+			        	<tags-input ng-model="newJob.tags"></tags-input>
+		        	</div>
 		        </div>
 		        <div class="modal-footer">
 		            <button class="btn btn-primary" ng-click="ok()">OK</button>
@@ -50,7 +73,7 @@
 			  	</div>
 			  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
 			  		<div class="navbar-form navbar-left">			    
-					    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#post-job-form" id="btn-post-job">post job</button>
+					    <button type="button" class="btn btn-default fa fa-thumb-tack" ng-click="postJob()"></button>
 				    </div>
 			  	</div>
 			</div>
@@ -87,9 +110,18 @@
 				<div class="container">
 				
 					<article class="pint-job-item-view">
+
 						<button class="back-to-list fa fa-chevron-left" pint-float-button ng-click="backToJobList()">
 						
 						</button>
+						<div class="pint-job-item-contact">
+							<h2>
+								Apply now
+							</h2>
+							<p>
+								Call <a class="phone">{{selectedJob.phone}}</a> or send an email to <a class="email">{{selectedJob.email}}</a>
+							</p>
+						</div>
 						<div class="pint-job-item-logo">
 							<img data-src="holder.js/120x120" alt="pint-job-item logo" class="{{selectedJob.imgHolderClass}}"  bs-holder />
 						</div>
@@ -98,8 +130,8 @@
 						</h1>
 						<p class="pint-job-item-date"> this job was posted <span am-time-ago="selectedJob.date" am-format="YYYY/DD/MM"></span> </p>
 						<p class="pint-job-item-description center-block">
-							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive"/>
 							<div>{{selectedJob.description}}</div>
+							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive"/>
 						</p>
 						<h2>
 							This position requires the following skills 
@@ -111,14 +143,7 @@
 							</span>
 						</p>
 						
-						<div class="pint-job-item-contact">
-							<h2>
-								Apply now
-							</h2>
-							<p>
-								Call <a class="phone">{{selectedJob.phone}}</a> or send an email to <a class="email">{{selectedJob.email}}</a>
-							</p>
-						</div>
+						
 					</article>
 				</div>
 			</section>

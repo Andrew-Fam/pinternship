@@ -72,7 +72,7 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 
 	scope.$watch( 'selectedIndustry' , function(){
 		if(scope.selectedIndustry!=undefined){
-			scope.skillList = scope.selectedIndustry.tags;
+			scope.skillList = scope.selectedIndustry.tags.slice(0);
 		}
 		
 	});
@@ -97,7 +97,7 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 	scope.viewSkillList = function () {
 		var skillListModalInstance = modal.open({
 			templateUrl: 'skillListTpl.html',
-			controller: ModalInstanceCtrl,
+			controller: SkillListModalInstanceCtrl,
 			resolve: {
 				skillList: function (){
 					console.log(scope.skillList);
@@ -116,22 +116,31 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 	};
 
 
-	var ModalInstanceCtrl = ['$scope','$modalInstance','skillList', function (scope, modal, skillList) {
+	var SkillListModalInstanceCtrl = ['$scope','$modalInstance','skillList', function (scope, modal, skillList) {
 
-	  scope.skillList = skillList;
-	  console.log('HAHA CONTROLLER SKILL LIST:'+skillList);
+	  scope.mySkillList = skillList.slice(0);
+	  
+	 
+	
 	  scope.ok = function () {
-	    modal.close(scope.skillList);
+	  	//over write the original skill List;
+
+	  	skillList.length = 0;
+
+	  	for(var i = 0; i<scope.mySkillList.length; i++) {
+	  		skillList.push(scope.mySkillList[i]);
+	  	}
+
+	    modal.close(scope.mySkillList);
 	  };
 
 	  scope.cancel = function () {
+	  	
 	    modal.dismiss('cancel');
 	  };
 	}];
 
-	scope.close  = function () {
-		alert("AAAAAAAAAAAAAAAAAAAAAA");
-	};
+
 
 	scope.fetchJob();
 }]);

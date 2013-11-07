@@ -1,3 +1,4 @@
+
 .animated {
 	-webkit-animation-fill-mode: both;
 	-moz-animation-fill-mode: both;
@@ -362,3 +363,6 @@ body {
 	height: 100%;
 	z-index: -1;
 }
+
+
+/* tag input style */
