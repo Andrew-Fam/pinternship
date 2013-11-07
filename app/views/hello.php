@@ -118,14 +118,7 @@
 						<button class="back-to-list fa fa-chevron-left" pint-float-button ng-click="backToJobList()">
 						
 						</button>
-						<div class="pint-job-item-contact">
-							<h2>
-								Apply now
-							</h2>
-							<p>
-								Call <a class="phone">{{selectedJob.phone}}</a> or send an email to <a class="email">{{selectedJob.email}}</a>
-							</p>
-						</div>
+						
 						<div class="pint-job-item-logo">
 							<img data-src="holder.js/120x120" alt="pint-job-item logo" class="{{selectedJob.imgHolderClass}}"  bs-holder />
 						</div>
@@ -147,6 +140,14 @@
 							</span>
 						</p>
 						
+						<div class="pint-job-item-contact">
+							<h2>
+								Apply now
+							</h2>
+							<p>
+								Call <a class="phone">{{selectedJob.phone}}</a> or send an email to <a class="email">{{selectedJob.email}}</a>
+							</p>
+						</div>
 						
 					</article>
 				</div>
