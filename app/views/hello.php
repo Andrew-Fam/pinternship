@@ -65,7 +65,7 @@
 			</section>
 			<section class="pint-search-result list-group pint-ui-view-left" >
 				<div class="container">
-					<article ng-repeat="job in selectedIndustry.jobs" class="pint-job-item list-group-item center-block" >
+					<article ng-repeat="job in getJobs()" class="pint-job-item list-group-item center-block" >
 						<div class="pint-job-item-thumbnail">
 							<img data-src="holder.js/100x100" alt="pint-job-item" class="img-responsive {{job.imgHolderClass}}" bs-holder/>
 						</div>

@@ -15,12 +15,15 @@ pinternshipApp.controller('JobListCtrl', function JobListCtrl($scope, $http, $ti
 		$http.get('dummy_data/data.js').success(function(data){
 			$scope.industries = data;
 			
-
+			$scope.allJobs = new Array();
 			//img holder for testing only
 			var imgHolderClass= ['img-rounded','img-circle','img-square'];
 			$scope.industries.forEach(function(industry){
 				industry.jobs.forEach(function(job){
 					job.imgHolderClass = imgHolderClass[Math.floor(Math.random()*imgHolderClass.length)];
+
+
+					$scope.allJobs.push(job);
 				});
 			});
 			//end dummy test code section
@@ -47,6 +50,18 @@ pinternshipApp.controller('JobListCtrl', function JobListCtrl($scope, $http, $ti
 		 	window.scrollTo(0,$scope.currentListPosition);
 		});	
 	};
+
+	$scope.getJobs = function(){
+		if( $scope.selectedIndustry!=undefined && $scope.selectedIndustry!="")
+		{
+			return $scope.selectedIndustry.jobs;
+		}
+		else
+		{
+			return $scope.allJobs;
+		}
+	}
+
 
 	$scope.fetchJob();
 });
