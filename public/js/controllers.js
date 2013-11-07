@@ -34,8 +34,9 @@ pinternshipApp.controller('JobListCtrl', function JobListCtrl($scope, $http, $ti
 		$scope.isViewingJob = true;
 		//console.log($scope.isViewingJob);
 		$scope.currentListPosition = window.scrollY;
-		
-		window.scrollTo(0,0);
+		$timeout(function(){
+			window.scrollTo(0,0);
+		});
 	};
 
 	$scope.backToJobList = function(job){
