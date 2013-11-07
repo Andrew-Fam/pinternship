@@ -128,7 +128,7 @@
 						<p class="pint-job-item-date"> this job was posted <span am-time-ago="selectedJob.date" am-format="X"></span> </p>
 						<p class="pint-job-item-description center-block">
 							<div>{{selectedJob.description}}</div>
-							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive"/>
+							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive center-block"/>
 						</p>
 						<h2>
 							This position requires the following skills 

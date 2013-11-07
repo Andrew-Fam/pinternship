@@ -297,7 +297,7 @@ body {
 	padding-bottom: 15px;
 }
 .img-responsive {
-	width: 100% !important;
+	max-width: 100% !important;
 	height: auto!important;
 }
 
