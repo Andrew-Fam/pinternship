@@ -31,7 +31,7 @@
 		    </div>
 	    </div>
     </script>
-    <script type="text/ng-template" id="addJob.html">
+    <script type="text/ng-template" id="postJob.html">
 		<div class="modal-background-click-handler" ng-click="$close($event)">
 		</div>
 		<div class="modal-dialog">
@@ -41,9 +41,13 @@
 		        </div>
 		        <div class="modal-body">
 		        	<div class="form-group">
-			        	<input class="form-control" ng-model="newJob.title" placeholder="title"/>
+			        	<input type="text" class="form-control" ng-model="newJob.title" placeholder="title"/>
 			        	<textarea class="form-control" ng-model="newJob.description" placeholder="description"></textarea>
-			        	<input class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+			        	
+			        	<input type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+
+			        	<input type="text" class="form-control" ng-model="newJob.industry" typeahead="industry as industry.name for industry in industries | filter:{name: $viewValue} | limitTo:8" typeahead-editable="false" placeholder="Search">
+		
 			        	<tags-input ng-model="newJob.tags"></tags-input>
 		        	</div>
 		        </div>
@@ -85,13 +89,13 @@
 			
 			<section class="pint-search-result list-group pint-ui-view-left" >
 				<div class="container">
-					<article ng-repeat="job in getJobs()" class="pint-job-item list-group-item center-block" >
+					<article ng-repeat="job in getJobs() | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
 						<div class="pint-job-item-thumbnail">
 							<img data-src="holder.js/100x100" alt="pint-job-item" class="img-responsive {{job.imgHolderClass}}" bs-holder/>
 						</div>
 						<div class="pint-job-item-content">
 							<h1 class="pint-job-item-title"> {{job.title}}</h1>
-							<p class="pint-job-item-date" am-time-ago="job.date" am-format="YYYY/DD/MM"> </p>
+							<p class="pint-job-item-date" am-time-ago="job.date" am-format="X"> </p>
 							<p class="pint-job-item-description">
 								{{job.description}}
 							</p>
@@ -128,7 +132,7 @@
 						<h1 class="pint-job-item-title">
 							{{selectedJob.title}}
 						</h1>
-						<p class="pint-job-item-date"> this job was posted <span am-time-ago="selectedJob.date" am-format="YYYY/DD/MM"></span> </p>
+						<p class="pint-job-item-date"> this job was posted <span am-time-ago="selectedJob.date" am-format="X"></span> </p>
 						<p class="pint-job-item-description center-block">
 							<div>{{selectedJob.description}}</div>
 							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive"/>

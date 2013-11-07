@@ -14,15 +14,16 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 		http.get('dummy_data/data.js').success(function(data){
 			scope.industries = data;
 			
-			scope.allJobs = new Array();
+			
 			//img holder for testing only
 			var imgHolderClass= ['img-rounded','img-circle','img-square'];
 			scope.industries.forEach(function(industry){
 				industry.jobs.forEach(function(job){
 					job.imgHolderClass = imgHolderClass[Math.floor(Math.random()*imgHolderClass.length)];
 
+					job.date = moment(job.date,"YYYY/DD/MM").format('X');
 
-					scope.allJobs.push(job);
+					
 				});
 			});
 			//end dummy test code section
@@ -64,6 +65,14 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 		}
 		else
 		{
+			scope.allJobs = new Array();
+			//img holder for testing only
+			
+			scope.industries.forEach(function(industry){
+				
+				scope.allJobs = scope.allJobs.concat(industry.jobs);
+			});
+
 			return scope.allJobs;
 		}
 	};
@@ -100,7 +109,6 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 			controller: SkillListModalInstanceCtrl,
 			resolve: {
 				skillList: function (){
-					console.log(scope.skillList);
 					return scope.skillList;
 				}
 			}
@@ -140,7 +148,50 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 	  };
 	}];
 
+	//controller for post job modal window
 
+	scope.postJob =  function () {
+		var postJobModalInstance = modal.open({
+			templateUrl: 'postJob.html',
+			controller: PostJobModalInstanceCtrl,
+			resolve: {
+				'industries': function() {
+					return scope.industries;
+				}
+			}
+		});
+		
+		scope.modalOpened = true;
+
+		postJobModalInstance.result.then(function(){
+			scope.modalOpened = false;
+		}, function(){
+			scope.modalOpened = false;
+		});
+	}
+
+	var PostJobModalInstanceCtrl = ['$scope','$modalInstance','industries', function (scope, modal, industries) {
+
+
+		scope.industries = industries;
+		scope.newJob = {};
+
+		scope.ok = function () {
+			//over write the original skill List;
+			scope.newJob.date = moment().format("X");
+
+			console.log(scope.newJob);
+			console.log(scope.newJob.industry);
+			scope.newJob.industry.jobs.push(scope.newJob);
+
+			modal.close();
+		};
+
+		scope.cancel = function () {
+			
+		modal.dismiss('cancel');
+		};
+	}];
 
 	scope.fetchJob();
 }]);
