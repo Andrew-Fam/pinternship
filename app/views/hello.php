@@ -71,12 +71,14 @@
 						</div>
 						<div class="pint-job-item-content">
 							<h1 class="pint-job-item-title"> {{job.title}}</h1>
-							<p class="pint-job-item-date"> {{job.date}} </p>
+							<p class="pint-job-item-date" am-time-ago="job.date" am-format="YYYY/DD/MM"> </p>
 							<p class="pint-job-item-description">
 								{{job.description}}
 							</p>
 							<p class="pint-job-item-tags">
-								<a class="tag" ng-repeat="tag in job.tags"> {{tag}} </a> 
+								<span ng-repeat="tag in job.tags">
+									<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
+								</span>
 							</p>
 						</div>
 						<a class="pint-job-item-selector" ng-click="viewJob($index)"><i class="fa fa-chevron-right fa-fw"></i></a>
@@ -97,7 +99,7 @@
 						<h1 class="pint-job-item-title">
 							{{selectedJob.title}}
 						</h1>
-						<p class="pint-job-item-date"> {{selectedJob.date}} </p>
+						<p class="pint-job-item-date"> this job was posted <span am-time-ago="selectedJob.date" am-format="YYYY/DD/MM"></span> </p>
 						<p class="pint-job-item-description center-block">
 							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive"/>
 							<div>{{selectedJob.description}}</div>
@@ -107,7 +109,9 @@
 						</h2>
 					
 						<p class="pint-job-item-tags">
-							<a class="tag" ng-repeat="tag in selectedJob.tags"> {{tag}} </a> 
+							<span ng-repeat="tag in selectedJob.tags">
+								<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
+							</span>
 						</p>
 						
 						<div class="pint-job-item-contact">
@@ -130,13 +134,18 @@
    
     <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js"></script>
 
-    <script src="<?php echo asset('js/ui-bootstrap-tpls-0.6.0.js')?>"></script>
+    <script src="<?php echo asset('js/ui-bootstrap-tpls-0.6.0.min.js')?>"></script>
+
+    <script src="<?php echo asset('js/moment.min.js')?>"></script>
+	
+	<script src="<?php echo asset('js/angular-moment.min.js')?>"></script>
 
     <script src="<?php echo asset('js/app.js')?>"></script>
 
     <script src="<?php echo asset('js/controllers.js')?>"></script>
 
     <script src="<?php echo asset('js/directives.js')?>"></script>
+
 
   
 
