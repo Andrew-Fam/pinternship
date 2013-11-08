@@ -1,0 +1,1 @@
+angular.module('pinternshipApp',['pinternship-controllers','pinternship-directives']);

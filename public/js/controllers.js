@@ -1,4 +1,4 @@
-var pinternshipApp = angular.module('pinternshipApp', ['ui.bootstrap','angularMoment','tags-input']);
+var pinternshipApp = angular.module('pinternship-controllers', ['ui.bootstrap','angularMoment','tags-input']);
 
 pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','$modal', function JobListCtrl(scope, http, timeout, window, modal){
 

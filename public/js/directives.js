@@ -1,4 +1,4 @@
-angular.module('pinternshipApp').directive('bsHolder', function() {
+var pinternshipDirectives = angular.module('pinternship-directives',[]).directive('bsHolder', function() {
     return {
         link: function (scope, element, attrs) {
             Holder.run({images:element[0], nocss:true});
@@ -6,7 +6,7 @@ angular.module('pinternshipApp').directive('bsHolder', function() {
     };
 });
 
-angular.module('pinternshipApp').directive('pintFloatButton', function($window) {
+pinternshipDirectives.directive('pintFloatButton', function($window) {
 	return {
 		link: function (scope, element, attrs){
 			angular.element($window).bind("scroll", function(){

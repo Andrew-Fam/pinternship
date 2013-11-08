@@ -169,7 +169,7 @@
 
 	<script src="<?php echo asset('js/ng-tags-input.min.js')?>"></script>
 
-    <script src="<?php echo asset('js/app.js')?>"></script>
+   	<script src="<?php echo asset('js/app.js')?>"></script>
 
     <script src="<?php echo asset('js/controllers.js')?>"></script>
 
