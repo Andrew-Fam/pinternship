@@ -103,7 +103,7 @@
 							</span>
 						</p>
 					</div>
-					<a class="pint-job-item-selector" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}"><i class="fa fa-chevron-right fa-fw"></i></a>
+					<a class="pint-job-item-selector" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="storeJobToCache(job)"><i class="fa fa-chevron-right fa-fw"></i></a>
 				</article>
 		
 			</div>
