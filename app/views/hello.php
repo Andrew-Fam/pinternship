@@ -70,7 +70,7 @@
 				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 				  		<form class="pint-search-form navbar-form navbar-left" role="search">
 						    <div class="form-group">
-						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.name for industry in industries | filter:{name: $viewValue} | limitTo:8" typeahead-editable="false" placeholder="Search">
+						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.industry_name for industry in industries | filter: { 'industry_name' : $viewValue } | limitTo:8" typeahead-editable="false" placeholder="Search">
 						    </div>
 						    <button type="submit" class="btn btn-default fa fa-search"></button>
 						    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
@@ -165,7 +165,7 @@
     
     <script src="<?php echo asset('js/holder.js')?>"></script>
    
-    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
  	
  	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>
 	
@@ -178,6 +178,8 @@
 	<script src="<?php echo asset('js/angular-moment.min.js')?>"></script>
 
 	<script src="<?php echo asset('js/ng-tags-input.min.js')?>"></script>
+
+	<script src="<?php echo asset('js/lodash.min.js')?>"></script>
 
 	<script src="<?php echo asset('js/restangular.min.js')?>"></script>
 
