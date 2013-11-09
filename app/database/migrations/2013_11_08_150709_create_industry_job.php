@@ -17,8 +17,8 @@ class CreateIndustryJob extends Migration {
 
 			$table->integer('job_id')->unsigned();
 			$table->integer('industry_id')->unsigned();
-			$table->foreign('industry_id')->references('id')->on('industries');
-			$table->foreign('job_id')->references('id')->on('jobs');
+			$table->foreign('industry_id')->references('id')->on('industries')->onDelete('CASCADE')->onUpdate('CASCADE');
+			$table->foreign('job_id')->references('id')->on('jobs')->onDelete('CASCADE')->onUpdate('CASCADE');
 		});
 	}
 

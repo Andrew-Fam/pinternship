@@ -17,8 +17,8 @@ class CreateIndustrySkill extends Migration {
 			$table->increments('id');
 			$table->integer('skill_id')->unsigned();
 			$table->integer('industry_id')->unsigned();
-			$table->foreign('industry_id')->references('id')->on('industries');
-			$table->foreign('skill_id')->references('id')->on('skills');
+			$table->foreign('industry_id')->references('id')->on('industries')->onDelete('CASCADE')->onUpdate('CASCADE');
+			$table->foreign('skill_id')->references('id')->on('skills')->onDelete('CASCADE')->onUpdate('CASCADE');
 		});
 	}
 

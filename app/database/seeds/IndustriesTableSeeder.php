@@ -3,7 +3,10 @@
 class IndustriesTableSeeder extends Seeder {
 	public function run()
 	{
+		DB::table('industry_job')->delete();
+		DB::table('jobs')->delete();
 		DB::table('industries')->delete();
+		
 
 		$industries = [
 			['industry_name' => 'Graphic/Web design'],
@@ -16,11 +19,12 @@ class IndustriesTableSeeder extends Seeder {
 			['industry_name' => 'Business Administration'],
 			['industry_name' => 'Network Administration'],
 			['industry_name' => 'Computer Security'],
-			['industry_name' => 'Press design'],
-			['industry_name' => 'Fashion design'],
+			['industry_name' => 'Press Design'],
+			['industry_name' => 'Fashion Design'],
 			['industry_name' => 'Architecture'],
-			['industry_name' => 'Mechanical engineering'],
-			['industry_name' => 'Chemical engineering'],
+			['industry_name' => 'Mechanical Engineering'],
+			['industry_name' => 'Chemical Engineering'],
+			['industry_name' => 'Medical Professional'],
 			['industry_name' => 'Biologist']
 		];
 

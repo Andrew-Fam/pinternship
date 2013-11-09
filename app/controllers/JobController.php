@@ -1,6 +1,6 @@
 <?php
 
-class IndustryController extends BaseController {
+class JobController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,9 +10,8 @@ class IndustryController extends BaseController {
 	public function index()
 	{
 		//
-		$industries = Industry::all();
-
-		return $industries->toArray();
+		$jobs = Job::all();
+		return $jobs->toArray();
 	}
 
 	/**
@@ -23,7 +22,6 @@ class IndustryController extends BaseController {
 	public function create()
 	{
 		//
-		echo 'Industry Controller create';
 	}
 
 	/**
@@ -34,7 +32,6 @@ class IndustryController extends BaseController {
 	public function store()
 	{
 		//
-		echo 'Industry Controller store';
 	}
 
 	/**
@@ -45,7 +42,8 @@ class IndustryController extends BaseController {
 	 */
 	public function show($id)
 	{
-		echo 'Industry Controller show';
+		$job = Job::find($id);
+		return $job->toJson();
 	}
 
 	/**
@@ -56,7 +54,7 @@ class IndustryController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		echo 'Industry Controller edit';
+		//
 	}
 
 	/**
@@ -67,7 +65,7 @@ class IndustryController extends BaseController {
 	 */
 	public function update($id)
 	{
-		echo 'Industry Controller update';
+		//
 	}
 
 	/**
@@ -78,15 +76,7 @@ class IndustryController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		echo 'Industry Controller destroy';
-	}
-
-	/* custom functions */
-
-	public function jobs($id)
-	{
-		$industry = Industry::find($id);
-		return $industry->jobs->toArray();
+		//
 	}
 
 }

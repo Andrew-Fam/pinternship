@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Pinternship</title>
+    <meta name="fragment" content="!">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo asset('bootstrap/css/bootstrap.css')?>"/>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
 
 </head>
-<body ng-controller="PinternshipCtrl" ng-class="{'modal-open':modalOpened}">
+<body>
 	<script type="text/ng-template" id="skillListTpl.html">
 		<div class="modal-background-click-handler" ng-click="cancel()">
 		</div>
@@ -70,7 +71,7 @@
 				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 				  		<form class="pint-search-form navbar-form navbar-left" role="search">
 						    <div class="form-group">
-						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.industry_name for industry in industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" placeholder="Search">
+						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.industry_name for industry in industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
 						    </div>
 						    <button type="submit" class="btn btn-default fa fa-search"></button>
 						    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
@@ -86,15 +87,15 @@
 		</nav>
     	<section class="pint-search-result list-group" >
 			<div class="container">
-				<article ng-repeat="job in getJobs() | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
+				<article ng-repeat="job in jobs | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
-						<img data-src="holder.js/100x100" alt="pint-job-item" class="img-responsive {{job.imgHolderClass}}" bs-holder/>
+						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
 					<div class="pint-job-item-content">
-						<h1 class="pint-job-item-title"> {{job.title}}</h1>
-						<p class="pint-job-item-date" am-time-ago="job.date" am-format="X"> </p>
+						<h1 class="pint-job-item-title"> {{job.job_title}}</h1>
+						<p class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </p>
 						<p class="pint-job-item-description">
-							{{job.description}}
+							{{job.job_description | truncate:255}}
 						</p>
 						<p class="pint-job-item-tags">
 							<span ng-repeat="tag in job.tags">
@@ -102,46 +103,38 @@
 							</span>
 						</p>
 					</div>
-					<a class="pint-job-item-selector" ng-click="viewJob($index)"><i class="fa fa-chevron-right fa-fw"></i></a>
+					<a class="pint-job-item-selector" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}"><i class="fa fa-chevron-right fa-fw"></i></a>
 				</article>
 		
 			</div>
 		</section>
    	</script>
-	
-	<section class="view-animate-container">
-		<div ng-view class="view-animate">
-
-		</div>
-		<!--
-		<div class="ng-class: {viewingJob : isViewingJob,'pint-ui-frame': true};"  ng-cloak >
-			
-			<section class="pint-ui-view-right pint-item-view">
+	<script type="text/ng-template" id="viewJob.html">
+		<section class="pint-item-view">
 				<div class="container">
 				
 					<article class="pint-job-item-view">
 
-						<button class="back-to-list fa fa-chevron-left" pint-float-button ng-click="backToJobList()">
+						<a class="back-to-list fa fa-chevron-left" href="/#/jobs" pint-float-button>
 						
-						</button>
+						</a>
 						
 						<div class="pint-job-item-logo">
-							<img data-src="holder.js/120x120" alt="pint-job-item logo" class="{{selectedJob.imgHolderClass}}"  bs-holder />
+							<img ng-src="{{job.job_logo}}" />
 						</div>
 						<h1 class="pint-job-item-title">
-							{{selectedJob.title}}
+							{{job.job_title}}
 						</h1>
-						<p class="pint-job-item-date"> this job was posted <span am-time-ago="selectedJob.date" am-format="X"></span> </p>
+						<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
 						<p class="pint-job-item-description center-block">
-							<div>{{selectedJob.description}}</div>
-							<img data-src="holder.js/480x320"  bs-holder class="pint-job-item-media img-responsive center-block"/>
+							<div>{{job.job_description}}</div>
 						</p>
 						<h2>
 							This position requires the following skills 
 						</h2>
 					
 						<p class="pint-job-item-tags">
-							<span ng-repeat="tag in selectedJob.tags">
+							<span ng-repeat="tag in job.tags">
 								<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
 							</span>
 						</p>
@@ -151,13 +144,22 @@
 								Apply now
 							</h2>
 							<p>
-								Call <a class="phone">{{selectedJob.phone}}</a> or send an email to <a class="email">{{selectedJob.email}}</a>
+								Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
 							</p>
 						</div>
 						
 					</article>
 				</div>
 			</section>
+	</script>
+	<section class="view-animate-container">
+		<div ng-view class="view-animate">
+
+		</div>
+		<!--
+		<div class="ng-class: {viewingJob : isViewingJob,'pint-ui-frame': true};"  ng-cloak >
+			
+			
 		</div>-->
 	</section>
    	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -182,6 +184,10 @@
 	<script src="<?php echo asset('js/lodash.min.js')?>"></script>
 
 	<script src="<?php echo asset('js/restangular.min.js')?>"></script>
+
+	<script src="<?php echo asset('js/igTruncate.js')?>"></script>
+
+	<script src="<?php echo asset('js/angular-slugify.js')?>"></script>
 
    	<script src="<?php echo asset('js/app.js')?>"></script>
 
