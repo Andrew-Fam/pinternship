@@ -10,7 +10,9 @@ class IndustryController extends BaseController {
 	public function index()
 	{
 		//
-		echo 'Industry Controller index';
+		$industries = Industry::all();
+
+		return $industries->toArray();
 	}
 
 	/**
