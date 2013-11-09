@@ -1,6 +1,57 @@
-var pinternshipApp = angular.module('pinternship-controllers', ['ui.bootstrap','angularMoment','tags-input']);
+var pinternshipController = angular.module('pinternship-controllers', ['ui.bootstrap','angularMoment','tags-input']);
 
-pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','$modal', function JobListCtrl(scope, http, timeout, window, modal){
+pinternshipController.controller('JobsController',['$scope','$http', function JobsController(scope,http){
+	
+	scope.selectedIndustry = undefined;
+
+	scope.industries = new Array();
+
+	scope.skillList = new Array();
+
+	scope.fetchJob = function(){
+		http.get('dummy_data/data.js').success(function(data){
+			scope.industries = data;
+			
+			
+			//img holder for testing only
+			var imgHolderClass= ['img-rounded','img-circle','img-square'];
+			scope.industries.forEach(function(industry){
+				industry.jobs.forEach(function(job){
+					job.imgHolderClass = imgHolderClass[Math.floor(Math.random()*imgHolderClass.length)];
+
+					job.date = moment(job.date,"YYYY/DD/MM").format('X');
+
+					
+				});
+			});
+			//end dummy test code section
+		});
+	};
+
+	scope.getJobs = function(){
+		if( scope.selectedIndustry!=undefined && scope.selectedIndustry!="")
+		{
+			return scope.selectedIndustry.jobs;
+		}
+		else
+		{
+			scope.allJobs = new Array();
+			//img holder for testing only
+			
+			scope.industries.forEach(function(industry){
+				
+				scope.allJobs = scope.allJobs.concat(industry.jobs);
+			});
+
+			return scope.allJobs;
+		}
+	};
+
+	scope.fetchJob();
+}]);
+
+/*
+pinternshipController.controller('JobListCtrl',['$scope','$http','$timeout','$window','$modal', function JobListCtrl(scope, http, timeout, window, modal){
 
 	scope.selectedIndustry = undefined;
 
@@ -195,3 +246,4 @@ pinternshipApp.controller('JobListCtrl',['$scope','$http','$timeout','$window','
 
 	scope.fetchJob();
 }]);
+*/

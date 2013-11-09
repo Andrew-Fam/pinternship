@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
 
 </head>
-<body ng-controller="JobListCtrl" ng-class="{'modal-open':modalOpened}">
+<body ng-controller="PinternshipCtrl" ng-class="{'modal-open':modalOpened}">
 	<script type="text/ng-template" id="skillListTpl.html">
 		<div class="modal-background-click-handler" ng-click="cancel()">
 		</div>
@@ -58,58 +58,64 @@
 		    </div>
 	    </div>
     </script>
-	<nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
-		<div class="container">
-		  <!-- Brand and toggle get grouped for better mobile display -->
-			<div class="row">
-				<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-				    <a class="navbar-brand hidden-xs" href="#">Pinternship</a>
-				    <a class="navbar-brand visible-xs" href="#">P</a>
-				</div>
-			  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-			  		<form class="pint-search-form navbar-form navbar-left" role="search">
-					    <div class="form-group">
-					        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.name for industry in industries | filter:{name: $viewValue} | limitTo:8" typeahead-editable="false" placeholder="Search">
+    <script type="text/ng-template" id="jobs.html">
+	    <nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
+			<div class="container">
+			  <!-- Brand and toggle get grouped for better mobile display -->
+				<div class="row">
+					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+					    <a class="navbar-brand hidden-xs" href="#">Pinternship</a>
+					    <a class="navbar-brand visible-xs" href="#">P</a>
+					</div>
+				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+				  		<form class="pint-search-form navbar-form navbar-left" role="search">
+						    <div class="form-group">
+						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.name for industry in industries | filter:{name: $viewValue} | limitTo:8" typeahead-editable="false" placeholder="Search">
+						    </div>
+						    <button type="submit" class="btn btn-default fa fa-search"></button>
+						    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
+					    </form>
+				  	</div>
+				  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+				  		<div class="navbar-form navbar-left">			    
+						    <button type="button" class="btn btn-default fa fa-thumb-tack" ng-click="postJob()"></button>
 					    </div>
-					    <button type="submit" class="btn btn-default fa fa-search"></button>
-					    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
-				    </form>
-			  	</div>
-			  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-			  		<div class="navbar-form navbar-left">			    
-					    <button type="button" class="btn btn-default fa fa-thumb-tack" ng-click="postJob()"></button>
-				    </div>
-			  	</div>
+				  	</div>
+				</div>
 			</div>
-		</div>
-	</nav>
+		</nav>
+    	<section class="pint-search-result list-group" >
+			<div class="container">
+				<article ng-repeat="job in getJobs() | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
+					<div class="pint-job-item-thumbnail">
+						<img data-src="holder.js/100x100" alt="pint-job-item" class="img-responsive {{job.imgHolderClass}}" bs-holder/>
+					</div>
+					<div class="pint-job-item-content">
+						<h1 class="pint-job-item-title"> {{job.title}}</h1>
+						<p class="pint-job-item-date" am-time-ago="job.date" am-format="X"> </p>
+						<p class="pint-job-item-description">
+							{{job.description}}
+						</p>
+						<p class="pint-job-item-tags">
+							<span ng-repeat="tag in job.tags">
+								<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
+							</span>
+						</p>
+					</div>
+					<a class="pint-job-item-selector" ng-click="viewJob($index)"><i class="fa fa-chevron-right fa-fw"></i></a>
+				</article>
+		
+			</div>
+		</section>
+   	</script>
 	
-	<section class="pint-ui-frame-wrapper">
+	<section class="view-animate-container">
+		<div ng-view class="view-animate">
+
+		</div>
+		<!--
 		<div class="ng-class: {viewingJob : isViewingJob,'pint-ui-frame': true};"  ng-cloak >
 			
-			<section class="pint-search-result list-group pint-ui-view-left" >
-				<div class="container">
-					<article ng-repeat="job in getJobs() | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
-						<div class="pint-job-item-thumbnail">
-							<img data-src="holder.js/100x100" alt="pint-job-item" class="img-responsive {{job.imgHolderClass}}" bs-holder/>
-						</div>
-						<div class="pint-job-item-content">
-							<h1 class="pint-job-item-title"> {{job.title}}</h1>
-							<p class="pint-job-item-date" am-time-ago="job.date" am-format="X"> </p>
-							<p class="pint-job-item-description">
-								{{job.description}}
-							</p>
-							<p class="pint-job-item-tags">
-								<span ng-repeat="tag in job.tags">
-									<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
-								</span>
-							</p>
-						</div>
-						<a class="pint-job-item-selector" ng-click="viewJob($index)"><i class="fa fa-chevron-right fa-fw"></i></a>
-					</article>
-			
-				</div>
-			</section>
 			<section class="pint-ui-view-right pint-item-view">
 				<div class="container">
 				
@@ -152,7 +158,7 @@
 					</article>
 				</div>
 			</section>
-		</div>
+		</div>-->
 	</section>
    	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://code.jquery.com/jquery.js"></script> -->
@@ -160,7 +166,11 @@
     <script src="<?php echo asset('js/holder.js')?>"></script>
    
     <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js"></script>
-
+ 	
+ 	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>
+	
+	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-route.min.js"></script>
+    
     <script src="<?php echo asset('js/ui-bootstrap-tpls-0.6.0.min.js')?>"></script>
 
     <script src="<?php echo asset('js/moment.min.js')?>"></script>
