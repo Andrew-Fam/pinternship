@@ -10,16 +10,15 @@ pinternshipControllers.config(['RestangularProvider', function(RestangularProvid
 
 //jobs cache service
 pinternshipControllers.service('jobsCache',[ 'Restangular', function (restangular){
-	var jobs = [];
+	this.jobs = [];
 
-	return {
-		getJobs:function (){
-			return jobs;
-		},
-		setJobs:function (j){
-			jobs = j;
-		}
+	this.getJobs = function (){
+		return this.jobs;
 	};
+
+	this.setJobs = function (j){
+		this.jobs = j;
+	}
 }]);
 
 pinternshipControllers.controller('JobsController',['$routeParams', 'jobsCache','$scope','$http', '$timeout', 'Restangular', function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
@@ -50,8 +49,9 @@ pinternshipControllers.controller('JobsController',['$routeParams', 'jobsCache',
 
 	// watch jobsCache
 
-	scope.watch ( jobsCache.getJob, function (){
+	scope.$watch ( function() { return jobsCache.jobs }, function (newValue, oldValue){
 		console.log('sumthing changed in the jobsCache');
+		scope.jobs = jobsCache.jobs;
 	});
 
 	// get job from a specific industry
