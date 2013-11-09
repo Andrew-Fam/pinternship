@@ -4,13 +4,15 @@ pinternshipControllers.config(['RestangularProvider', function(RestangularProvid
 	RestangularProvider.setBaseUrl('/api/v0.1');
 }]);
 
-pinternshipControllers.controller('JobsController',['$scope','$http', 'Restangular', function JobsController(scope,http,restangular){
+pinternshipControllers.controller('JobsController',['$scope','$http', '$timeout', 'Restangular', function JobsController(scope,http,timeout,restangular){
 	
 
 	var baseIndustries = restangular.all('industry');
 	
-	scope.industries = baseIndustries.getList();
-	
+	baseIndustries.getList().then( function (industries) {
+		scope.industries = industries;
+	});
+
 }]);
 
 /*
