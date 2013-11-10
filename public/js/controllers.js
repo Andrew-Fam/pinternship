@@ -156,8 +156,10 @@ pinternshipControllers.controller( 'JobsController',[
 	// store job to cache, and remember job list scroll position before going to viewJob
 
 	scope.switchToJobView = function (job){
-		console.log(window.scrollY);
-		jobsCache.rememberScrollPosition(window.scrollY);
+
+		//get cross-browser scroll position
+		var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+		jobsCache.rememberScrollPosition(scrollTop);
 		jobsCache.setCurrentJob(job);
 	};
 
