@@ -284,8 +284,9 @@ body {
 .modal-dialog {
 	margin-top: 50px;
 }
+
 .pint-search-result {
-	padding-top: 50px;
+	
 }
 
 .pint-search-result .list-group-item {
