@@ -166,6 +166,7 @@ pinternshipControllers.controller( 'JobsController',[
 		//get cross-browser scroll position
 
 		var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+		alert(scrollTop);
 		jobsCache.rememberScrollPosition(scrollTop);
 		jobsCache.setCurrentJob(job);
 	};
