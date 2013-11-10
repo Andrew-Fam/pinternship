@@ -47,4 +47,6 @@ Route::group(array('prefix' => 'api/v0.1'), function(){
 	Route::resource('jobs','JobController');
 
 	Route::get('industries/{id}/jobs','IndustryController@jobs');
+
+	Route::resource('skills','SkillController');
 });

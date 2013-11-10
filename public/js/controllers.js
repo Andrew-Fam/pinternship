@@ -9,7 +9,8 @@ pinternshipControllers.config(['RestangularProvider', function(RestangularProvid
 }]);
 
 //jobs cache service
-pinternshipControllers.service('jobsCache',[ 'Restangular', function (restangular){
+pinternshipControllers.service('cacheService',[ 'Restangular', function (restangular){
+	
 	this.jobs = [];
 	
 	this.currentJob = undefined;
@@ -32,45 +33,48 @@ pinternshipControllers.service('jobsCache',[ 'Restangular', function (restangula
 		this.memorizedScrollPosition = scrollPos;
 	}
 
+
+
 }]);
 
 // controllers for each view
 
 pinternshipControllers.controller( 'HomeController',[
 	'$routeParams', 
-	'jobsCache',
+	'cacheService',
 	'$scope',
 	'$http', 
 	'$timeout', 
 	'Restangular', 
-	function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
+	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
 				
 	}]
 );
 
 pinternshipControllers.controller( 'PostJobController',[
 	'$routeParams', 
-	'jobsCache',
+	'cacheService',
 	'$scope',
 	'$http', 
 	'$timeout', 
 	'Restangular', 
-	function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
+	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
 				
 	}]
 );
 
 pinternshipControllers.controller( 'JobsController',[
 	'$routeParams', 
-	'jobsCache',
+	'cacheService',
 	'$scope',
 	'$http', 
 	'$timeout', 
 	'Restangular', 
-	function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
+	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
 	
 	scope.selectedIndustry = undefined;
 
+	scope.cacheService = cacheService;
 
 	// if already apply memorized scroll position, set this to true to prevent auto scrolling again
 
@@ -89,20 +93,20 @@ pinternshipControllers.controller( 'JobsController',[
 
 	var baseJobs = restangular.all('jobs');
 
-	// only if jobsCache is empty at first and there's no industry query
+	// only if cacheService is empty at first and there's no industry query
 
-	if(jobsCache.getJobs().length<=0 && 
+	if(cacheService.getJobs().length<=0 && 
 		( routeParams.industry == undefined || routeParams.industry == '' )) {
 		baseJobs.getList().then( function (jobs) {
-			jobsCache.setJobs(jobs);
+			cacheService.setJobs(jobs);
 		});
 	}
 
-	// watch jobsCache
+	// watch cacheService
 
-	scope.$watch ( function() { return jobsCache.jobs }, function (newValue, oldValue){
+	scope.$watch ( function() { return cacheService.jobs }, function (newValue, oldValue){
 		
-		scope.jobs = jobsCache.jobs;
+		scope.jobs = cacheService.jobs;
 
 	});
 		
@@ -113,11 +117,11 @@ pinternshipControllers.controller( 'JobsController',[
 	    timeout( function () {
 	    	if(!scope.scrolledToMemorizeSpot)
 		    {
-		    	window.scrollTo(0,jobsCache.memorizedScrollPosition);
+		    	window.scrollTo(0,cacheService.memorizedScrollPosition);
 
 		    	// if scroll successfully, change flag.
 
-		    	if(window.scrollY == jobsCache.memorizedScrollPosition)
+		    	if(window.scrollY == cacheService.memorizedScrollPosition)
 		    	{
 		    		scope.scrolledToMemorizeSpot = true;
 		    	}
@@ -129,10 +133,10 @@ pinternshipControllers.controller( 'JobsController',[
 
 	scope.getJobs = function(){
 
-		var jobsInIndustry = restangular.one('industries',scope.selectedIndustry.id);
+		var jobsInIndustry = restangular.one('industries',scope.cacheService.selectedIndustry.id);
 
 		jobsInIndustry.getList('jobs').then( function (jobs) {
-			jobsCache.setJobs(jobs);
+			cacheService.setJobs(jobs);
 		});
 	};
 
@@ -140,7 +144,7 @@ pinternshipControllers.controller( 'JobsController',[
 
 	scope.switchToJobView = function (job){
 
-		jobsCache.setCurrentJob(job);
+		cacheService.setCurrentJob(job);
 	};
 
 	scope.$on('$routeChangeStart', function() {
@@ -154,17 +158,17 @@ pinternshipControllers.controller( 'JobsController',[
 		
 		//store to cache before switching to another view
 
-		jobsCache.rememberScrollPosition(scrollTop);
+		cacheService.rememberScrollPosition(scrollTop);
 
 		console.log('save Scroll Pos');
 	});
 }]);
 
-pinternshipControllers.controller('ViewJobController',['jobsCache', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(jobsCache,routeParams,scope,http,timeout,restangular){
+pinternshipControllers.controller('ViewJobController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(cacheService,routeParams,scope,http,timeout,restangular){
 	
-	//try to set scope.job to the currentJob object in the jobsCache
+	//try to set scope.job to the currentJob object in the cacheService
 
-	scope.job = jobsCache.currentJob;
+	scope.job = cacheService.currentJob;
 
 	//however, if the cache is undefined, query from api
 

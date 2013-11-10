@@ -83,7 +83,7 @@
 				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 				  		<form class="pint-search-form navbar-form navbar-left" role="search">
 						    <div class="form-group">
-						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.industry_name for industry in industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
+						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
 						    </div>
 						    <button type="submit" class="btn btn-default fa fa-search"></button>
 						    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
