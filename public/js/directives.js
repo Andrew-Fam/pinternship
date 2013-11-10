@@ -1,10 +1,4 @@
-var pinternshipDirectives = angular.module('pinternship-directives',[]).directive('bsHolder', function() {
-    return {
-        link: function (scope, element, attrs) {
-            Holder.run({images:element[0], nocss:true});
-        }
-    };
-});
+var pinternshipDirectives = angular.module('pinternship-directives',[]);
 
 pinternshipDirectives.directive('pintFloatButton', function($window) {
 	return {

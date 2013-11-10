@@ -85,7 +85,7 @@
 				</div>
 			</div>
 		</nav>
-    	<section class="pint-search-result list-group" memorize-scroll="{{memorizedScrollPosition}}">
+    	<section class="pint-search-result list-group" ng-cloak>
 			<div class="container">
 				<article ng-repeat="job in jobs | orderBy:'date':true" on-finish-render class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
@@ -110,7 +110,7 @@
 		</section>
    	</script>
 	<script type="text/ng-template" id="viewJob.html">
-		<section class="pint-item-detail-view">
+		<section class="pint-item-detail-view" ng-cloak>
 			<div class="container">
 			
 				<article class="pint-job-item-view">
