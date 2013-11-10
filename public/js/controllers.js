@@ -14,6 +14,8 @@ pinternshipControllers.service('jobsCache',[ 'Restangular', function (restangula
 	
 	this.currentJob = undefined;
 
+	this.memorizedScrollPosition = undefined;
+
 	this.getJobs = function (){
 		return this.jobs;
 	};
@@ -26,14 +28,29 @@ pinternshipControllers.service('jobsCache',[ 'Restangular', function (restangula
 		this.currentJob = job;
 	}
 
+	this.rememberScrollPosition = function (scrollPos){
+		this.memorizedScrollPosition = scrollPos;
+	}
 
 }]);
 
 // controllers for each view
 
-pinternshipControllers.controller('JobsController',['$routeParams', 'jobsCache','$scope','$http', '$timeout', 'Restangular', function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
+pinternshipControllers.controller( 'JobsController',[
+	'$routeParams', 
+	'jobsCache',
+	'$scope',
+	'$http', 
+	'$timeout', 
+	'Restangular', 
+	function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
 	
 	scope.selectedIndustry = undefined;
+
+
+	// if already apply memorized scroll position, set this to true to prevent auto scrolling again
+
+	scope.scrolledToMemorizeSpot = false;
 
 	// get a list of all industries
 
@@ -60,15 +77,74 @@ pinternshipControllers.controller('JobsController',['$routeParams', 'jobsCache',
 	// watch jobsCache
 
 	scope.$watch ( function() { return jobsCache.jobs }, function (newValue, oldValue){
-		console.log('sumthing changed in the jobsCache');
+		
 		scope.jobs = jobsCache.jobs;
+
 	});
+		
+
+	// watch document height to try and scroll to right position
+
+	scope.$watch (
+		function () { 
+			var D = document;
+		    return Math.max(
+		        D.body.scrollHeight, D.documentElement.scrollHeight,
+		        D.body.offsetHeight, D.documentElement.offsetHeight,
+		        D.body.clientHeight, D.documentElement.clientHeight
+		    );
+		},
+		function (newValue, oldValue) {
+			var viewportHeight;
+  
+			 // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
+			  
+			if (typeof window.innerWidth != 'undefined')
+			{
+			  
+			  viewportHeight = window.innerHeight;
+			}
+			  
+			// IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
+			 
+			else if (typeof document.documentElement != 'undefined'
+			 && typeof document.documentElement.clientWidth !=
+			 'undefined' && document.documentElement.clientWidth != 0)
+			{
+			   
+			   viewportHeight = document.documentElement.clientHeight;
+			}
+
+			// older versions of IE
+
+			else
+			{
+			   
+			   viewportHeight = document.getElementsByTagName('body')[0].clientHeight;
+			}
+
+
+			//check if new body height is greater than viewport height to perform auto scroll
+			var D = document;
+
+			bodyHeight = Math.max(
+		        D.body.scrollHeight, D.documentElement.scrollHeight,
+		        D.body.offsetHeight, D.documentElement.offsetHeight,
+		        D.body.clientHeight, D.documentElement.clientHeight
+		    );
+
+		    if(bodyHeight>viewportHeight && !scope.scrolledToMemorizeSpot)
+		    {
+		    	window.scrollTo(0,jobsCache.memorizedScrollPosition);
+		    }
+		}
+	);
 
 	// get job from a specific industry
 
 	scope.getJobs = function(){
 
-		console.log(scope.selectedIndustry);
+		
 
 		var jobsInIndustry = restangular.one('industries',scope.selectedIndustry.id);
 
@@ -77,10 +153,11 @@ pinternshipControllers.controller('JobsController',['$routeParams', 'jobsCache',
 		});
 	};
 
-	// store job to cache before going to viewJob
+	// store job to cache, and remember job list scroll position before going to viewJob
 
-	scope.storeJobToCache = function (job){
-
+	scope.switchToJobView = function (job){
+		console.log(window.scrollY);
+		jobsCache.rememberScrollPosition(window.scrollY);
 		jobsCache.setCurrentJob(job);
 	};
 
@@ -98,7 +175,6 @@ pinternshipControllers.controller('ViewJobController',['jobsCache', '$routeParam
 		var baseJob = restangular.one('jobs',routeParams.id);
 
 		baseJob.get().then( function (job){
-			console.log(job.job_title);
 			scope.job = job;
 		});
 	}

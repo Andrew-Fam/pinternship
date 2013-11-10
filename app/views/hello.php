@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="pinternshipApp">
+<html lang="en" ng-app="pinternshipApp" >
 <head>
     <meta charset="UTF-8">
     <title>Pinternship</title>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
 
 </head>
-<body>
+<body >
 	<script type="text/ng-template" id="skillListTpl.html">
 		<div class="modal-background-click-handler" ng-click="cancel()">
 		</div>
@@ -61,7 +61,7 @@
     </script>
     <script type="text/ng-template" id="jobs.html">
 	    <nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
-			<div class="container">
+			<div class="container" >
 			  <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="row">
 					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
@@ -85,7 +85,7 @@
 				</div>
 			</div>
 		</nav>
-    	<section class="pint-search-result list-group" >
+    	<section class="pint-search-result list-group" memorize-scroll="{{memorizedScrollPosition}}">
 			<div class="container">
 				<article ng-repeat="job in jobs | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
@@ -103,7 +103,7 @@
 							</span>
 						</p>
 					</div>
-					<a class="pint-job-item-selector" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="storeJobToCache(job)"><i class="fa fa-chevron-right fa-fw"></i></a>
+					<a class="pint-job-item-selector" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="switchToJobView(job)"><i class="fa fa-chevron-right fa-fw"></i></a>
 				</article>
 		
 			</div>
@@ -111,56 +111,51 @@
    	</script>
 	<script type="text/ng-template" id="viewJob.html">
 		<section class="pint-item-view">
-				<div class="container">
-				
-					<article class="pint-job-item-view">
+			<div class="container">
+			
+				<article class="pint-job-item-view">
 
-						<a class="back-to-list fa fa-chevron-left" href="/#/jobs" pint-float-button>
-						
-						</a>
-						
-						<div class="pint-job-item-logo">
-							<img ng-src="{{job.job_logo}}" />
-						</div>
-						<h1 class="pint-job-item-title">
-							{{job.job_title}}
-						</h1>
-						<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
-						<p class="pint-job-item-description center-block">
-							<div>{{job.job_description}}</div>
-						</p>
-						<h2>
-							This position requires the following skills 
-						</h2>
+					<a class="back-to-list fa fa-chevron-left" href="/#/jobs" pint-float-button>
 					
-						<p class="pint-job-item-tags">
-							<span ng-repeat="tag in job.tags">
-								<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
-							</span>
+					</a>
+					
+					<div class="pint-job-item-logo">
+						<img ng-src="{{job.job_logo}}" />
+					</div>
+					<h1 class="pint-job-item-title">
+						{{job.job_title}}
+					</h1>
+					<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
+					<p class="pint-job-item-description center-block">
+						<div>{{job.job_description}}</div>
+					</p>
+					<h2>
+						This position requires the following skills 
+					</h2>
+				
+					<p class="pint-job-item-tags">
+						<span ng-repeat="tag in job.tags">
+							<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
+						</span>
+					</p>
+					
+					<div class="pint-job-item-contact">
+						<h2>
+							Apply now
+						</h2>
+						<p>
+							Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
 						</p>
-						
-						<div class="pint-job-item-contact">
-							<h2>
-								Apply now
-							</h2>
-							<p>
-								Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
-							</p>
-						</div>
-						
-					</article>
-				</div>
-			</section>
+					</div>
+					
+				</article>
+			</div>
+		</section>
 	</script>
 	<section class="view-animate-container">
 		<div ng-view class="view-animate">
 
 		</div>
-		<!--
-		<div class="ng-class: {viewingJob : isViewingJob,'pint-ui-frame': true};"  ng-cloak >
-			
-			
-		</div>-->
 	</section>
    	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://code.jquery.com/jquery.js"></script> -->
