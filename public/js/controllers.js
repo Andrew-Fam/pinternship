@@ -36,6 +36,30 @@ pinternshipControllers.service('jobsCache',[ 'Restangular', function (restangula
 
 // controllers for each view
 
+pinternshipControllers.controller( 'HomeController',[
+	'$routeParams', 
+	'jobsCache',
+	'$scope',
+	'$http', 
+	'$timeout', 
+	'Restangular', 
+	function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
+				
+	}]
+);
+
+pinternshipControllers.controller( 'PostJobController',[
+	'$routeParams', 
+	'jobsCache',
+	'$scope',
+	'$http', 
+	'$timeout', 
+	'Restangular', 
+	function JobsController(routeParams, jobsCache, scope,http,timeout,restangular){
+				
+	}]
+);
+
 pinternshipControllers.controller( 'JobsController',[
 	'$routeParams', 
 	'jobsCache',
@@ -83,73 +107,7 @@ pinternshipControllers.controller( 'JobsController',[
 	});
 		
 
-	// watch document height to try and scroll to right position
-/*
-	scope.$watch (
-		function () { 
-			var D = document;
-		    return Math.max(
-		        D.body.scrollHeight, D.documentElement.scrollHeight,
-		        D.body.offsetHeight, D.documentElement.offsetHeight,
-		        D.body.clientHeight, D.documentElement.clientHeight
-		    );
-		},
-		function (newValue, oldValue) {
-			var viewportHeight;
-  
-			 // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
-			  
-			if (typeof window.innerWidth != 'undefined')
-			{
-			  
-			  viewportHeight = window.innerHeight;
-			}
-			  
-			// IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
-			 
-			else if (typeof document.documentElement != 'undefined'
-			 && typeof document.documentElement.clientWidth !=
-			 'undefined' && document.documentElement.clientWidth != 0)
-			{
-			   
-			   viewportHeight = document.documentElement.clientHeight;
-			}
-
-			// older versions of IE
-
-			else
-			{
-			   
-			   viewportHeight = document.getElementsByTagName('body')[0].clientHeight;
-			}
-
-
-			//check if new body height is greater than viewport height to perform auto scroll
-			var D = document;
-
-			bodyHeight = Math.max(
-		        D.body.scrollHeight, D.documentElement.scrollHeight,
-		        D.body.offsetHeight, D.documentElement.offsetHeight,
-		        D.body.clientHeight, D.documentElement.clientHeight
-		    );
-
-			
-
-		    timeout( function () {
-		    	if(bodyHeight>viewportHeight && !scope.scrolledToMemorizeSpot)
-			    {
-			    	window.scrollTo(0,jobsCache.memorizedScrollPosition);
-
-			    	// if scroll successfully, change flag.
-
-			    	if(window.scrollY == jobsCache.memorizedScrollPosition)
-			    	{
-			    		scope.scrolledToMemorizeSpot = true;
-			    	}
-			    }
-		    }, 500);
-		}
-	);*/
+	// scroll when ngrepeat finish
 
 	scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
 	    timeout( function () {
@@ -170,8 +128,6 @@ pinternshipControllers.controller( 'JobsController',[
 	// get job from a specific industry
 
 	scope.getJobs = function(){
-
-		
 
 		var jobsInIndustry = restangular.one('industries',scope.selectedIndustry.id);
 
@@ -195,6 +151,9 @@ pinternshipControllers.controller( 'JobsController',[
 		//get cross-browser scroll position
 
 		var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+		
+		//store to cache before switching to another view
+
 		jobsCache.rememberScrollPosition(scrollTop);
 
 		console.log('save Scroll Pos');

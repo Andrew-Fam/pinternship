@@ -10,7 +10,7 @@ class JobController extends \BaseController {
 	public function index()
 	{
 		//
-		$jobs = Job::all();
+		$jobs = Job::with('skills')->get();
 		return $jobs->toArray();
 	}
 

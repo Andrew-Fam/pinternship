@@ -14,7 +14,19 @@
 
 </head>
 <body >
-	<script type="text/ng-template" id="skillListTpl.html">
+	<script type="text/ng-template" id="home.html">
+		<div class="container">
+			<h1>PINTERNSHIP.COM</h1>
+			<a href="/#/jobs">Browse jobs</a>
+			<a href="/#/jobs/post">Post job</a>
+		</div>
+    </script>
+    <script type="text/ng-template" id="postJob.html">
+		<div class="container">
+			<h1>POST A JOB</h1>
+		</div>
+    </script>
+    <script type="text/ng-template" id="skills.html">
 		<div class="modal-background-click-handler" ng-click="cancel()">
 		</div>
 		<div class="modal-dialog">
@@ -65,8 +77,8 @@
 			  <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="row">
 					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-					    <a class="navbar-brand hidden-xs" href="#">Pinternship</a>
-					    <a class="navbar-brand visible-xs" href="#">P</a>
+					    <a class="navbar-brand hidden-xs" href="<?php echo route('home'); ?>">Pinternship</a>
+					    <a class="navbar-brand visible-xs" href="<?php echo route('home'); ?>">P</a>
 					</div>
 				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 				  		<form class="pint-search-form navbar-form navbar-left" role="search">
@@ -98,8 +110,8 @@
 							{{job.job_description | truncate:140}}
 						</p>
 						<p class="pint-job-item-tags">
-							<span ng-repeat="tag in job.tags">
-								<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
+							<span ng-repeat="skill in job.skills">
+								<a class="tag" > {{skill.skill_name}} </a> 
 							</span>
 						</p>
 					</div>
@@ -134,8 +146,8 @@
 					</h1>
 				
 					<p class="pint-job-item-tags">
-						<span ng-repeat="tag in job.tags">
-							<a class="tag"  ng-class="{'has':hasSkill(tag)}"> {{tag}} </a> 
+						<span ng-repeat="skill in job.skills">
+							<a class="tag" > {{skill.skill_name}} </a> 
 						</span>
 					</p>
 					

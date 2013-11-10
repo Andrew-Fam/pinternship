@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder {
 		$this->command->info('Industries table seeded');
 		$this->call('JobsTableSeeder');
 		$this->command->info('Jobs table seeded');
+		$this->call('SkillsTableSeeder');
+		$this->command->info('Skills table seeded');
 	}
 
 }

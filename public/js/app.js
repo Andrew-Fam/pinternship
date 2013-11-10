@@ -2,9 +2,17 @@ var app = angular.module('pinternshipApp',[ 'pinternship-controllers' , 'pintern
 
 app.config([ '$routeProvider','$locationProvider', function ( routeProvider , locationProvider ) {
 	
-	routeProvider.when('/jobs',{
+	routeProvider.when('/',{
+		templateUrl:'home.html',
+		controller: 'HomeController'
+	}).
+	when('/jobs',{
 		templateUrl: 'jobs.html',
 		controller: 'JobsController'
+	}).
+	when('/jobs/post',{
+		templateUrl: 'postJob.html',
+		controller: 'PostJobController'
 	}).
 	when('/jobs/:id/:slug', {
 		templateUrl: 'viewJob.html',

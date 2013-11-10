@@ -14,7 +14,8 @@ class CreateSkill extends Migration {
 		Schema::create('skills', function($table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
-			$table->string('skil_name',255);
+			$table->string('skill_name',255);
+			$table->timestamps();
 		});
 	}
 
