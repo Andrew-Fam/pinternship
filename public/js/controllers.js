@@ -133,7 +133,7 @@ pinternshipControllers.controller( 'JobsController',[
 		        D.body.clientHeight, D.documentElement.clientHeight
 		    );
 
-		    timeout.( function () {
+		    timeout( function () {
 		    	if(bodyHeight>viewportHeight && !scope.scrolledToMemorizeSpot)
 			    {
 			    	window.scrollTo(0,jobsCache.memorizedScrollPosition);
