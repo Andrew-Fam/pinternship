@@ -108,14 +108,26 @@ html {
 	width: 100%;
 }
 body {
-	padding-top: 50px;
 	width: 100%;
 	overflow-x: hidden;
-	position:relative;
+	position: relative;
+	padding-bottom: 25px;
+}
+.row {
+	padding: 0;
+	margin: 0;
+}
+.center {
+	text-align: center;
 }
 
-.center {
-	text-align:center;
+.form-control {
+	height: auto;
+	min-height: 34px;
+}
+
+.pint-form textarea {
+	display: block;
 }
 
 .pint-navbar {
@@ -179,11 +191,11 @@ body {
 	overflow-y: hidden;
 }
 
-.pint-search-result.list-group .container,
-.pint-item-detail-view .container,
-.pint-ui-view-top .container  {
+.container  {
 	max-width: 800px;
 	padding: 0;
+	padding-left: 25px;
+	padding-right: 25px;
 }
 
 .pint-ui-view-left {
@@ -252,7 +264,9 @@ body {
 .modal-dialog {
 	margin-top: 50px;
 }
-
+.pint-search-result {
+	padding-top: 50px;
+}
 
 .pint-search-result .list-group-item {
 	border-radius: 0;
@@ -309,11 +323,6 @@ body {
 	font-size: 20px;
 }
 
-.pint-item-detail-view h1 {
-	font-size: 16px;
-	font-weight: bold;
-}
-
 .pint-job-item-tags .tag {
 	font-weight: 400;
 	cursor: pointer;
@@ -321,10 +330,16 @@ body {
 
 .pint-job-item-view {
 	padding: 50px;
-	padding-top: 0px;
+	padding-top: 25px;
 	text-align: center;
 	position: relative;
 }
+
+.pint-job-item-view h1 {
+	font-size: 16px;
+	font-weight: bold;
+}
+
 .pint-job-item-view .pint-job-item-description {
 	width: 70%;
 	text-align: left;

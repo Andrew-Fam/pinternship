@@ -17,6 +17,8 @@ pinternshipControllers.service('cacheService',[ 'Restangular', function (restang
 
 	this.memorizedScrollPosition = undefined;
 
+	this.industries = undefined;
+
 	this.getJobs = function (){
 		return this.jobs;
 	};
@@ -32,8 +34,6 @@ pinternshipControllers.service('cacheService',[ 'Restangular', function (restang
 	this.rememberScrollPosition = function (scrollPos){
 		this.memorizedScrollPosition = scrollPos;
 	}
-
-
 
 }]);
 
@@ -59,7 +59,17 @@ pinternshipControllers.controller( 'PostJobController',[
 	'$timeout', 
 	'Restangular', 
 	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
-				
+		
+		scope.cacheService = cacheService;
+		// get a list of all industries
+
+		if(cacheService.industries == undefined){
+			var baseIndustries = restangular.all('industries');
+			
+			baseIndustries.getList().then( function (industries) {
+				cacheService.industries = industries;
+			});
+		}
 	}]
 );
 
@@ -82,11 +92,13 @@ pinternshipControllers.controller( 'JobsController',[
 
 	// get a list of all industries
 
-	var baseIndustries = restangular.all('industries');
-	
-	baseIndustries.getList().then( function (industries) {
-		scope.industries = industries;
-	});
+	if(cacheService.industries == undefined){
+		var baseIndustries = restangular.all('industries');
+		
+		baseIndustries.getList().then( function (industries) {
+			cacheService.industries = industries;
+		});
+	}
 
 
 	// get a list of all jobs 

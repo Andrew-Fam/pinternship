@@ -16,9 +16,14 @@
 <body >
 	<script type="text/ng-template" id="home.html">
 		<div class="container">
-			<h1>PINTERNSHIP.COM</h1>
-			<a href="/#/jobs">Browse jobs</a>
-			<a href="/#/jobs/post">Post job</a>
+			<div class="row center">
+				<h1>PINTERNSHIP.COM</h1>
+				<div>
+					Its been tiring maaan! This job hunting. We need a way to end this experience-lacking shit!
+				</div>
+				<a class="btn btn-primary" href="/#/jobs">Browse internships</a>
+				<a class="btn btn-primary" href="/#/jobs/post">Post internship</a>
+			</div>
 		</div>
     </script>
     <script type="text/ng-template" id="postJob.html">
@@ -45,31 +50,47 @@
 	    </div>
     </script>
     <script type="text/ng-template" id="postJob.html">
-		<div class="modal-background-click-handler" ng-click="$close($event)">
-		</div>
-		<div class="modal-dialog">
-			<div class="modal-content">
-		        <div class="modal-header">
-		            <h3>Post a job: </h3>
-		        </div>
-		        <div class="modal-body">
-		        	<div class="form-group">
-			        	<input type="text" class="form-control" ng-model="newJob.title" placeholder="title"/>
-			        	<textarea class="form-control" ng-model="newJob.description" placeholder="description"></textarea>
-			        	
-			        	<input type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+    	<section class="pint-form">
+    		<div class="container">
+		    	<div class="row">
+		    		<div class="col-sm-3">
+		    		</div>
+		    		<div class="col-xs-12 col-sm-6">
+		    			 <h3>Post a job: </h3>
 
-			        	<input type="text" class="form-control" ng-model="newJob.industry" typeahead="industry as industry.name for industry in industries | filter:{name: $viewValue} | limitTo:8" typeahead-editable="false" placeholder="Search">
-		
-			        	<tags-input ng-model="newJob.tags"></tags-input>
+				        <div class="form-group">	
+				        	<label for="new-job-industry">Industry</label>	
+				        	<input type="text" id="new-job-industry" class="form-control" ng-model="newJob.industry"  typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" placeholder="eg. Web Develop">
+				        </div>
+
+				    	<div class="form-group">
+				    		<label for="new-job-title">Title</label>
+				        	<input id="new-job-title" type="text" class="form-control" ng-model="newJob.title" placeholder="title"/>
+				        </div>
+
+				        <div class="form-group">
+				        	<label for="new-job-description">Describe the job</label>
+				        	<textarea rows="10" id="new-job-description" class="form-control" ng-model="newJob.description" placeholder="description"></textarea>
+				        </div>
+
+				        <div class="form-group">	
+				        	<label for="new-job-logo">Logo</label>	
+				        	<input id="new-job-logo" type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+				        </div>
+
+				        <div class="form-group">	
+				        	<label for="new-job-industry">Skills required</label>	
+				        	<tags-input id="new-job-skills" class="form-control" ng-model="newJob.tags" placeholder="eg. Photoshop"></tags-input>
+				    	</div>
+
+				    	<button class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
+
+				        <button class="btn btn-primary pull-left" ng-click="ok()">OK</button>
 		        	</div>
 		        </div>
-		        <div class="modal-footer">
-		            <button class="btn btn-primary" ng-click="ok()">OK</button>
-		            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-		        </div>
-		    </div>
-	    </div>
+		        
+	        </div>
+		</section>
     </script>
     <script type="text/ng-template" id="jobs.html">
 	    <nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
@@ -83,16 +104,11 @@
 				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 				  		<form class="pint-search-form navbar-form navbar-left" role="search">
 						    <div class="form-group">
-						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
+						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
 						    </div>
-						    <button type="submit" class="btn btn-default fa fa-search"></button>
-						    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
+						    <button type="submit" ng-click="getJobs()" class="btn btn-default fa fa-search"></button>
+						   
 					    </form>
-				  	</div>
-				  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-				  		<div class="navbar-form navbar-left">			    
-						    <button type="button" class="btn btn-default fa fa-thumb-tack" ng-click="postJob()"></button>
-					    </div>
 				  	</div>
 				</div>
 			</div>
@@ -122,7 +138,7 @@
 		</section>
    	</script>
 	<script type="text/ng-template" id="viewJob.html">
-		<section class="pint-item-detail-view" ng-cloak>
+		<section ng-cloak>
 			<div class="container">
 			
 				<article class="pint-job-item-view">
@@ -174,7 +190,7 @@
     
     <script src="<?php echo asset('js/holder.js')?>"></script>
    
-    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
+    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js"></script>
  	
  	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>
 	
