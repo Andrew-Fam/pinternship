@@ -120,7 +120,7 @@
 					</a>
 					
 					<div class="pint-job-item-logo">
-						<img ng-src="{{job.job_logo}}" />
+						<img ng-src="{{job.job_logo}}" class="img-responsive center-block"/>
 					</div>
 					<h1 class="pint-job-item-title">
 						{{job.job_title}}
