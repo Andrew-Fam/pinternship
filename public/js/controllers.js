@@ -133,12 +133,19 @@ pinternshipControllers.controller( 'JobsController',[
 		        D.body.clientHeight, D.documentElement.clientHeight
 		    );
 
-			alert('called');
+			
 
 		    timeout( function () {
 		    	if(bodyHeight>viewportHeight && !scope.scrolledToMemorizeSpot)
 			    {
 			    	window.scrollTo(0,jobsCache.memorizedScrollPosition);
+
+			    	// if scroll successfully, change flag.
+
+			    	if(window.scrollY == jobsCache.memorizedScrollPosition)
+			    	{
+			    		scope.scrolledToMemorizeSpot = true;
+			    	}
 			    }
 		    });
 		}
@@ -157,10 +164,14 @@ pinternshipControllers.controller( 'JobsController',[
 		});
 	};
 
-	// store job to cache, and remember job list scroll position before going to viewJob
+	// store job to cache, before going to viewJob
 
 	scope.switchToJobView = function (job){
 
+		jobsCache.setCurrentJob(job);
+	};
+
+	scope.$on('$routeChangeStart', function() {
 		// set this to false to make app remember scroll position
 
 		scope.scrolledToMemorizeSpot = false;
@@ -168,11 +179,10 @@ pinternshipControllers.controller( 'JobsController',[
 		//get cross-browser scroll position
 
 		var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-		alert(scrollTop);
 		jobsCache.rememberScrollPosition(scrollTop);
-		jobsCache.setCurrentJob(job);
-	};
 
+		console.log('save Scroll Pos');
+	});
 }]);
 
 pinternshipControllers.controller('ViewJobController',['jobsCache', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(jobsCache,routeParams,scope,http,timeout,restangular){
