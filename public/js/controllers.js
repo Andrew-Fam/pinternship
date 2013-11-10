@@ -133,6 +133,8 @@ pinternshipControllers.controller( 'JobsController',[
 		        D.body.clientHeight, D.documentElement.clientHeight
 		    );
 
+			alert('called');
+
 		    timeout( function () {
 		    	if(bodyHeight>viewportHeight && !scope.scrolledToMemorizeSpot)
 			    {
