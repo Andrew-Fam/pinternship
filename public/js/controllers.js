@@ -147,7 +147,7 @@ pinternshipControllers.controller( 'JobsController',[
 			    		scope.scrolledToMemorizeSpot = true;
 			    	}
 			    }
-		    });
+		    }, 100);
 		}
 	);
 
