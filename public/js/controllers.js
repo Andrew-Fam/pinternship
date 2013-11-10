@@ -84,7 +84,7 @@ pinternshipControllers.controller( 'JobsController',[
 		
 
 	// watch document height to try and scroll to right position
-
+/*
 	scope.$watch (
 		function () { 
 			var D = document;
@@ -149,7 +149,23 @@ pinternshipControllers.controller( 'JobsController',[
 			    }
 		    }, 500);
 		}
-	);
+	);*/
+
+	scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+	    timeout( function () {
+	    	if(!scope.scrolledToMemorizeSpot)
+		    {
+		    	window.scrollTo(0,jobsCache.memorizedScrollPosition);
+
+		    	// if scroll successfully, change flag.
+
+		    	if(window.scrollY == jobsCache.memorizedScrollPosition)
+		    	{
+		    		scope.scrolledToMemorizeSpot = true;
+		    	}
+		    }
+	    }, 500);
+	});
 
 	// get job from a specific industry
 

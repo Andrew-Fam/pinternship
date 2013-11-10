@@ -87,7 +87,7 @@
 		</nav>
     	<section class="pint-search-result list-group" memorize-scroll="{{memorizedScrollPosition}}">
 			<div class="container">
-				<article ng-repeat="job in jobs | orderBy:'date':true" class="pint-job-item list-group-item center-block" >
+				<article ng-repeat="job in jobs | orderBy:'date':true" on-finish-render class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
 						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
