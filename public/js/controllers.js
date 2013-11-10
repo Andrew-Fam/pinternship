@@ -157,7 +157,12 @@ pinternshipControllers.controller( 'JobsController',[
 
 	scope.switchToJobView = function (job){
 
+		// set this to false to make app remember scroll position
+
+		scope.scrolledToMemorizeSpot = false;
+
 		//get cross-browser scroll position
+
 		var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
 		jobsCache.rememberScrollPosition(scrollTop);
 		jobsCache.setCurrentJob(job);
