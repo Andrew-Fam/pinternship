@@ -111,7 +111,7 @@ body {
 	width: 100%;
 	overflow-x: hidden;
 	position: relative;
-	padding-bottom: 25px;
+	padding-bottom: 50px;
 }
 .row {
 	padding: 0;
@@ -121,13 +121,22 @@ body {
 	text-align: center;
 }
 
+.pint-action-bar {
+	position: fixed;
+	height: 50px;
+	bottom: 0px;
+	width: 100%;
+}
+
+.pint-action-bar button{
+	display: block;
+	padding: 15px;
+	border: none;
+}
+
 .form-control {
 	height: auto;
 	min-height: 34px;
-}
-
-.pint-form textarea {
-	display: block;
 }
 
 .pint-navbar {
@@ -150,6 +159,18 @@ body {
 	margin: 0;
 	z-index: 1001;
 }
+
+.pint-home-view {
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+.pint-home-view .cta {
+	display: block;
+	padding: 15px;
+}
+
+
 
 .pint-ui-frame-wrapper {
 	width: 100%;
@@ -194,8 +215,6 @@ body {
 .container  {
 	max-width: 800px;
 	padding: 0;
-	padding-left: 25px;
-	padding-right: 25px;
 }
 
 .pint-ui-view-left {

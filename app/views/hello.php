@@ -15,21 +15,23 @@
 </head>
 <body >
 	<script type="text/ng-template" id="home.html">
-		<div class="container">
-			<div class="row center">
-				<h1>PINTERNSHIP.COM</h1>
-				<div>
-					Its been tiring maaan! This job hunting. We need a way to end this experience-lacking shit!
+		<section class="pint-home-view">
+			<div class="container">
+				<div class="row center">
+					<div>
+						Bitches be like,
+					</div>
+					<h1>FIND A JOB!</h1>
+					<div>
+						Its been tiring maaan! Aint easy, this job searching thing. We need a way to end this experience-lacking shit!
+					</div>
 				</div>
-				<a class="btn btn-primary" href="/#/jobs">Browse internships</a>
-				<a class="btn btn-primary" href="/#/jobs/post">Post internship</a>
+				<div class="row center">
+					<a class="btn-primary cta col-sm-6" href="/#/jobs">Browse internships</a>
+					<a class="btn-primary cta col-sm-6" href="/#/jobs/post">Post internship</a>
+				</div>
 			</div>
-		</div>
-    </script>
-    <script type="text/ng-template" id="postJob.html">
-		<div class="container">
-			<h1>POST A JOB</h1>
-		</div>
+		</section>
     </script>
     <script type="text/ng-template" id="skills.html">
 		<div class="modal-background-click-handler" ng-click="cancel()">
@@ -50,7 +52,7 @@
 	    </div>
     </script>
     <script type="text/ng-template" id="postJob.html">
-    	<section class="pint-form">
+    	<section class="pint-post-job-view">
     		<div class="container">
 		    	<div class="row">
 		    		<div class="col-sm-3">
@@ -82,13 +84,15 @@
 				        	<label for="new-job-industry">Skills required</label>	
 				        	<tags-input id="new-job-skills" class="form-control" ng-model="newJob.tags" placeholder="eg. Photoshop"></tags-input>
 				    	</div>
-
-				    	<button class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
-
-				        <button class="btn btn-primary pull-left" ng-click="ok()">OK</button>
 		        	</div>
 		        </div>
-		        
+	        </div>
+		</section>
+		<section class="pint-action-bar">
+			<div class="row">
+	        	<button class="btn-default col-xs-6" ng-click="cancel()">Cancel</button>
+
+			    <button class="btn-primary col-xs-6" ng-click="ok()">OK</button>
 	        </div>
 		</section>
     </script>
