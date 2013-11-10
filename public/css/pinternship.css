@@ -313,9 +313,10 @@ body {
 }
 
 .pint-job-item-view {
-	padding: 15px;
+	padding: 50px;
+	padding-top: 0px;
 	text-align: center;
-	position:relative;
+	position: relative;
 }
 .pint-job-item-view .pint-job-item-description {
 	width: 70%;
