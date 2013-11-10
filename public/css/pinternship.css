@@ -180,7 +180,7 @@ body {
 }
 
 .pint-search-result.list-group .container,
-.pint-item-view .container,
+.pint-item-detail-view .container,
 .pint-ui-view-top .container  {
 	max-width: 800px;
 	padding: 0;
@@ -303,8 +303,15 @@ body {
 	vertical-align: middle;
 	padding: 15px;
 }
+
+
 .pint-job-item-content h1 {
 	font-size: 20px;
+}
+
+.pint-item-detail-view h1 {
+	font-size: 16px;
+	font-weight: bold;
 }
 
 .pint-job-item-tags .tag {
@@ -326,9 +333,10 @@ body {
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
-.img-responsive {
-	max-width: 100% !important;
-	height: auto!important;
+
+.pint-job-item-logo img{
+	max-width: 120px;
+	height: auto;
 }
 
 .pint-job-item-tags .tag.has:after {
@@ -343,6 +351,7 @@ body {
 .pint-job-item-contact a {
 	font-size: 18px;
 }
+
 .back-to-list {
 	position: absolute;
 	top: 50px;
@@ -355,6 +364,8 @@ body {
 	border: none;
 	transition: margin 0.15s;
 }
+
+
 @media screen and ( min-width: 768px ){
 	.pint-job-item-thumbnail img {
 		margin-top: 15px;

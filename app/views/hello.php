@@ -110,7 +110,7 @@
 		</section>
    	</script>
 	<script type="text/ng-template" id="viewJob.html">
-		<section class="pint-item-view">
+		<section class="pint-item-detail-view">
 			<div class="container">
 			
 				<article class="pint-job-item-view">
@@ -129,9 +129,9 @@
 					<p class="pint-job-item-description center-block">
 						<div>{{job.job_description}}</div>
 					</p>
-					<h2>
+					<h1>
 						This position requires the following skills 
-					</h2>
+					</h1>
 				
 					<p class="pint-job-item-tags">
 						<span ng-repeat="tag in job.tags">
@@ -140,9 +140,9 @@
 					</p>
 					
 					<div class="pint-job-item-contact">
-						<h2>
+						<h1>
 							Apply now
-						</h2>
+						</h1>
 						<p>
 							Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
 						</p>
