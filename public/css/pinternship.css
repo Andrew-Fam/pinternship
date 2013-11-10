@@ -27,6 +27,7 @@
 .view-animate.ng-leave.ng-leave-active {
 	left: -100%;
 }
+
 .animated {
 	-webkit-animation-fill-mode: both;
 	-moz-animation-fill-mode: both;

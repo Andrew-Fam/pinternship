@@ -110,31 +110,6 @@
 		</section>
    	</script>
 	<script type="text/ng-template" id="viewJob.html">
-		<nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
-			<div class="container" >
-			  <!-- Brand and toggle get grouped for better mobile display -->
-				<div class="row">
-					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-					    <a class="navbar-brand hidden-xs" href="#">Pinternship</a>
-					    <a class="navbar-brand visible-xs" href="#">P</a>
-					</div>
-				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-				  		<form class="pint-search-form navbar-form navbar-left" role="search">
-						    <div class="form-group">
-						        <input type="text" class="form-control" ng-model="selectedIndustry" typeahead=" industry as industry.industry_name for industry in industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
-						    </div>
-						    <button type="submit" class="btn btn-default fa fa-search"></button>
-						    <button type="button" class="btn btn-default fa fa-cog" ng-click="viewSkillList()"></button>
-					    </form>
-				  	</div>
-				  	<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-				  		<div class="navbar-form navbar-left">			    
-						    <button type="button" class="btn btn-default fa fa-thumb-tack" ng-click="postJob()"></button>
-					    </div>
-				  	</div>
-				</div>
-			</div>
-		</nav>
 		<section class="pint-item-view">
 			<div class="container">
 			
