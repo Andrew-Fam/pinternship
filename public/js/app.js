@@ -5,6 +5,9 @@ app.config([ '$routeProvider','$locationProvider', function ( routeProvider , lo
 	routeProvider.when('/',{
 		templateUrl:'home.html',
 		controller: 'HomeController'
+	}).when('/industries',{
+		templateUrl: 'jobs.html',
+		controller: 'JobsController'
 	}).
 	when('/jobs',{
 		templateUrl: 'jobs.html',

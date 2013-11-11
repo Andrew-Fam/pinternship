@@ -16,7 +16,13 @@ Route::get('/', array('as' => 'home', function()
 	return View::make('hello');
 }));
 
+Route::group(array('prefix' => 'industries'), function(){
 
+	Route::get('/', function(){
+		return View::make('hello');
+	});
+
+});
 
 Route::group(array('prefix' => 'jobs'), function(){
 

@@ -1,6 +1,6 @@
 <?php
 
-class JobController extends \BaseController {
+class SkillController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,8 +10,8 @@ class JobController extends \BaseController {
 	public function index()
 	{
 		//
-		$jobs = Job::with('skills')->get();
-		return $jobs->toArray();
+		$skills = Skill::all();
+		return $skills->toArray();
 	}
 
 	/**
@@ -42,8 +42,7 @@ class JobController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$job = Job::with('skills')->find($id);
-		return $job->toJson();
+		//
 	}
 
 	/**

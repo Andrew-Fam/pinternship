@@ -71,6 +71,26 @@
 				        </div>
 
 				        <div class="form-group">
+				        	<div>tags display value array</div>	
+				        	<div>{{newJob.tags}}</div>
+				        	<div>actual selected value array</div>
+				        	<div>{{newJob.skills}}</div>
+				        	<label for="new-job-industry">Skills required</label>	
+				        	<tags-input id="new-job-skills" 
+				        		tags-input-source="getTagsSource()" 
+				        		tags-input-type-ahead="skill as skill.skill_name for skill in source | filter: { skill_name : $viewValue } | limitTo:6" 
+				        		class="form-control" 
+				        		ng-display-model="newJob.tags" 
+				        		ng-data-model="newJob.skills"
+				        		placeholder="eg. Photoshop"
+				        		max-length="140"
+				        		min-length="1"
+				        		replace-spaces-with-dashes="false"
+				        		tags-input-display-field="skill_name"
+				        		></tags-input>
+				    	</div>
+
+				        <div class="form-group">
 				        	<label for="new-job-description">Describe the job</label>
 				        	<textarea rows="10" id="new-job-description" class="form-control" ng-model="newJob.description" placeholder="description"></textarea>
 				        </div>
@@ -79,11 +99,6 @@
 				        	<label for="new-job-logo">Logo</label>	
 				        	<input id="new-job-logo" type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
 				        </div>
-
-				        <div class="form-group">	
-				        	<label for="new-job-industry">Skills required</label>	
-				        	<tags-input id="new-job-skills" class="form-control" ng-model="newJob.tags" placeholder="eg. Photoshop"></tags-input>
-				    	</div>
 		        	</div>
 		        </div>
 	        </div>
@@ -92,14 +107,13 @@
 			<div class="row">
 	        	<button class="btn-default col-xs-6" ng-click="cancel()">Cancel</button>
 
-			    <button class="btn-primary col-xs-6" ng-click="ok()">OK</button>
+			    <button class="btn-primary col-xs-6" ng-click="ok()">Post it</button>
 	        </div>
 		</section>
     </script>
     <script type="text/ng-template" id="jobs.html">
-	    <nav class="pint-navbar navbar navbar-fixed-top navbar-default" role="navigation">
+	    <nav class="pint-nav-bar" role="navigation">
 			<div class="container" >
-			  <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="row">
 					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
 					    <a class="navbar-brand hidden-xs" href="<?php echo route('home'); ?>">Pinternship</a>
@@ -111,7 +125,6 @@
 						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
 						    </div>
 						    <button type="submit" ng-click="getJobs()" class="btn btn-default fa fa-search"></button>
-						   
 					    </form>
 				  	</div>
 				</div>
@@ -159,7 +172,7 @@
 					</h1>
 					<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
 					<p class="pint-job-item-description center-block">
-						<div>{{job.job_description}}</div>
+						{{job.job_description}}
 					</p>
 					<h1>
 						This position requires the following skills 
@@ -194,7 +207,7 @@
     
     <script src="<?php echo asset('js/holder.js')?>"></script>
    
-    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
  	
  	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>
 	

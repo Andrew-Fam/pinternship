@@ -19,6 +19,8 @@ pinternshipControllers.service('cacheService',[ 'Restangular', function (restang
 
 	this.industries = undefined;
 
+	this.skills = undefined;
+
 	this.getJobs = function (){
 		return this.jobs;
 	};
@@ -58,16 +60,32 @@ pinternshipControllers.controller( 'PostJobController',[
 	'$http', 
 	'$timeout', 
 	'Restangular', 
-	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
+	function PostJobController(routeParams, cacheService, scope,http,timeout,restangular){
 		
 		scope.cacheService = cacheService;
 		// get a list of all industries
+		scope.getTagsSource = function () { 
+			//console.log('getTagsSource in the parent controller gets called');
+			return scope.cacheService.skills;
+		};
 
+		scope.foo = 'Hello!';
+		
 		if(cacheService.industries == undefined){
 			var baseIndustries = restangular.all('industries');
 			
 			baseIndustries.getList().then( function (industries) {
 				cacheService.industries = industries;
+				
+			});
+		}
+
+		if(cacheService.skills == undefined){
+			var baseSkills = restangular.all('skills');
+			
+			baseSkills.getList().then( function (skills) {
+				cacheService.skills = skills;
+				
 			});
 		}
 	}]
