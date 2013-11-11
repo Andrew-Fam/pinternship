@@ -88,6 +88,10 @@ pinternshipControllers.controller( 'PostJobController',[
 				
 			});
 		}
+
+		scope.cancel = function () {
+			window.history.back();
+		}
 	}]
 );
 

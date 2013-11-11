@@ -71,10 +71,6 @@
 				        </div>
 
 				        <div class="form-group">
-				        	<div>tags display value array</div>	
-				        	<div>{{newJob.tags}}</div>
-				        	<div>actual selected value array</div>
-				        	<div>{{newJob.skills}}</div>
 				        	<label for="new-job-industry">Skills required</label>	
 				        	<tags-input id="new-job-skills" 
 				        		tags-input-source="getTagsSource()" 
