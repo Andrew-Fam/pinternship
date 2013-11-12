@@ -41,8 +41,21 @@ class JobController extends \BaseController {
 		$job->job_email = $inputs['email'];
 		$job->job_phone = $inputs['phone'];
 		
-		if( !isset($job->job_title) && !isset($job->job_description) && !isset($job->job_email) && !isset($inputs['skills']) && !isset($inputs['industries'])){
-			$response = Response::make("some required fields are missing",'400') ;
+		$validator = Validator::make(
+			array(
+				'title' => $job->job_title,
+				'description' => $job->job_description,
+				'email' => $job->job_email
+			),
+			array(
+				'title' => 'required',
+				'description' => 'required',
+				'email' => 'required|email'
+			)
+		);
+
+		if( $validator->fails()){
+			$response = Response::make("some required fields are missing or invalid",'400') ;
 		}
 		else if(count($inputs['skills'])<=0 || count($inputs['industries'])<=0){
 			$response = Response::make("skills tags and industries tags are required",'400') ;
