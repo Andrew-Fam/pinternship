@@ -31,7 +31,33 @@ class JobController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$inputs = Input::all();
+
+
+		$job = new Job;
+		$job->job_title = $inputs['title'];
+		$job->job_description  = $inputs['description'];
+		$job->job_logo = $inputs['logo'];
+
+		
+		
+		if($job->save()){
+			
+			foreach( $inputs['skills'] as $skill_id ) {
+				$job->skills()->attach($skill_id);
+			}
+
+			foreach( $inputs['industries'] as $industry_id ) {
+				$job->industries()->attach($industry_id);
+			}
+			
+			$response = Response::make($job->toArray(),'200') ;
+		}else
+		{
+			$response = Response::make('Could not save','500') ;
+		}
+
+		return $response;
 	}
 
 	/**

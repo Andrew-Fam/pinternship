@@ -85,8 +85,8 @@ class IndustryController extends BaseController {
 
 	public function jobs($id)
 	{
-		$industry = Industry::find($id);
-		return $industry->jobs->toArray();
+		$industry = Industry::with('Jobs.Skills')->find($id);
+		return $industry->jobs()->with('Skills')->get()->toArray();
 	}
 
 }

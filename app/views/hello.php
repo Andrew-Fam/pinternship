@@ -52,58 +52,81 @@
 	    </div>
     </script>
     <script type="text/ng-template" id="postJob.html">
+    	<nav class="pint-nav-bar">
+    	</nav>
     	<section class="pint-post-job-view">
     		<div class="container">
+    			<div class="row">
+    				<div class="col-sm-12">
+    					 <h3>Post a job: </h3>
+
+    				</div>
+    			</div>
 		    	<div class="row">
-		    		<div class="col-sm-3">
-		    		</div>
-		    		<div class="col-xs-12 col-sm-6">
-		    			 <h3>Post a job: </h3>
+		    		<form name="postJobForm" novalidate ng-submit="submitJob()">
+			    		<div class="col-sm-6">
+			    			<div class="form-group">
+					    		<label for="new-job-title">Title <span class="form-error" ng-show="postJobForm.title.$error.required"> - this field is required</span></label> 
+					        	<input id="new-job-title" type="text" name="title" class="form-control" required ng-model="newJob.title" placeholder="title"/>
+					        </div>
 
-				        <div class="form-group">	
-				        	<label for="new-job-industry">Industry</label>	
-				        	<input type="text" id="new-job-industry" class="form-control" ng-model="newJob.industry"  typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" placeholder="eg. Web Develop">
-				        </div>
+					        <div class="form-group">	
+					        	<label for="new-job-industry">Industry <span class="form-error" ng-show="industryIsInvalid()"> - type and select from suggestion</span></label>	
+					        	<tags-input id="new-job-skills" 
+					        		tags-input-source="getIndustryTagsSource()" 
+					        		tags-input-type-ahead="industry as industry.industry_name for industry in source | filter: { industry_name : $viewValue } | limitTo:6" 
+					        		class="form-control" 
+					        		ng-display-model="newJob.industryTags" 
+					        		ng-data-model="newJob.industries"
+					        		placeholder="eg. Graphic/Web design"
+					        		max-length="140"
+					        		min-length="1"
+					        		replace-spaces-with-dashes="false"
+					        		tags-input-display-field="industry_name"
+					        		></tags-input>
+					        </div>
 
-				    	<div class="form-group">
-				    		<label for="new-job-title">Title</label>
-				        	<input id="new-job-title" type="text" class="form-control" ng-model="newJob.title" placeholder="title"/>
-				        </div>
+					    	
 
-				        <div class="form-group">
-				        	<label for="new-job-industry">Skills required</label>	
-				        	<tags-input id="new-job-skills" 
-				        		tags-input-source="getTagsSource()" 
-				        		tags-input-type-ahead="skill as skill.skill_name for skill in source | filter: { skill_name : $viewValue } | limitTo:6" 
-				        		class="form-control" 
-				        		ng-display-model="newJob.tags" 
-				        		ng-data-model="newJob.skills"
-				        		placeholder="eg. Photoshop"
-				        		max-length="140"
-				        		min-length="1"
-				        		replace-spaces-with-dashes="false"
-				        		tags-input-display-field="skill_name"
-				        		></tags-input>
-				    	</div>
+					        <div class="form-group">
+					        	<label for="new-job-industry" name="skills" >Skills required <span class="form-error" ng-show="skillsInvalid()"> - type and select from suggestion</span></label>	
+					        	<tags-input id="new-job-skills" 
+					        		tags-input-source="getSkillTagsSource()" 
+					        		tags-input-type-ahead="skill as skill.skill_name for skill in source | filter: { skill_name : $viewValue } | limitTo:6" 
+					        		class="form-control" 
+					        		ng-display-model="newJob.skillTags" 
+					        		ng-data-model="newJob.skills"
+					        		placeholder="eg. Photoshop"
+					        		max-length="140"
+					        		min-length="1"
+					        		replace-spaces-with-dashes="false"
+					        		tags-input-display-field="skill_name"
+					        		></tags-input>
+					    	</div>
+					    
+					        
+					       
+			        	</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<label for="new-job-description"  required>Describe the job <span class="form-error" ng-show="postJobForm.description.$error.required"> - type and select from suggestion</span> </label>
+						    	<textarea rows="10" id="new-job-description" name="description" class="form-control" ng-model="newJob.description" placeholder="description" required></textarea>
+						    </div>
 
-				        <div class="form-group">
-				        	<label for="new-job-description">Describe the job</label>
-				        	<textarea rows="10" id="new-job-description" class="form-control" ng-model="newJob.description" placeholder="description"></textarea>
-				        </div>
-
-				        <div class="form-group">	
-				        	<label for="new-job-logo">Logo</label>	
-				        	<input id="new-job-logo" type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
-				        </div>
-		        	</div>
+						    <div class="form-group">	
+						    	<label for="new-job-logo">Logo</label>	
+						    	<input id="new-job-logo" name="logo" type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+						    </div>
+						</div>
+					</form>
 		        </div>
 	        </div>
 		</section>
 		<section class="pint-action-bar">
 			<div class="row">
-	        	<button class="btn-default col-xs-6" ng-click="cancel()">Cancel</button>
-
-			    <button class="btn-primary col-xs-6" ng-click="ok()">Post it</button>
+	        	<a class="btn-default col-xs-4" href="<?php echo route('home'); ?>">Cancel</a>
+	        	<a class="btn-primary col-xs-4" href="/#/jobs/post/preview">Preview</a>
+			    <a class="btn-success col-xs-4" ng-click="postJob()">Post it</a>
 	        </div>
 		</section>
     </script>

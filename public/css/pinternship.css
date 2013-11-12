@@ -129,15 +129,24 @@ body {
 	width: 100%;
 }
 
-.pint-action-bar button{
+.pint-action-bar a,.pint-action-bar button {
 	display: block;
 	padding: 15px;
 	border: none;
+	text-align: center;
+	cursor: pointer;
+}
+.pint-action-bar .btn-default {
+	background-color: rgb(234,234,234);
 }
 
 .form-control {
 	height: auto;
 	min-height: 34px;
+}
+
+.form-error {
+
 }
 
 .pint-nav-bar {

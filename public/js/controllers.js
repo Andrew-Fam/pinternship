@@ -48,7 +48,7 @@ pinternshipControllers.controller( 'HomeController',[
 	'$http', 
 	'$timeout', 
 	'Restangular', 
-	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
+	function HomeController(routeParams, cacheService, scope,http,timeout,restangular){
 				
 	}]
 );
@@ -62,11 +62,20 @@ pinternshipControllers.controller( 'PostJobController',[
 	'Restangular', 
 	function PostJobController(routeParams, cacheService, scope,http,timeout,restangular){
 		
+		scope.newJob = scope.newJob || {};
+
 		scope.cacheService = cacheService;
 		// get a list of all industries
-		scope.getTagsSource = function () { 
-			//console.log('getTagsSource in the parent controller gets called');
+		scope.getSkillTagsSource = function () { 
+			console.log('getIndustryTagsSource in the parent controller gets called');
 			return scope.cacheService.skills;
+			
+		};
+
+		// get a list of all industries
+		scope.getIndustryTagsSource = function () { 
+			console.log('getTagsSource in the parent controller gets called');
+			return scope.cacheService.industries;
 		};
 
 		scope.foo = 'Hello!';
@@ -91,6 +100,62 @@ pinternshipControllers.controller( 'PostJobController',[
 
 		scope.cancel = function () {
 			window.history.back();
+		}
+
+		scope.postJob = function () {
+		 	
+		 	var baseJobs = restangular.all('jobs');
+
+		 	var newJob = {};
+
+		 	var valid = true;
+
+		 	if(!scope.formInvalid()){
+			 	newJob.title = scope.newJob.title;
+			 	newJob.skills = new Array();
+			 	for(var i = 0; i < scope.newJob.skills.length;i++){
+			 		newJob.skills.push(scope.newJob.skills[i].id);
+			 	}
+			 	
+			 	newJob.industries = new Array();
+			 	for(var i = 0; i < scope.newJob.industries.length;i++){
+			 		newJob.industries.push(scope.newJob.industries[i].id);
+			 	}
+			 	newJob.logo = scope.newJob.logo || '/img/default_logo.png';
+			 	newJob.description = scope.newJob.description;
+			}
+
+			baseJobs.post(newJob).then(function(response){
+				console.log(response);
+			},function(response){
+
+			});
+
+			console.log(newJob);
+		}
+
+		scope.formInvalid = function () {
+			return scope.postJobForm.description.$error.required && (scope.newJob.skills.length <= 0) && scope.postJobForm.title.$error.required && (scope.newJob.industries.length <= 0)
+		}
+
+		scope.industryIsInvalid = function () {
+			var invalid = false;
+
+			if( scope.newJob.industries.length <= 0 ){
+				invalid = true;
+			}
+
+			return invalid;
+		}
+
+		scope.skillsInvalid = function () {
+			var invalid = false;
+
+			if( scope.newJob.skills.length <= 0 ){
+				invalid = true;
+			}
+
+			return invalid;
 		}
 	}]
 );
