@@ -142,7 +142,6 @@
 	    <nav class="pint-nav-bar" role="navigation">
 			<div class="container" >
 				<div class="row">
-					{{cacheService.selectedIndustry}}
 					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
 					    <a class="navbar-brand hidden-xs" href="<?php echo route('home'); ?>">Pinternship</a>
 					    <a class="navbar-brand visible-xs" href="<?php echo route('home'); ?>">P</a>
