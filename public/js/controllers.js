@@ -123,6 +123,8 @@ pinternshipControllers.controller( 'PostJobController',[
 			 	}
 			 	newJob.logo = scope.newJob.logo || '/img/default_logo.png';
 			 	newJob.description = scope.newJob.description;
+			 	newJob.phone = scope.newJob.phone;
+			 	newJob.email = scope.newJob.email;
 			}
 
 			baseJobs.post(newJob).then(function(response){
@@ -135,7 +137,7 @@ pinternshipControllers.controller( 'PostJobController',[
 		}
 
 		scope.formInvalid = function () {
-			return scope.postJobForm.description.$error.required && (scope.newJob.skills.length <= 0) && scope.postJobForm.title.$error.required && (scope.newJob.industries.length <= 0)
+			return scope.postJobForm.email.$error.required && scope.postJobForm.email.$error.required && scope.postJobForm.description.$error.required && (scope.newJob.skills.length <= 0) && scope.postJobForm.title.$error.required && (scope.newJob.industries.length <= 0)
 		}
 
 		scope.industryIsInvalid = function () {

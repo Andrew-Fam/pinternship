@@ -339,11 +339,14 @@ body {
 	vertical-align: top;
 	padding: 15px;
 	width: 40px;
+	min-width: 40px;
 }
 .pint-job-item-thumbnail img {
 	margin-top: 15px;
 	width: 40px!important;
+	min-width: 40px!important;
 	height: auto!important;
+	display: block;
 }
 .pint-job-item-content {
 	font-size: 12px;
@@ -428,6 +431,7 @@ body {
 	.pint-job-item-thumbnail img {
 		margin-top: 15px;
 		width: 100px!important;
+		min-width: 100px!important;
 		height: auto!important;
 	}
 	.back-to-list {

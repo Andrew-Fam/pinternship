@@ -104,12 +104,19 @@
 					        		></tags-input>
 					    	</div>
 					    
-					        
+					         <div class="form-group">	
+						    	<label for="new-job-phone">Phone - optional </label>	
+						    	<input id="new-job-phone" name="phone" type="text" class="form-control" ng-model="newJob.phone"/>
+						    </div>
+						    <div class="form-group">	
+						    	<label for="new-job-email">Email <span class="form-error" ng-show="postJobForm.email.$error.required"> - email is required</span> <span class="form-error" ng-show="postJobForm.email.$error.email"> - please enter valid email address</span> </label>	
+						    	<input id="new-job-email" name="email" type="email" class="form-control" ng-model="newJob.email" required placeholder="eg. email@sample.com"/>
+						    </div>
 					       
 			        	</div>
 						<div class="col-sm-6">
 							<div class="form-group">
-						    	<label for="new-job-description"  required>Describe the job <span class="form-error" ng-show="postJobForm.description.$error.required"> - type and select from suggestion</span> </label>
+						    	<label for="new-job-description">Describe the job <span class="form-error" ng-show="postJobForm.description.$error.required"> - type and select from suggestion</span> </label>
 						    	<textarea rows="10" id="new-job-description" name="description" class="form-control" ng-model="newJob.description" placeholder="description" required></textarea>
 						    </div>
 
@@ -117,6 +124,7 @@
 						    	<label for="new-job-logo">Logo</label>	
 						    	<input id="new-job-logo" name="logo" type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
 						    </div>
+						   
 						</div>
 					</form>
 		        </div>

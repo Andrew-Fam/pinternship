@@ -38,7 +38,8 @@ class JobController extends \BaseController {
 		$job->job_title = $inputs['title'];
 		$job->job_description  = $inputs['description'];
 		$job->job_logo = $inputs['logo'];
-
+		$job->job_email = $inputs['email'];
+		$job->job_phone = $inputs['phone'];
 		
 		
 		if($job->save()){
@@ -50,7 +51,7 @@ class JobController extends \BaseController {
 			foreach( $inputs['industries'] as $industry_id ) {
 				$job->industries()->attach($industry_id);
 			}
-			
+
 			$response = Response::make($job->toArray(),'200') ;
 		}else
 		{
