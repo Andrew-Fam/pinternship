@@ -142,6 +142,7 @@
 	    <nav class="pint-nav-bar" role="navigation">
 			<div class="container" >
 				<div class="row">
+					{{cacheService.selectedIndustry}}
 					<div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
 					    <a class="navbar-brand hidden-xs" href="<?php echo route('home'); ?>">Pinternship</a>
 					    <a class="navbar-brand visible-xs" href="<?php echo route('home'); ?>">P</a>
@@ -159,7 +160,7 @@
 		</nav>
     	<section class="pint-search-result list-group" ng-cloak>
 			<div class="container">
-				<article ng-repeat="job in jobs | orderBy:'date':true" on-finish-render class="pint-job-item list-group-item center-block" >
+				<article ng-repeat="job in cacheService.jobs | orderBy:'date':true" on-finish-render class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
 						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>

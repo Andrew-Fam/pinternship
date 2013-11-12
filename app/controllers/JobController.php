@@ -41,8 +41,13 @@ class JobController extends \BaseController {
 		$job->job_email = $inputs['email'];
 		$job->job_phone = $inputs['phone'];
 		
-		
-		if($job->save()){
+		if( !isset($job->job_title) && !isset($job->job_description) && !isset($job->job_email) && !isset($inputs['skills']) && !isset($inputs['industries'])){
+			$response = Response::make("some required fields are missing",'400') ;
+		}
+		else if(count($inputs['skills'])<=0 || count($inputs['industries'])<=0){
+			$response = Response::make("skills tags and industries tags are required",'400') ;
+		}
+		else if($job->save()){
 			
 			foreach( $inputs['skills'] as $skill_id ) {
 				$job->skills()->attach($skill_id);
@@ -52,7 +57,7 @@ class JobController extends \BaseController {
 				$job->industries()->attach($industry_id);
 			}
 
-			$response = Response::make($job->toArray(),'200') ;
+			$response = Response::make($job->toArray(),'201') ;
 		}else
 		{
 			$response = Response::make('Could not save','500') ;

@@ -203,12 +203,18 @@ pinternshipControllers.controller( 'JobsController',[
 		});
 	}
 
-	// watch cacheService
-
-	scope.$watch ( function() { return cacheService.jobs }, function (newValue, oldValue){
-		
-		scope.jobs = cacheService.jobs;
-
+	// watch cacheService selected Industry to restore full job list when no industry is selected.
+	scope.$watch ( function() { return cacheService.selectedIndustry }, function (newValue, oldValue){
+	
+		console.log('watching')
+		if(scope.cacheService.selectedIndustry == undefined)
+		{
+			console.log('gotcha')
+			baseJobs.getList().then( function (jobs) {
+				cacheService.setJobs(jobs);
+			});
+			
+		}
 	});
 		
 
@@ -240,6 +246,7 @@ pinternshipControllers.controller( 'JobsController',[
 			cacheService.setJobs(jobs);
 		});
 	};
+
 
 	// store job to cache, before going to viewJob
 
