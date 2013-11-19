@@ -199,20 +199,23 @@ pinternshipControllers.controller( 'JobsController',[
 	'$http', 
 	'$timeout', 
 	'Restangular', 
-	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
+	'$q',
+	function JobsController(routeParams, cacheService, scope,http,timeout,restangular,$q){
+
+
+	// controller scope functions 
 
 	// get industry id from parameter if possible
 	// then set the corresponding industry as selectedIndustry if found
-	console.log('Start jobs controller');
-	
-
-
 
 	scope.readIndustryFromUrl = function () {
+		console.log('read industry from url');
 		if(routeParams.industry != undefined && routeParams.industry != "") {
+			console.log('detected industry from url');
 			for(var i = 0 ; i < cacheService.industries.length; i++ ){
 				if (cacheService.industries[i].id == routeParams.industry) {
 					cacheService.selectedIndustry = cacheService.industries[i];
+					console.log('found');
 					// load corresponding job list
 					scope.moreJobs();
 					break; // break loop when found
@@ -222,33 +225,6 @@ pinternshipControllers.controller( 'JobsController',[
 	}
 
 	
-
-
-
-
-	scope.selectedIndustry = undefined;
-
-	scope.cacheService = cacheService;
-
-	// if already apply memorized scroll position, set this to true to prevent auto scrolling again
-
-	scope.scrolledToMemorizeSpot = false;
-
-	// get a list of all industries
-
-	if(cacheService.industries == undefined){
-		var baseIndustries = restangular.all('industries');
-		
-		baseIndustries.getList().then( function (industries) {
-			cacheService.industries = industries;
-
-			
-
-			scope.readIndustryFromUrl();
-
-		});
-	}
-
 
 	// call this function to retrieve more jobs
 
@@ -267,6 +243,10 @@ pinternshipControllers.controller( 'JobsController',[
 			});
 		}else {
 
+			// prepare restangular object for jobs 
+
+			var baseJobs = restangular.all('jobs');
+
 			// get job from all industries
 			
 			baseJobs.getList({'skip':scope.cacheService.jobs.length,'take':scope.cacheService.jobsPerRetrieval})
@@ -283,19 +263,78 @@ pinternshipControllers.controller( 'JobsController',[
 
 	}
 	
+	// store job to cache, before going to viewJob
 
-	// get a list of all jobs 
+	scope.switchToJobView = function (job){
 
-	var baseJobs = restangular.all('jobs');
+		cacheService.setCurrentJob(job);
+	};
+
+
+	scope.getJobsInIndustry = function (industry) {
+		scope.cacheService.selectedIndustry = industry;
+		scope.refreshJobs();
+	}
+
+	scope.refreshJobs = function () {
+		scope.cacheService.jobs = [];
+		scope.moreJobs();
+	}
+
+
+	/*
+	* Event handlers
+	*
+	*/
+
+	// prepare resource for the controller soon as route change complete 
+
+	scope.$on('$routeChangeSuccess', function() {
+
+
+		scope.selectedIndustry = undefined;
+
+		scope.cacheService = cacheService;
+
+		// if already apply memorized scroll position, set this to true to prevent auto scrolling again
+
+		scope.scrolledToMemorizeSpot = false;
+
+
+		// query industries first if cacheService.industries is undefined
+		if(cacheService.industries == undefined){
+			var baseIndustries = restangular.all('industries');
+			
+			baseIndustries.getList().then( function (industries) {
+				cacheService.industries = industries;
+
+				
+
+				scope.readIndustryFromUrl();
+			});
+		}else // otherwise, proceed to read industry From URL directly
+		{
+			scope.readIndustryFromUrl();
+		}
+		
+
+	});
 
 	
+	
+	
 
-	// watch cacheService selected Industry to restore full job list when no industry is selected and scope.scrolledToMemorizeSpot == true,
-	// which only happens after the scroll position is restored when going back to this view from another route, or memorizedScrollPosition == undefined, which only happens when user visit the jobs view for the first time
+
+
+	// this function aims to refresh the jobs list when user erase the search box.
+	// it is fired whenever cacheService.selectedIndustry is changed. Including when the controller is first created.
+	// therefore, an if statement is needed to only refresh the jobs 
+	// from a user erasing the search box.
 	scope.$watch ( function() { return cacheService.selectedIndustry }, function (newValue, oldValue){
-	
-		if(scope.cacheService.selectedIndustry == undefined && (scope.scrolledToMemorizeSpot || cacheService.memorizedScrollPosition == undefined))
+		
+		if(scope.cacheService.industries!=undefined && scope.cacheService.selectedIndustry == undefined && (scope.scrolledToMemorizeSpot || cacheService.memorizedScrollPosition == undefined))
 		{	
+			
 			scope.refreshJobs();
 		}
 	});
@@ -322,12 +361,8 @@ pinternshipControllers.controller( 'JobsController',[
 	});
 
 
-	// store job to cache, before going to viewJob
 
-	scope.switchToJobView = function (job){
-
-		cacheService.setCurrentJob(job);
-	};
+	
 
 	scope.$on('$routeUpdate', function (){
 		scope.readIndustryFromUrl();
@@ -348,19 +383,8 @@ pinternshipControllers.controller( 'JobsController',[
 
 		//console.log('save Scroll Pos');
 	});
-	scope.$on('$routeChangeSuccess', function() {
-		scope.readIndustryFromUrl();
-	});
 
-	scope.getJobsInIndustry = function (industry) {
-		scope.cacheService.selectedIndustry = industry;
-		scope.refreshJobs();
-	}
 
-	scope.refreshJobs = function () {
-		scope.cacheService.jobs = [];
-		scope.moreJobs();
-	}
 	
 
 	
