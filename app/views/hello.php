@@ -23,7 +23,7 @@
 					</div>
 					<h1>FIND A JOB!</h1>
 					<div>
-						Its been tiring maaan! Aint easy, this job searching thing. We need a way to end this experience-lacking shit!
+						It is hard man! We need a way to end this experience-lacking dilemma!
 					</div>
 				</div>
 				<div class="row text-center">
