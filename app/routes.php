@@ -36,6 +36,10 @@ Route::group(array('prefix' => 'jobs'), function(){
 		return View::make('hello');
 	});
 
+	Route::get('/post/preview', function(){
+		return View::make('hello');
+	});
+
 	Route::get('{job}/{slug?}', array('as'=>'job.view', function(Job $job, $slug = null) {
 		
 		if($slug==null || Str::slug($job->job_title)!=$slug) {

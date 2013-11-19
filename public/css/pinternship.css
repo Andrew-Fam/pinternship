@@ -1,3 +1,12 @@
+.tag {
+	cursor: pointer;
+}
+.collapsed {
+	max-height: 0px!important;
+	min-height: 0px!important;
+	padding: 0!important;
+}
+
 .view-animate-container {
 	position: relative;
 	width: 100%;
@@ -118,13 +127,17 @@ body {
 	padding: 0;
 	margin: 0;
 }
-.center {
+.text-center {
 	text-align: center;
+}
+
+.pint-nav-bar a, .pint-action-bar a {
+	text-decoration: none;
 }
 
 .pint-action-bar {
 	position: fixed;
-	height: 50px;
+	min-height: 50px;
 	bottom: 0px;
 	width: 100%;
 }
@@ -146,7 +159,7 @@ body {
 }
 
 .form-error {
-
+	color: #fd2f25;
 }
 
 .pint-nav-bar {
@@ -413,16 +426,17 @@ body {
 
 }
 
+
+
 .back-to-list {
-	position: absolute;
-	top: 50px;
-	left: 0px;
 	background-color: rgb(248, 248, 248);
+	display: block;
 	font-size: 32px;
-	width: 64px;
-	height: 64px;
-	padding: 16px;
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle;
 	border: none;
+	text-decoration: none;
 	transition: margin 0.15s;
 }
 
@@ -433,13 +447,6 @@ body {
 		width: 100px!important;
 		min-width: 100px!important;
 		height: auto!important;
-	}
-	.back-to-list {
-
-		font-size: 48px;
-		width: 96px;
-		height: 96px;
-		padding: 24px;
 	}
 	.pint-job-item-contact {
 		padding-top: 25px;
@@ -469,3 +476,4 @@ body {
 
 
 /* tag input style */
+

@@ -61,20 +61,20 @@ pinternshipControllers.controller( 'PostJobController',[
 	'$timeout', 
 	'Restangular', 
 	function PostJobController(routeParams, cacheService, scope,http,timeout,restangular){
-		
-		scope.newJob = scope.newJob || {};
+
+		scope.newJob = scope.newJob || cacheService.previewingJob || {};
 
 		scope.cacheService = cacheService;
 		// get a list of all industries
 		scope.getSkillTagsSource = function () { 
-			console.log('getIndustryTagsSource in the parent controller gets called');
+			//console.log('getIndustryTagsSource in the parent controller gets called');
 			return scope.cacheService.skills;
 			
 		};
 
 		// get a list of all industries
 		scope.getIndustryTagsSource = function () { 
-			console.log('getTagsSource in the parent controller gets called');
+			//console.log('getTagsSource in the parent controller gets called');
 			return scope.cacheService.industries;
 		};
 
@@ -99,8 +99,14 @@ pinternshipControllers.controller( 'PostJobController',[
 		}
 
 		scope.cancel = function () {
-			window.history.back();
+			// clear previewing Job from cache
+			console.log('clear previewing job');
+			cacheService.previewingJob = {};
+			//window.history.back();
 		}
+
+
+
 
 		scope.postJob = function () {
 		 	
@@ -111,7 +117,7 @@ pinternshipControllers.controller( 'PostJobController',[
 		 	var valid = true;
 
 		 	if(!scope.formInvalid()){
-			 	newJob.title = scope.newJob.title;
+			 	newJob.job_title = scope.newJob.job_title;
 			 	newJob.skills = new Array();
 			 	for(var i = 0; i < scope.newJob.skills.length;i++){
 			 		newJob.skills.push(scope.newJob.skills[i].id);
@@ -121,10 +127,10 @@ pinternshipControllers.controller( 'PostJobController',[
 			 	for(var i = 0; i < scope.newJob.industries.length;i++){
 			 		newJob.industries.push(scope.newJob.industries[i].id);
 			 	}
-			 	newJob.logo = scope.newJob.logo || '/img/default_logo.png';
-			 	newJob.description = scope.newJob.description;
-			 	newJob.phone = scope.newJob.phone;
-			 	newJob.email = scope.newJob.email;
+			 	newJob.job_logo = scope.newJob.job_logo || '/img/default_logo.png';
+			 	newJob.job_description = scope.newJob.job_description;
+			 	newJob.job_phone = scope.newJob.job_phone;
+			 	newJob.job_email = scope.newJob.job_email;
 			}
 
 			baseJobs.post(newJob).then(function(response){
@@ -133,8 +139,22 @@ pinternshipControllers.controller( 'PostJobController',[
 
 			});
 
-			console.log(newJob);
+			//console.log(newJob);
 		}
+
+
+		// store the current new job item in the cache, so that it can be used in the preview view
+
+		scope.storePreviewJob = function () {
+			cacheService.previewingJob = scope.newJob;
+		}
+		// a worse approach: Update the preview job object as scope.newJob changes - uncertain, consuming
+
+		/*scope.$watch( scope.newJob , function () {
+			cacheService.previewingJob = scope.newJob;
+		});*/
+
+		// validation code
 
 		scope.formInvalid = function () {
 			return scope.postJobForm.email.$error.required && scope.postJobForm.email.$error.required && scope.postJobForm.description.$error.required && (scope.newJob.skills.length <= 0) && scope.postJobForm.title.$error.required && (scope.newJob.industries.length <= 0)
@@ -159,6 +179,7 @@ pinternshipControllers.controller( 'PostJobController',[
 
 			return invalid;
 		}
+
 	}]
 );
 
@@ -170,7 +191,7 @@ pinternshipControllers.controller( 'JobsController',[
 	'$timeout', 
 	'Restangular', 
 	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
-	
+
 	scope.selectedIndustry = undefined;
 
 	scope.cacheService = cacheService;
@@ -206,10 +227,10 @@ pinternshipControllers.controller( 'JobsController',[
 	// watch cacheService selected Industry to restore full job list when no industry is selected.
 	scope.$watch ( function() { return cacheService.selectedIndustry }, function (newValue, oldValue){
 	
-		console.log('watching')
+		//console.log('watching')
 		if(scope.cacheService.selectedIndustry == undefined)
 		{
-			console.log('gotcha')
+			//console.log('gotcha')
 			baseJobs.getList().then( function (jobs) {
 				cacheService.setJobs(jobs);
 			});
@@ -268,12 +289,20 @@ pinternshipControllers.controller( 'JobsController',[
 
 		cacheService.rememberScrollPosition(scrollTop);
 
-		console.log('save Scroll Pos');
+		//console.log('save Scroll Pos');
 	});
+
+	scope.getJobsInIndustry = function (industry) {
+		scope.cacheService.selectedIndustry = industry;
+		scope.getJobs();
+		alert('AAAAAAAAAAAAAAAAAAAAAA');
+	}
 }]);
 
-pinternshipControllers.controller('ViewJobController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(cacheService,routeParams,scope,http,timeout,restangular){
+pinternshipControllers.controller('ViewJobController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function ViewJobController(cacheService,routeParams,scope,http,timeout,restangular){
 	
+	scope.contactIsCollapsed = true;
+
 	//try to set scope.job to the currentJob object in the cacheService
 
 	scope.job = cacheService.currentJob;
@@ -289,4 +318,19 @@ pinternshipControllers.controller('ViewJobController',['cacheService', '$routePa
 	}
 
 
+}]);
+
+pinternshipControllers.controller('previewJobPostController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(cacheService,routeParams,scope,http,timeout,restangular){
+	
+	//try to set scope.job to the currentJob object in the cacheService
+
+	scope.job = cacheService.previewingJob;
+
+	console.log(scope.job);
+
+	scope.previewing = true;
+	
+	scope.cancel = function () {
+		window.history.back();
+	}
 }]);

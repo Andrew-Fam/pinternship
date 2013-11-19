@@ -10,7 +10,7 @@ class JobController extends \BaseController {
 	public function index()
 	{
 		//
-		$jobs = Job::with('skills')->get();
+		$jobs = Job::with('skills','industries')->get();
 		return $jobs->toArray();
 	}
 
@@ -35,11 +35,11 @@ class JobController extends \BaseController {
 
 
 		$job = new Job;
-		$job->job_title = $inputs['title'];
-		$job->job_description  = $inputs['description'];
-		$job->job_logo = $inputs['logo'];
-		$job->job_email = $inputs['email'];
-		$job->job_phone = $inputs['phone'];
+		$job->job_title = $inputs['job_title'];
+		$job->job_description  = $inputs['job_description'];
+		$job->job_logo = $inputs['job_logo'];
+		$job->job_email = $inputs['job_email'];
+		$job->job_phone = $inputs['job_phone'];
 		
 		$validator = Validator::make(
 			array(
@@ -87,7 +87,7 @@ class JobController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$job = Job::with('skills')->find($id);
+		$job = Job::with('skills','industries')->find($id);
 		return $job->toJson();
 	}
 

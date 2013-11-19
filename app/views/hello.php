@@ -17,7 +17,7 @@
 	<script type="text/ng-template" id="home.html">
 		<section class="pint-home-view">
 			<div class="container">
-				<div class="row center">
+				<div class="row text-center">
 					<div>
 						Bitches be like,
 					</div>
@@ -26,7 +26,7 @@
 						Its been tiring maaan! Aint easy, this job searching thing. We need a way to end this experience-lacking shit!
 					</div>
 				</div>
-				<div class="row center">
+				<div class="row text-center">
 					<a class="btn-primary cta col-sm-6" href="/#/jobs">Browse internships</a>
 					<a class="btn-primary cta col-sm-6" href="/#/jobs/post">Post internship</a>
 				</div>
@@ -67,7 +67,7 @@
 			    		<div class="col-sm-6">
 			    			<div class="form-group">
 					    		<label for="new-job-title">Title <span class="form-error" ng-show="postJobForm.title.$error.required"> - this field is required</span></label> 
-					        	<input id="new-job-title" type="text" name="title" class="form-control" required ng-model="newJob.title" placeholder="title"/>
+					        	<input id="new-job-title" type="text" name="title" class="form-control" required ng-model="newJob.job_title" placeholder="title"/>
 					        </div>
 
 					        <div class="form-group">	
@@ -106,23 +106,23 @@
 					    
 					         <div class="form-group">	
 						    	<label for="new-job-phone">Phone - optional </label>	
-						    	<input id="new-job-phone" name="phone" type="text" class="form-control" ng-model="newJob.phone"/>
+						    	<input id="new-job-phone" name="phone" type="text" class="form-control" ng-model="newJob.job_phone"/>
 						    </div>
 						    <div class="form-group">	
 						    	<label for="new-job-email">Email <span class="form-error" ng-show="postJobForm.email.$error.required"> - email is required</span> <span class="form-error" ng-show="postJobForm.email.$error.email"> - please enter valid email address</span> </label>	
-						    	<input id="new-job-email" name="email" type="email" class="form-control" ng-model="newJob.email" required placeholder="eg. email@sample.com"/>
+						    	<input id="new-job-email" name="email" type="email" class="form-control" ng-model="newJob.job_email" required placeholder="eg. email@sample.com"/>
 						    </div>
 					       
 			        	</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 						    	<label for="new-job-description">Describe the job <span class="form-error" ng-show="postJobForm.description.$error.required"> - type and select from suggestion</span> </label>
-						    	<textarea rows="10" id="new-job-description" name="description" class="form-control" ng-model="newJob.description" placeholder="description" required></textarea>
+						    	<textarea rows="10" id="new-job-description" name="description" class="form-control" ng-model="newJob.job_description" placeholder="description" required></textarea>
 						    </div>
 
 						    <div class="form-group">	
 						    	<label for="new-job-logo">Logo</label>	
-						    	<input id="new-job-logo" name="logo" type="text" class="form-control" ng-model="newJob.logo" placeholder="logo"/>
+						    	<input id="new-job-logo" name="logo" type="text" class="form-control" ng-model="newJob.job_logo" placeholder="logo"/>
 						    </div>
 						   
 						</div>
@@ -131,11 +131,13 @@
 	        </div>
 		</section>
 		<section class="pint-action-bar">
-			<div class="row">
-	        	<a class="btn-default col-xs-4" href="<?php echo route('home'); ?>">Cancel</a>
-	        	<a class="btn-primary col-xs-4" href="/#/jobs/post/preview">Preview</a>
-			    <a class="btn-success col-xs-4" ng-click="postJob()">Post it</a>
-	        </div>
+			<div class="container">
+				<div class="row">
+		        	<a class="btn-default col-xs-4" href="<?php echo route('home'); ?>" ng-click="cancel()">Cancel</a>
+		        	<a class="btn-primary col-xs-4" href="/#/jobs/post/preview" ng-click="storePreviewJob()">Preview</a>
+				    <a class="btn-success col-xs-4" ng-click="postJob()">Post it</a>
+		        </div>
+		    </div>
 		</section>
     </script>
     <script type="text/ng-template" id="jobs.html">
@@ -164,7 +166,7 @@
 						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
 					<div class="pint-job-item-content">
-						<h1 class="pint-job-item-title"> {{job.job_title}}</h1>
+						<h1 class="pint-job-item-title"> {{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-click="getJobsInIndustry(industry)">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
 						<p class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </p>
 						<p class="pint-job-item-description">
 							{{job.job_description | truncate:140}}
@@ -182,46 +184,64 @@
 		</section>
    	</script>
 	<script type="text/ng-template" id="viewJob.html">
+		<nav class="pint-nav-bar">
+			<div class="container">
+				<div class="row">
+					<a class="back-to-list fa fa-chevron-left col-xs-3 text-center" ng-hide="previewing" href="/#/jobs" pint-float-button>
+					</a>
+				</div>
+			</div>
+		</nav>
 		<section ng-cloak>
 			<div class="container">
-			
-				<article class="pint-job-item-view">
+				<div class="row">
+					<article class="pint-job-item-view col-sm-8 col-sm-offset-2">
 
-					<a class="back-to-list fa fa-chevron-left" href="/#/jobs" pint-float-button>
-					
-					</a>
-					
-					<div class="pint-job-item-logo">
-						<img ng-src="{{job.job_logo}}" class="img-responsive center-block"/>
-					</div>
-					<h1 class="pint-job-item-title">
-						{{job.job_title}}
-					</h1>
-					<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
-					<p class="pint-job-item-description center-block">
-						{{job.job_description}}
-					</p>
-					<h1>
-						This position requires the following skills 
-					</h1>
-				
-					<p class="pint-job-item-tags">
-						<span ng-repeat="skill in job.skills">
-							<a class="tag" > {{skill.skill_name}} </a> 
-						</span>
-					</p>
-					
-					<div class="pint-job-item-contact">
-						<h1>
-							Apply now
+						
+						
+						<div class="pint-job-item-logo">
+							<img ng-src="{{job.job_logo}}" class="img-responsive center-block"/>
+						</div>
+						<h1 class="pint-job-item-title">
+							{{job.job_title}}
 						</h1>
-						<p>
-							Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
+						<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
+						<p class="pint-job-item-description center-block">
+							{{job.job_description}}
 						</p>
-					</div>
+						<h1>
+							This position requires the following skills 
+						</h1>
 					
-				</article>
+						<p class="pint-job-item-tags">
+							<span ng-repeat="skill in job.skills">
+								<a class="tag" > {{skill.skill_name}} </a> 
+							</span>
+						</p>
+						
+						
+						
+					</article>
+				</div>
 			</div>
+		</section>
+		<section class="pint-action-bar" ng-show="previewing">
+			<div class="container">
+				<div class="row">
+		        	<a class="btn-primary col-xs-6" ng-click="cancel()">Back</a>
+				    <a class="btn-success col-xs-6" ng-click="postJob()">Post it</a>
+		        </div>
+		    </div>
+		</section>
+		<section class="pint-action-bar" ng-hide="previewing">
+			<div class="container">
+				<div class="row">
+		        	<button class="btn-primary col-xs-12" ng-click="contactIsCollapsed = !contactIsCollapsed">Contact</button>
+		        </div>
+		        <div class="pint-job-item-contact col-xs-12" ng-class="{ 'collapsed' : contactIsCollapsed}">
+						Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
+				</div>
+		    </div>
 		</section>
 	</script>
 	<section class="view-animate-container">
