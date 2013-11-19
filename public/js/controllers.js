@@ -295,7 +295,6 @@ pinternshipControllers.controller( 'JobsController',[
 	scope.getJobsInIndustry = function (industry) {
 		scope.cacheService.selectedIndustry = industry;
 		scope.getJobs();
-		alert('AAAAAAAAAAAAAAAAAAAAAA');
 	}
 }]);
 
