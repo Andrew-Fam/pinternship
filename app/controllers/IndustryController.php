@@ -102,7 +102,7 @@ class IndustryController extends BaseController {
 		}
 		
 		$industry = Industry::with('Jobs.Skills')->find($id);
-		return $industry->jobs()->with('skills','industries')->take($take)->skip($skip)->get()->toArray();
+		return $industry->jobs()->with('skills','industries')->orderBy('created_at', 'desc')->take($take)->skip($skip)->get()->toArray();
 	}
 
 }

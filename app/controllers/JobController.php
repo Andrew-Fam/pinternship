@@ -1,6 +1,6 @@
 <?php
 
-class JobController extends \BaseController {
+class JobController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -26,7 +26,7 @@ class JobController extends \BaseController {
 		}
 		
 		//
-		$jobs = Job::with('skills','industries')->take($take)->skip($skip)->get();
+		$jobs = Job::with('skills','industries')->orderBy('created_at', 'desc')->take($take)->skip($skip)->get();
 		return $jobs->toArray();
 	}
 
