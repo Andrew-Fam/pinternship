@@ -209,7 +209,9 @@ pinternshipControllers.controller( 'JobsController',[
 	// then set the corresponding industry as selectedIndustry if found
 
 	scope.readIndustryFromUrl = function () {
+
 		console.log('read industry from url');
+
 		if(routeParams.industry != undefined && routeParams.industry != "") {
 			console.log('detected industry from url');
 			for(var i = 0 ; i < cacheService.industries.length; i++ ){
@@ -217,11 +219,16 @@ pinternshipControllers.controller( 'JobsController',[
 					cacheService.selectedIndustry = cacheService.industries[i];
 					console.log('found');
 					// load corresponding job list
-					scope.moreJobs();
+					scope.refreshJobs();
 					break; // break loop when found
 				}
 			}
+		}else if(scope.cacheService.jobs == undefined || scope.cacheService.jobs.length <=0)
+		{
+			scope.moreJobs();
 		}
+		
+		
 	}
 
 	
@@ -270,11 +277,6 @@ pinternshipControllers.controller( 'JobsController',[
 		cacheService.setCurrentJob(job);
 	};
 
-
-	scope.getJobsInIndustry = function (industry) {
-		scope.cacheService.selectedIndustry = industry;
-		scope.refreshJobs();
-	}
 
 	scope.refreshJobs = function () {
 		scope.cacheService.jobs = [];

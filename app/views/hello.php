@@ -166,7 +166,7 @@
 						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
 					<div class="pint-job-item-content">
-						<h1 class="pint-job-item-title"> {{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
+						<h1 class="pint-job-item-title"> {{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag"  title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
 						<p class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </p>
 						<p class="pint-job-item-description">
 							{{job.job_description | truncate:140}}
@@ -205,7 +205,7 @@
 							<img ng-src="{{job.job_logo}}" class="img-responsive center-block"/>
 						</div>
 						<h1 class="pint-job-item-title">
-							{{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span>
+							{{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span>
 						</h1>
 						<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
 						<p class="pint-job-item-description center-block">
@@ -246,8 +246,8 @@
 		    </div>
 		</section>
 	</script>
-	<section class="view-animate-container">
-		<div ng-view class="view-animate" ng-cloak>
+	<section >
+		<div ng-view ng-cloak>
 
 		</div>
 	</section>
