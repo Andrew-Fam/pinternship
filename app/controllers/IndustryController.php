@@ -85,8 +85,24 @@ class IndustryController extends BaseController {
 
 	public function jobs($id)
 	{
+		$inputs = Input::all();
+
+
+		if(isset($inputs['skip']) && is_numeric($inputs['skip'])) {
+			$skip = $inputs['skip'];
+		} else
+		{
+			$skip = 0;
+		}
+		if(isset($inputs['take']) && is_numeric($inputs['take'])) {
+			$take = $inputs['take'];
+		} else
+		{
+			$take = 3;
+		}
+		
 		$industry = Industry::with('Jobs.Skills')->find($id);
-		return $industry->jobs()->with('skills','industries')->get()->toArray();
+		return $industry->jobs()->with('skills','industries')->take($take)->skip($skip)->get()->toArray();
 	}
 
 }

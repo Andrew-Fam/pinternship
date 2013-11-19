@@ -9,10 +9,12 @@ pinternshipControllers.config(['RestangularProvider', function(RestangularProvid
 }]);
 
 //jobs cache service
-pinternshipControllers.service('cacheService',[ 'Restangular', function (restangular){
+pinternshipControllers.service('cacheService', function (){
 	
 	this.jobs = [];
 	
+	this.jobsPerRetrieval = 3;
+
 	this.currentJob = undefined;
 
 	this.memorizedScrollPosition = undefined;
@@ -29,6 +31,13 @@ pinternshipControllers.service('cacheService',[ 'Restangular', function (restang
 		this.jobs = jobs;
 	}
 
+	this.appendJobs = function (jobs){
+		for(var i=0; i< jobs.length; i++) {
+			this.jobs.push(jobs[i]);
+		}
+		
+	}
+
 	this.setCurrentJob = function (job){
 		this.currentJob = job;
 	}
@@ -37,7 +46,7 @@ pinternshipControllers.service('cacheService',[ 'Restangular', function (restang
 		this.memorizedScrollPosition = scrollPos;
 	}
 
-}]);
+});
 
 // controllers for each view
 
@@ -192,6 +201,31 @@ pinternshipControllers.controller( 'JobsController',[
 	'Restangular', 
 	function JobsController(routeParams, cacheService, scope,http,timeout,restangular){
 
+	// get industry id from parameter if possible
+	// then set the corresponding industry as selectedIndustry if found
+	console.log('Start jobs controller');
+	
+
+
+
+	scope.readIndustryFromUrl = function () {
+		if(routeParams.industry != undefined && routeParams.industry != "") {
+			for(var i = 0 ; i < cacheService.industries.length; i++ ){
+				if (cacheService.industries[i].id == routeParams.industry) {
+					cacheService.selectedIndustry = cacheService.industries[i];
+					// load corresponding job list
+					scope.moreJobs();
+					break; // break loop when found
+				}
+			}
+		}
+	}
+
+	
+
+
+
+
 	scope.selectedIndustry = undefined;
 
 	scope.cacheService = cacheService;
@@ -207,34 +241,62 @@ pinternshipControllers.controller( 'JobsController',[
 		
 		baseIndustries.getList().then( function (industries) {
 			cacheService.industries = industries;
+
+			
+
+			scope.readIndustryFromUrl();
+
 		});
 	}
 
+
+	// call this function to retrieve more jobs
+
+	scope.moreJobs = function () {
+
+		scope.isLoadingJob = true;
+
+		if(scope.cacheService.selectedIndustry != undefined){
+			// get job in a specific industry
+			var jobsInIndustry = restangular.one('industries',scope.cacheService.selectedIndustry.id);
+
+			jobsInIndustry.getList('jobs',{'skip':scope.cacheService.jobs.length,'take':scope.cacheService.jobsPerRetrieval})
+			.then( function (jobs) {
+				cacheService.appendJobs(jobs);
+				scope.isLoadingJob = false;
+			});
+		}else {
+
+			// get job from all industries
+			
+			baseJobs.getList({'skip':scope.cacheService.jobs.length,'take':scope.cacheService.jobsPerRetrieval})
+			.then( function (jobs) {
+				cacheService.appendJobs(jobs);
+				scope.isLoadingJob = false;
+			});
+		}
+
+		// set flag to prevent scrolling when ng-repeat finishes
+
+		scope.justAddedMoreJob = true;
+
+
+	}
+	
 
 	// get a list of all jobs 
 
 	var baseJobs = restangular.all('jobs');
 
-	// only if cacheService is empty at first and there's no industry query
+	
 
-	if(cacheService.getJobs().length<=0 && 
-		( routeParams.industry == undefined || routeParams.industry == '' )) {
-		baseJobs.getList().then( function (jobs) {
-			cacheService.setJobs(jobs);
-		});
-	}
-
-	// watch cacheService selected Industry to restore full job list when no industry is selected.
+	// watch cacheService selected Industry to restore full job list when no industry is selected and scope.scrolledToMemorizeSpot == true,
+	// which only happens after the scroll position is restored when going back to this view from another route, or memorizedScrollPosition == undefined, which only happens when user visit the jobs view for the first time
 	scope.$watch ( function() { return cacheService.selectedIndustry }, function (newValue, oldValue){
 	
-		//console.log('watching')
-		if(scope.cacheService.selectedIndustry == undefined)
-		{
-			//console.log('gotcha')
-			baseJobs.getList().then( function (jobs) {
-				cacheService.setJobs(jobs);
-			});
-			
+		if(scope.cacheService.selectedIndustry == undefined && (scope.scrolledToMemorizeSpot || cacheService.memorizedScrollPosition == undefined))
+		{	
+			scope.refreshJobs();
 		}
 	});
 		
@@ -243,7 +305,7 @@ pinternshipControllers.controller( 'JobsController',[
 
 	scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
 	    timeout( function () {
-	    	if(!scope.scrolledToMemorizeSpot)
+	    	if(!scope.scrolledToMemorizeSpot && !scope.justAddedMoreJob)
 		    {
 		    	window.scrollTo(0,cacheService.memorizedScrollPosition);
 
@@ -254,19 +316,10 @@ pinternshipControllers.controller( 'JobsController',[
 		    		scope.scrolledToMemorizeSpot = true;
 		    	}
 		    }
+
+		    scope.justAddedMoreJob = false;
 	    }, 500);
 	});
-
-	// get job from a specific industry
-
-	scope.getJobs = function(){
-
-		var jobsInIndustry = restangular.one('industries',scope.cacheService.selectedIndustry.id);
-
-		jobsInIndustry.getList('jobs').then( function (jobs) {
-			cacheService.setJobs(jobs);
-		});
-	};
 
 
 	// store job to cache, before going to viewJob
@@ -275,6 +328,10 @@ pinternshipControllers.controller( 'JobsController',[
 
 		cacheService.setCurrentJob(job);
 	};
+
+	scope.$on('$routeUpdate', function (){
+		scope.readIndustryFromUrl();
+	});
 
 	scope.$on('$routeChangeStart', function() {
 		// set this to false to make app remember scroll position
@@ -291,11 +348,23 @@ pinternshipControllers.controller( 'JobsController',[
 
 		//console.log('save Scroll Pos');
 	});
+	scope.$on('$routeChangeSuccess', function() {
+		scope.readIndustryFromUrl();
+	});
 
 	scope.getJobsInIndustry = function (industry) {
 		scope.cacheService.selectedIndustry = industry;
-		scope.getJobs();
+		scope.refreshJobs();
 	}
+
+	scope.refreshJobs = function () {
+		scope.cacheService.jobs = [];
+		scope.moreJobs();
+	}
+	
+
+	
+
 }]);
 
 pinternshipControllers.controller('ViewJobController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function ViewJobController(cacheService,routeParams,scope,http,timeout,restangular){

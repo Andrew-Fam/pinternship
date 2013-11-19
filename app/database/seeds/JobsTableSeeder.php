@@ -8,7 +8,7 @@ class JobsTableSeeder extends Seeder {
 
 		$web_dev_id = Industry::where('industry_name','=','Web Develop')->first()->id;
 		$med_pro_id = Industry::where('industry_name','=','Medical Professional')->first()->id;
-
+		$graphic_id = Industry::where('industry_name','=','Graphic/Web design')->first()->id;
 		$newJob = Job::create(
 			array(
 				'job_title' => 'Web developer internship at Laravel',
@@ -74,6 +74,70 @@ Bower runs over Git, and is package-agnostic. A packaged component can be made u
 		);
 		$newJob->industries()->attach($med_pro_id);
 
+
+		$newJob = Job::create(
+			array(
+				'job_title' => 'Graphics design intern @ Glover Garage',
+				'job_description' => "Glover's garage Find more detailed information about this photograph: acms.sl.nsw.gov.au/item/itemdetailpaged.aspx?itemid=391713
+
+From the collection of the State Library of New South Wales www.sl.nsw.gov.au ",
+				'job_phone' => '02 9382 6111',
+				'job_email' => 'glover@garage.com.au',
+				'job_logo' => 'http://images.fromupnorth.com/471/5108c4f8b0902.jpg'
+			)
+		);
+		$newJob->industries()->attach($graphic_id);
+
+		$newJob = Job::create(
+			array(
+				'job_title' => 'Bison publish design apprenticeship',
+				'job_description' => "Thank everyone for all the feedback, I'm really happy to have joined such an active community.
+Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
+				'job_phone' => '3141',
+				'job_email' => 'bison@band.com.au',
+				'job_logo' => 'http://logopond.com/logos/1c7f79c1188bb0b6b1ccdcbada974e62.png'
+			)
+		);
+		$newJob->industries()->attach($graphic_id);
+
+		$newJob = Job::create(
+			array(
+				'job_title' => 'internship at Alight Creative Design Agency',
+				'job_description' => "Thank everyone for all the feedback, I'm really happy to have joined such an active community.
+Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
+				'job_phone' => '3141',
+				'job_email' => 'bison@band.com.au',
+				'job_logo' => 'http://d1r5i20o8cadcu.cloudfront.net/designs/images/107860/original/design-agency.jpg'
+			)
+		);
+		$newJob->industries()->attach($graphic_id);
+
+		$newJob = Job::create(
+			array(
+				'job_title' => 'Soft facade jobs available',
+				'job_description' => "Thank everyone for all the feedback, I'm really happy to have joined such an active community.
+Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
+				'job_phone' => '3141',
+				'job_email' => 'bison@band.com.au',
+				'job_logo' => 'http://d1r5i20o8cadcu.cloudfront.net/designs/images/108356/original/fu-sfacade-fvjtvo.png'
+			)
+		);
+		$newJob->industries()->attach($graphic_id);
+		$newJob->industries()->attach($web_dev_id);
+		
+
+		$newJob = Job::create(
+			array(
+				'job_title' => 'The multi tasker internship',
+				'job_description' => "Thank everyone for all the feedback, I'm really happy to have joined such an active community.
+Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
+				'job_phone' => '3141',
+				'job_email' => 'bison@band.com.au',
+				'job_logo' => 'http://www.thelogomix.com/files/imagecache/v3-logo-detail/SkillGuy.png'
+			)
+		);
+		$newJob->industries()->attach($graphic_id);
+		$newJob->industries()->attach($web_dev_id);
 	}
 }
 

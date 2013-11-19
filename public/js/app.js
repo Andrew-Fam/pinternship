@@ -7,11 +7,13 @@ app.config([ '$routeProvider','$locationProvider', function ( routeProvider , lo
 		controller: 'HomeController'
 	}).when('/industries',{
 		templateUrl: 'jobs.html',
-		controller: 'JobsController'
+		controller: 'JobsController',
+		reloadOnSearch: false
 	}).
 	when('/jobs',{
 		templateUrl: 'jobs.html',
-		controller: 'JobsController'
+		controller: 'JobsController',
+		reloadOnSearch: false
 	}).
 	when('/jobs/post',{
 		templateUrl: 'postJob.html',

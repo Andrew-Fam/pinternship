@@ -21,7 +21,7 @@
 					<div>
 						Bitches be like,
 					</div>
-					<h1>FIND A JOB!</h1>
+					<h1>JUST GET A JOB!</h1>
 					<div>
 						It is hard man! We need a way to end this experience-lacking dilemma!
 					</div>
@@ -151,9 +151,9 @@
 				  	<div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
 				  		<form class="pint-search-form navbar-form navbar-left" role="search">
 						    <div class="form-group">
-						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="getJobs()" placeholder="Search">
+						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="refreshJobs()" placeholder="Search">
 						    </div>
-						    <button type="submit" ng-click="getJobs()" class="btn btn-default fa fa-search"></button>
+						    <button type="submit" ng-click="moreJobs()" ng-disabled="isLoadingJob" class="btn btn-default fa fa-search"></button>
 					    </form>
 				  	</div>
 				</div>
@@ -161,12 +161,12 @@
 		</nav>
     	<section class="pint-search-result list-group" ng-cloak>
 			<div class="container">
-				<article ng-repeat="job in cacheService.jobs | orderBy:'date':true" on-finish-render class="pint-job-item list-group-item center-block" >
+				<article ng-repeat="job in cacheService.jobs  track by job.id" on-finish-render class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
 						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
 					<div class="pint-job-item-content">
-						<h1 class="pint-job-item-title"> {{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-click="getJobsInIndustry(industry)">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
+						<h1 class="pint-job-item-title"> {{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="/#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
 						<p class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </p>
 						<p class="pint-job-item-description">
 							{{job.job_description | truncate:140}}
@@ -179,7 +179,9 @@
 					</div>
 					<a class="pint-job-item-selector" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="switchToJobView(job)"><i class="fa fa-chevron-right fa-fw"></i></a>
 				</article>
-		
+				<div>
+					<button class="btn center-block btn-primary" ng-disabled="isLoadingJob" ng-click="moreJobs()">more jobs <img alt="loading" ng-show="isLoadingJob" src="<?php echo asset('images/loading.gif')?>" /></button>
+				</div>
 			</div>
 		</section>
    	</script>
@@ -203,7 +205,7 @@
 							<img ng-src="{{job.job_logo}}" class="img-responsive center-block"/>
 						</div>
 						<h1 class="pint-job-item-title">
-							{{job.job_title}}
+							{{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="/#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span>
 						</h1>
 						<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
 						<p class="pint-job-item-description center-block">

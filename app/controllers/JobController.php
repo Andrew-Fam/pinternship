@@ -9,8 +9,24 @@ class JobController extends \BaseController {
 	 */
 	public function index()
 	{
+		$inputs = Input::all();
+
+
+		if(isset($inputs['skip']) && is_numeric($inputs['skip'])) {
+			$skip = $inputs['skip'];
+		} else
+		{
+			$skip = 0;
+		}
+		if(isset($inputs['take']) && is_numeric($inputs['take'])) {
+			$take = $inputs['take'];
+		} else
+		{
+			$take = 3;
+		}
+		
 		//
-		$jobs = Job::with('skills','industries')->get();
+		$jobs = Job::with('skills','industries')->take($take)->skip($skip)->get();
 		return $jobs->toArray();
 	}
 

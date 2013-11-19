@@ -11,7 +11,12 @@ class SkillsTableSeeder extends Seeder {
 		$job2 = Job::all()[1]->id;
 		$job3 = Job::all()[2]->id;
 		$job4 = Job::all()[3]->id;
-
+		$job5 = Job::all()[4]->id;
+		$job6 = Job::all()[5]->id;
+		$job7 = Job::all()[6]->id;
+		$job8 = Job::all()[7]->id;
+		$job9 = Job::all()[8]->id;
+		$job10 = Job::all()[9]->id;
 		$newSkill = Skill::create(
 			array(
 				'skill_name' => 'Zend'
@@ -188,7 +193,7 @@ class SkillsTableSeeder extends Seeder {
 		);
 
 		$newSkill->jobs()->attach($job4);
-
+		$newSkill->jobs()->attach($job10);
 		$newSkill = Skill::create(
 			array(
 				'skill_name' => 'Photoshop'
@@ -196,13 +201,26 @@ class SkillsTableSeeder extends Seeder {
 		);
 
 		$newSkill->jobs()->attach($job1);
-
+		$newSkill->jobs()->attach($job5);
+		$newSkill->jobs()->attach($job7);
+		$newSkill->jobs()->attach($job6);
+		$newSkill->jobs()->attach($job8);
+		$newSkill->jobs()->attach($job9);
+		$newSkill->jobs()->attach($job4);
+		$newSkill->jobs()->attach($job10);
 		$newSkill = Skill::create(
 			array(
 				'skill_name' => 'Adobe Illustrator'
 			)
 		);
-
+		$newSkill->jobs()->attach($job5);
+		$newSkill->jobs()->attach($job7);
+		$newSkill->jobs()->attach($job6);
+		$newSkill->jobs()->attach($job8);
+		$newSkill->jobs()->attach($job9);
+		$newSkill->jobs()->attach($job4);
+		$newSkill->jobs()->attach($job10);
+		
 		$newSkill = Skill::create(
 			array(
 				'skill_name' => 'Adobe Indesign'
@@ -214,6 +232,13 @@ class SkillsTableSeeder extends Seeder {
 				'skill_name' => 'Dreamweaver'
 			)
 		);
+		$newSkill->jobs()->attach($job5);
+		$newSkill->jobs()->attach($job7);
+		$newSkill->jobs()->attach($job6);
+		$newSkill->jobs()->attach($job8);
+		$newSkill->jobs()->attach($job9);
+		$newSkill->jobs()->attach($job4);
+		$newSkill->jobs()->attach($job10);
 
 	}
 }
