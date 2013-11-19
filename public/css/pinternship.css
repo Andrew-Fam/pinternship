@@ -330,8 +330,8 @@ body {
 }
 .pint-job-item-selector {
 	display: table-cell;
-	width: 70px;
-	max-width: 70px;
+	width: 45px;
+	max-width: 45px;
 	cursor: pointer;
 	position: relative;
 	vertical-align: middle;
@@ -344,12 +344,14 @@ body {
 }
 
 .pint-job-item-selector i {
-	font-size: 40px;
+	font-size: 24px;
 }
+
+
 
 .pint-job-item-thumbnail {
 	display: table-cell;
-	vertical-align: top;
+	vertical-align: middle;
 	padding: 15px;
 	width: 40px;
 	min-width: 40px;
@@ -370,7 +372,7 @@ body {
 
 
 .pint-job-item-content h1 {
-	font-size: 20px;
+	font-size: 16px;
 }
 
 .pint-job-item-tags .tag {
@@ -520,7 +522,7 @@ body {
 		font-weight: 400;
 		cursor: pointer;
 	}
-	
+
 	.pint-job-item-thumbnail img {
 		margin-top: 15px;
 		width: 100px!important;

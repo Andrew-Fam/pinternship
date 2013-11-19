@@ -164,9 +164,9 @@
 						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
 					<div class="pint-job-item-content">
-						<h1 class="pint-job-item-title"> {{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag"  title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
+						<h1 class="pint-job-item-title"> <a title="{{job.job_title}}" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="switchToJobView(job)">{{job.job_title}}</a> - <span ng-repeat="industry in job.industries"> <a class="tag"  title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
 						<p class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </p>
-						<p class="pint-job-item-description">
+						<p class="pint-job-item-description hidden-xs">
 							{{job.job_description | truncate:140}}
 						</p>
 						<p class="pint-job-item-tags">
