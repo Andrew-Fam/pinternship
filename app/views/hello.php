@@ -52,8 +52,6 @@
 	    </div>
     </script>
     <script type="text/ng-template" id="postJob.html">
-    	<nav class="pint-nav-bar">
-    	</nav>
     	<section class="pint-post-job-view">
     		<div class="container">
     			<div class="row">
