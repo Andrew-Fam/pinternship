@@ -389,9 +389,29 @@ body {
 	font-size: 16px;
 	font-weight: bold;
 }
+.pint-job-item-description {
+	text-align: left;
+		-ms-word-break: break-all;
+     word-break: break-all;
 
+     /* Non standard for webkit */
+     word-break: break-word;
+
+	-webkit-hyphens: auto;
+	   -moz-hyphens: auto;
+	        hyphens: auto;
+}
 .pint-job-item-view .pint-job-item-description {
 	text-align: left;
+		-ms-word-break: break-all;
+     word-break: break-all;
+
+     /* Non standard for webkit */
+     word-break: break-word;
+
+	-webkit-hyphens: auto;
+	   -moz-hyphens: auto;
+	        hyphens: auto;
 }
 .pint-job-item-view .pint-job-item-media {
 	padding-top: 15px;
@@ -442,6 +462,65 @@ body {
 
 
 @media screen and ( min-width: 768px ){
+
+
+	.pint-job-item {
+		padding-right: 60px;
+		position: relative;
+		width: 100%;
+		display: table;
+		min-height: 100px;
+	}
+	.pint-job-item-selector {
+		display: table-cell;
+		width: 70px;
+		max-width: 70px;
+		cursor: pointer;
+		position: relative;
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	.pint-job-item-selector:hover {
+		background-color: rgb(248, 248, 248);
+		color: white;
+	}
+
+	.pint-job-item-selector i {
+		font-size: 40px;
+	}
+
+	.pint-job-item-thumbnail {
+		display: table-cell;
+		vertical-align: top;
+		padding: 15px;
+		width: 40px;
+		min-width: 40px;
+	}
+	.pint-job-item-thumbnail img {
+		margin-top: 15px;
+		width: 40px!important;
+		min-width: 40px!important;
+		height: auto!important;
+		display: block;
+	}
+	.pint-job-item-content {
+		font-size: 12px;
+		display: table-cell;
+		vertical-align: middle;
+		padding: 15px;
+	}
+
+
+	.pint-job-item-content h1 {
+		font-size: 20px;
+	}
+
+	.pint-job-item-tags .tag {
+		font-weight: 400;
+		cursor: pointer;
+	}
+	
 	.pint-job-item-thumbnail img {
 		margin-top: 15px;
 		width: 100px!important;

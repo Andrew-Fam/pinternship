@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Pinternship</title>
     <meta name="fragment" content="!">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=0">
     <link rel="stylesheet" href="<?php echo asset('bootstrap/css/bootstrap.css')?>"/>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset('css/ng-tags-input.min.css')?>"/>
