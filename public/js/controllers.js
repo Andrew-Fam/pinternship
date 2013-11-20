@@ -146,6 +146,10 @@ pinternshipControllers.controller( 'PostJobController',[
 			 	newJob.job_email = scope.newJob.job_email;
 
 			 	baseJobs.post(newJob).then(function(response){
+					//after successful post, clear jobs from cache to refresh job list
+
+					scope.cacheService.jobs = [];
+
 					console.log(response);
 					scope.postingJob = false;
 				},function(response){

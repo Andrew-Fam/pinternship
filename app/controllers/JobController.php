@@ -53,7 +53,7 @@ class JobController extends BaseController {
 		$job = new Job;
 		$job->job_title = $inputs['job_title'];
 		$job->job_description  = $inputs['job_description'];
-		$job->job_logo = $inputs['job_logo'];
+		$job->job_logo = isset($inputs['job_logo'])?$inputs['job_logo']:"";
 		$job->job_email = $inputs['job_email'];
 		$job->job_phone = $inputs['job_phone'];
 		
