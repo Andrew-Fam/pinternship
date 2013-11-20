@@ -148,6 +148,7 @@ body {
 	border: none;
 	text-align: center;
 	cursor: pointer;
+	height: 50px;
 }
 .pint-action-bar .btn-default {
 	background-color: rgb(234,234,234);

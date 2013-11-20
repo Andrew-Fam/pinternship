@@ -119,13 +119,17 @@ pinternshipControllers.controller( 'PostJobController',[
 
 		scope.postJob = function () {
 		 	
+
+			scope.postingJob = true;
+
 		 	var baseJobs = restangular.all('jobs');
 
 		 	var newJob = {};
 
-		 	var valid = true;
+		 
 
 		 	if(!scope.formInvalid()){
+		 		console.log('hahaha');
 			 	newJob.job_title = scope.newJob.job_title;
 			 	newJob.skills = new Array();
 			 	for(var i = 0; i < scope.newJob.skills.length;i++){
@@ -136,17 +140,27 @@ pinternshipControllers.controller( 'PostJobController',[
 			 	for(var i = 0; i < scope.newJob.industries.length;i++){
 			 		newJob.industries.push(scope.newJob.industries[i].id);
 			 	}
-			 	newJob.job_logo = scope.newJob.job_logo || '/img/default_logo.png';
+			 	newJob.job_logo = scope.newJob.job_logo;
 			 	newJob.job_description = scope.newJob.job_description;
 			 	newJob.job_phone = scope.newJob.job_phone;
 			 	newJob.job_email = scope.newJob.job_email;
+
+			 	baseJobs.post(newJob).then(function(response){
+					console.log(response);
+					scope.postingJob = false;
+				},function(response){
+					console.log(response);
+					scope.postingJob = false;
+				});
+
+			} else {
+
+
+
+				scope.postingJob = false;
 			}
 
-			baseJobs.post(newJob).then(function(response){
-				console.log(response);
-			},function(response){
-
-			});
+			
 
 			//console.log(newJob);
 		}
@@ -154,7 +168,7 @@ pinternshipControllers.controller( 'PostJobController',[
 
 		// store the current new job item in the cache, so that it can be used in the preview view
 
-		scope.storePreviewJob = function () {
+		scope.previewJob = function () {
 			cacheService.previewingJob = scope.newJob;
 		}
 		// a worse approach: Update the preview job object as scope.newJob changes - uncertain, consuming
@@ -166,7 +180,7 @@ pinternshipControllers.controller( 'PostJobController',[
 		// validation code
 
 		scope.formInvalid = function () {
-			return scope.postJobForm.email.$error.required && scope.postJobForm.email.$error.required && scope.postJobForm.description.$error.required && (scope.newJob.skills.length <= 0) && scope.postJobForm.title.$error.required && (scope.newJob.industries.length <= 0)
+			return scope.industriesExceedLimit() || scope.skillsExceedLimit() || scope.postJobForm.email.$error.required || scope.postJobForm.email.$error.required || scope.postJobForm.description.$error.required || (scope.newJob.skills.length <= 0) || scope.postJobForm.title.$error.required || (scope.newJob.industries.length <= 0)
 		}
 
 		scope.industryIsInvalid = function () {
@@ -186,6 +200,26 @@ pinternshipControllers.controller( 'PostJobController',[
 				invalid = true;
 			}
 
+			return invalid;
+		}
+
+		scope.skillsExceedLimit = function () {
+			var invalid = false;
+
+			if( scope.newJob.skills.length > 10 ){
+				invalid = true;
+			}
+			console.log("skillsExceedLimit: "+invalid);
+			return invalid;
+		}
+
+		scope.industriesExceedLimit = function () {
+			var invalid = false;
+
+			if( scope.newJob.industries.length > 3 ){
+				invalid = true;
+			}
+			console.log("industriesExceedLimit: "+invalid);
 			return invalid;
 		}
 

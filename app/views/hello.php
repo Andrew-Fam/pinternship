@@ -13,14 +13,12 @@
     <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
 
 </head>
-<body >
+<body ng-class="{'modal-open':isModalOpened}" >
+	
 	<script type="text/ng-template" id="home.html">
 		<section class="pint-home-view">
 			<div class="container">
 				<div class="row text-center">
-					<div>
-						Bitches be like,
-					</div>
 					<h1>JUST GET A JOB!</h1>
 					<div>
 						It is hard man! We need a way to end this experience-lacking dilemma!
@@ -69,7 +67,7 @@
 					        </div>
 
 					        <div class="form-group">	
-					        	<label for="new-job-industry">Industry <span class="form-error" ng-show="industryIsInvalid()"> - type and select from suggestion</span></label>	
+					        	<label for="new-job-industry">Industry <span class="form-error" ng-show="industryIsInvalid()"> - type and select from suggestion</span><span class="form-error" ng-show="industriesExceedLimit()"> - maximum 3</span></label>	
 					        	<tags-input id="new-job-skills" 
 					        		tags-input-source="getIndustryTagsSource()" 
 					        		tags-input-type-ahead="industry as industry.industry_name for industry in source | filter: { industry_name : $viewValue } | limitTo:6" 
@@ -87,7 +85,7 @@
 					    	
 
 					        <div class="form-group">
-					        	<label for="new-job-industry" name="skills" >Skills required <span class="form-error" ng-show="skillsInvalid()"> - type and select from suggestion</span></label>	
+					        	<label for="new-job-industry" name="skills" >Skills required <span class="form-error" ng-show="skillsInvalid()"> - type and select from suggestion</span> <span class="form-error" ng-show="skillsExceedLimit()"> - maximum 10</span></label>	
 					        	<tags-input id="new-job-skills" 
 					        		tags-input-source="getSkillTagsSource()" 
 					        		tags-input-type-ahead="skill as skill.skill_name for skill in source | filter: { skill_name : $viewValue } | limitTo:6" 
@@ -114,7 +112,7 @@
 			        	</div>
 						<div class="col-sm-6">
 							<div class="form-group">
-						    	<label for="new-job-description">Describe the job <span class="form-error" ng-show="postJobForm.description.$error.required"> - type and select from suggestion</span> </label>
+						    	<label for="new-job-description">Describe the job <span class="form-error" ng-show="postJobForm.description.$error.required"> - description is required</span> </label>
 						    	<textarea rows="10" id="new-job-description" name="description" class="form-control" ng-model="newJob.job_description" placeholder="description" required></textarea>
 						    </div>
 
@@ -132,8 +130,8 @@
 			<div class="container">
 				<div class="row">
 		        	<a class="btn-default col-xs-4" href="<?php echo route('home'); ?>" ng-click="cancel()">Cancel</a>
-		        	<a class="btn-primary col-xs-4" href="/#/jobs/post/preview" ng-click="storePreviewJob()">Preview</a>
-				    <a class="btn-success col-xs-4" ng-click="postJob()">Post it</a>
+		        	<a class="btn-primary col-xs-4" ng-click="previewJob()">Preview</a>
+				    <a class="btn-success col-xs-4" ng-disabled="postingJob" ng-click="postJob()">Post it <img alt="loading" ng-show="postingJob" src="<?php echo asset('images/loading.gif')?>" /></a>
 		        </div>
 		    </div>
 		</section>
@@ -161,7 +159,7 @@
 			<div class="container">
 				<article ng-repeat="job in cacheService.jobs  track by job.id" on-finish-render class="pint-job-item list-group-item center-block" >
 					<div class="pint-job-item-thumbnail">
-						<img ng-src="{{job.job_logo}}" alt="logo" class=" img-rounded" bs-holder/>
+						<img ng-src="{{job.job_logo || '/images/default_logo.png'}}" alt="logo" class=" img-rounded" bs-holder/>
 					</div>
 					<div class="pint-job-item-content">
 						<h1 class="pint-job-item-title"> <a title="{{job.job_title}}" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="switchToJobView(job)">{{job.job_title}}</a> - <span ng-repeat="industry in job.industries"> <a class="tag"  title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
