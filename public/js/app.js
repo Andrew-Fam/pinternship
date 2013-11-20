@@ -1,4 +1,4 @@
-var app = angular.module('pinternshipApp',[ 'pinternship-controllers' , 'pinternship-directives' , 'ngRoute' , 'ngAnimate' ]);
+var app = angular.module('pinternshipApp',[ 'pinternship-controllers' , 'pinternship-directives' , 'ngRoute' ]);
 
 app.config([ '$routeProvider','$locationProvider', function ( routeProvider , locationProvider ) {
 	

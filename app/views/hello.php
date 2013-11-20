@@ -14,7 +14,15 @@
 
 </head>
 <body ng-class="{'modal-open':isModalOpened}" >
-	
+	<script type="text/ng-template" id="afterPost.html">
+		<section class="container">
+			<div class="row">
+				<div>
+					{{message}}
+				</div>
+			</div>
+		</section>
+	</script>
 	<script type="text/ng-template" id="home.html">
 		<section class="pint-home-view">
 			<div class="container">
@@ -30,24 +38,6 @@
 				</div>
 			</div>
 		</section>
-    </script>
-    <script type="text/ng-template" id="skills.html">
-		<div class="modal-background-click-handler" ng-click="cancel()">
-		</div>
-		<div class="modal-dialog">
-			<div class="modal-content">
-		        <div class="modal-header">
-		            <h3>Your skill list: </h3>
-		        </div>
-		        <div class="modal-body">
-		            <tags-input ng-model="mySkillList"></tags-input>
-		        </div>
-		        <div class="modal-footer">
-		            <button class="btn btn-primary" ng-click="ok()">OK</button>
-		            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-		        </div>
-		    </div>
-	    </div>
     </script>
     <script type="text/ng-template" id="postJob.html">
     	<section class="pint-post-job-view">
@@ -129,9 +119,12 @@
 		<section class="pint-action-bar">
 			<div class="container">
 				<div class="row">
-		        	<a class="btn-default col-xs-4" href="<?php echo route('home'); ?>" ng-click="cancel()">Cancel</a>
-		        	<a class="btn-primary col-xs-4" ng-click="previewJob()">Preview</a>
-				    <a class="btn-success col-xs-4" ng-disabled="postingJob" ng-click="postJob()">Post it <img alt="loading" ng-show="postingJob" src="<?php echo asset('images/loading.gif')?>" /></a>
+					 <alert ng-repeat="alert in alerts" class="shake animated" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+				</div>
+				<div class="row">
+		        	<a class="btn-default col-xs-4 action-button" href="<?php echo route('home'); ?>" ng-click="cancel()">Cancel</a>
+		        	<a class="btn-primary col-xs-4 action-button" ng-click="previewJob()">Preview</a>
+				    <a class="btn-success col-xs-4 action-button" ng-disabled="postingJob" ng-click="postJob()">Post it <img alt="loading" ng-show="postingJob" src="<?php echo asset('images/loading.gif')?>" /></a>
 		        </div>
 		    </div>
 		</section>
@@ -149,7 +142,7 @@
 						    <div class="form-group">
 						        <input type="text" class="form-control" ng-model="cacheService.selectedIndustry" value="{{cacheService.selectedIndustry}}" typeahead=" industry as industry.industry_name for industry in cacheService.industries | filter: { industry_name : $viewValue } | limitTo:8" typeahead-editable="false" typeahead-on-select="refreshJobs()" placeholder="Search">
 						    </div>
-						    <button type="submit" ng-click="moreJobs()" ng-disabled="isLoadingJob" class="btn btn-default fa fa-search"></button>
+						    <button type="submit" ng-click="refreshJobs()" ng-disabled="isLoadingJob" class="btn btn-default fa fa-search"></button>
 					    </form>
 				  	</div>
 				</div>
@@ -226,15 +219,15 @@
 		<section class="pint-action-bar" ng-show="previewing">
 			<div class="container">
 				<div class="row">
-		        	<a class="btn-primary col-xs-6" ng-click="cancel()">Back</a>
-				    <a class="btn-success col-xs-6" ng-click="postJob()">Post it</a>
+		        	<a class="btn-primary col-xs-6 action-button" ng-click="cancel()">Back</a>
+				    <a class="btn-success col-xs-6 action-button" ng-click="postJob()">Post it</a>
 		        </div>
 		    </div>
 		</section>
 		<section class="pint-action-bar" ng-hide="previewing">
 			<div class="container">
 				<div class="row">
-		        	<button class="btn-primary col-xs-12" ng-click="contactIsCollapsed = !contactIsCollapsed">Contact</button>
+		        	<button class="btn-primary col-xs-12 action-button" ng-click="contactIsCollapsed = !contactIsCollapsed">Contact</button>
 		        </div>
 		        <div class="pint-job-item-contact col-xs-12" ng-class="{ 'collapsed' : contactIsCollapsed}">
 						Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
@@ -254,7 +247,10 @@
    
     <script src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
  	
- 	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>
+ 	<!-- encountered weird bug when trying to use ng-repeat in conjunction with animate.css because ng-animate automatically try to handle animation which it does like shit
+ 	AND add its own stupid classes to the dom element which some how messes up the DOM structure and hence prevent ng-repeat from updating itself
+ 	when an element is removed from the array
+ 	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>-->
 	
 	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-route.min.js"></script>
     

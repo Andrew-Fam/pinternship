@@ -71,7 +71,14 @@ pinternshipControllers.controller( 'PostJobController',[
 	'Restangular', 
 	function PostJobController(routeParams, cacheService, scope,http,timeout,restangular){
 
+		scope.alerts = [];
+
+		scope.shakeAlert = false;
+
 		scope.newJob = scope.newJob || cacheService.previewingJob || {};
+
+		scope.newJob.skills = [];
+		scope.newJob.industries = [];
 
 		scope.cacheService = cacheService;
 		// get a list of all industries
@@ -129,7 +136,7 @@ pinternshipControllers.controller( 'PostJobController',[
 		 
 
 		 	if(!scope.formInvalid()){
-		 		console.log('hahaha');
+		 		
 			 	newJob.job_title = scope.newJob.job_title;
 			 	newJob.skills = new Array();
 			 	for(var i = 0; i < scope.newJob.skills.length;i++){
@@ -154,13 +161,14 @@ pinternshipControllers.controller( 'PostJobController',[
 					scope.postingJob = false;
 				},function(response){
 					console.log(response);
+					scope.addAlert('danger','Post unsuccessful! Please check post details for errors or try again later.');
 					scope.postingJob = false;
 				});
 
 			} else {
 
 
-
+				scope.addAlert('danger','Some details are invalid!');
 				scope.postingJob = false;
 			}
 
@@ -173,7 +181,10 @@ pinternshipControllers.controller( 'PostJobController',[
 		// store the current new job item in the cache, so that it can be used in the preview view
 
 		scope.previewJob = function () {
+
+
 			cacheService.previewingJob = scope.newJob;
+			cacheService.previewingJob.isInvalid = scope.formInvalid();
 		}
 		// a worse approach: Update the preview job object as scope.newJob changes - uncertain, consuming
 
@@ -213,7 +224,7 @@ pinternshipControllers.controller( 'PostJobController',[
 			if( scope.newJob.skills.length > 10 ){
 				invalid = true;
 			}
-			console.log("skillsExceedLimit: "+invalid);
+			
 			return invalid;
 		}
 
@@ -223,10 +234,25 @@ pinternshipControllers.controller( 'PostJobController',[
 			if( scope.newJob.industries.length > 3 ){
 				invalid = true;
 			}
-			console.log("industriesExceedLimit: "+invalid);
+			
 			return invalid;
 		}
 
+
+		scope.getAlerts = function () {
+			return scope.alerts;
+		}
+
+		scope.addAlert = function(t,message) {
+			
+		    scope.alerts.push({'type':t, 'msg': message});
+		   
+		};
+
+		scope.closeAlert = function(index) {
+		   	scope.alerts.splice(index, 1);
+		    //console.log(scope.alerts);
+		};
 	}]
 );
 
@@ -454,6 +480,9 @@ pinternshipControllers.controller('ViewJobController',['cacheService', '$routePa
 
 pinternshipControllers.controller('previewJobPostController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(cacheService,routeParams,scope,http,timeout,restangular){
 	
+
+	scope.alerts = [];
+	
 	//try to set scope.job to the currentJob object in the cacheService
 
 	scope.job = cacheService.previewingJob;
@@ -465,4 +494,60 @@ pinternshipControllers.controller('previewJobPostController',['cacheService', '$
 	scope.cancel = function () {
 		window.history.back();
 	}
+
+	scope.postJob = function () {
+	 	
+
+		scope.postingJob = true;
+
+	 	var baseJobs = restangular.all('jobs');
+
+	 	var newJob = {};
+
+	 
+
+	 	if(!scope.formInvalid()){
+	 		
+		 	newJob.job_title = scope.newJob.job_title;
+		 	newJob.skills = new Array();
+		 	for(var i = 0; i < scope.newJob.skills.length;i++){
+		 		newJob.skills.push(scope.newJob.skills[i].id);
+		 	}
+		 	
+		 	newJob.industries = new Array();
+		 	for(var i = 0; i < scope.newJob.industries.length;i++){
+		 		newJob.industries.push(scope.newJob.industries[i].id);
+		 	}
+		 	newJob.job_logo = scope.newJob.job_logo;
+		 	newJob.job_description = scope.newJob.job_description;
+		 	newJob.job_phone = scope.newJob.job_phone;
+		 	newJob.job_email = scope.newJob.job_email;
+
+		 	baseJobs.post(newJob).then(function(response){
+				//after successful post, clear jobs from cache to refresh job list
+
+				scope.cacheService.jobs = [];
+
+				console.log(response);
+				scope.postingJob = false;
+			},function(response){
+				console.log(response);
+				scope.addAlert('danger','Post unsuccessful! Please check post details for errors or try again later.');
+				scope.postingJob = false;
+			});
+
+		} else {
+
+
+			scope.addAlert('danger','Some details are invalid!');
+			scope.postingJob = false;
+		}
+
+		//console.log(newJob);
+	}
+
+
+
+
+
 }]);
