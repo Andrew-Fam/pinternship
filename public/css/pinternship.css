@@ -318,14 +318,14 @@ body {
 	display: table-cell;
 	vertical-align: middle;
 	padding: 15px;
-	width: 40px;
-	min-width: 40px;
+	width: 100px;
+	min-width: 100px;
 }
 .pint-job-item-thumbnail img {
 	margin-top: 15px;
-	width: 40px!important;
-	min-width: 40px!important;
-	height: auto!important;
+	width: 100px;
+	min-width: 100px;
+	height: auto;
 	display: block;
 }
 .pint-job-item-content {
@@ -386,7 +386,7 @@ body {
 }
 
 .pint-job-item-logo img{
-	max-width: 120px;
+	max-width: 100%;
 	height: auto;
 }
 

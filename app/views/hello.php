@@ -123,7 +123,7 @@
 				</div>
 				<div class="row">
 		        	<a class="btn-default col-xs-4 action-button" href="<?php echo route('home'); ?>" ng-click="cancel()">Cancel</a>
-		        	<a class="btn-primary col-xs-4 action-button" ng-click="previewJob()">Preview</a>
+		        	<a class="btn-primary col-xs-4 action-button" href="/#/jobs/post/preview" ng-click="previewJob()">Preview</a>
 				    <a class="btn-success col-xs-4 action-button" ng-disabled="postingJob" ng-click="postJob()">Post it <img alt="loading" ng-show="postingJob" src="<?php echo asset('images/loading.gif')?>" /></a>
 		        </div>
 		    </div>
@@ -188,6 +188,9 @@
 				<div class="row">
 					<article class="pint-job-item-view col-sm-8 col-sm-offset-2">
 
+						<div ng-show="previewing">
+							This is how your post woud look like
+						</div>
 						
 						
 						<div class="pint-job-item-logo">
@@ -196,7 +199,7 @@
 						<h1 class="pint-job-item-title">
 							{{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span>
 						</h1>
-						<p class="pint-job-item-date"> this job was posted <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
+						<p class="pint-job-item-date"> this job was posted <span ng-show="previewing">a minute ago</span> <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
 						<p class="pint-job-item-description center-block">
 							{{job.job_description}}
 						</p>
@@ -219,8 +222,11 @@
 		<section class="pint-action-bar" ng-show="previewing">
 			<div class="container">
 				<div class="row">
+					 <alert ng-repeat="alert in alerts" class="shake animated" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+				</div>
+				<div class="row">
 		        	<a class="btn-primary col-xs-6 action-button" ng-click="cancel()">Back</a>
-				    <a class="btn-success col-xs-6 action-button" ng-click="postJob()">Post it</a>
+				    <a class="btn-success col-xs-6 action-button" ng-disabled="postingJob" ng-click="postJob()">Post it</a>
 		        </div>
 		    </div>
 		</section>

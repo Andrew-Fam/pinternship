@@ -75,10 +75,14 @@ pinternshipControllers.controller( 'PostJobController',[
 
 		scope.shakeAlert = false;
 
-		scope.newJob = scope.newJob || cacheService.previewingJob || {};
-
-		scope.newJob.skills = [];
-		scope.newJob.industries = [];
+		scope.newJob = cacheService.previewingJob || {};
+		if(scope.newJob.skills==undefined){
+			scope.newJob.skills = [];
+		}
+		if(scope.newJob.industries==undefined){
+			scope.newJob.industries = [];
+		}
+		
 
 		scope.cacheService = cacheService;
 		// get a list of all industries
@@ -397,10 +401,8 @@ pinternshipControllers.controller( 'JobsController',[
 	// therefore, an if statement is needed to only refresh the jobs 
 	// from a user erasing the search box.
 	scope.$watch ( function() { return cacheService.selectedIndustry }, function (newValue, oldValue){
-		
-		if(scope.cacheService.industries!=undefined && scope.cacheService.selectedIndustry == undefined && (scope.scrolledToMemorizeSpot || cacheService.memorizedScrollPosition == undefined))
+		if(scope.cacheService.industries!=undefined && scope.cacheService.selectedIndustry == undefined && newValue != oldValue)
 		{	
-			
 			scope.refreshJobs();
 		}
 	});
@@ -478,14 +480,22 @@ pinternshipControllers.controller('ViewJobController',['cacheService', '$routePa
 
 }]);
 
-pinternshipControllers.controller('previewJobPostController',['cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController(cacheService,routeParams,scope,http,timeout,restangular){
+pinternshipControllers.controller('previewJobPostController',['$location','cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController($location,cacheService,routeParams,scope,http,timeout,restangular){
 	
 
 	scope.alerts = [];
-	
+
 	//try to set scope.job to the currentJob object in the cacheService
 
 	scope.job = cacheService.previewingJob;
+
+	scope.cacheService = cacheService;
+
+
+
+	if(scope.job==undefined) {
+		$location.path("/");
+	}
 
 	console.log(scope.job);
 
@@ -504,9 +514,9 @@ pinternshipControllers.controller('previewJobPostController',['cacheService', '$
 
 	 	var newJob = {};
 
-	 
+	 	scope.newJob = scope.job;
 
-	 	if(!scope.formInvalid()){
+	 	if(!scope.job.isInvalid){
 	 		
 		 	newJob.job_title = scope.newJob.job_title;
 		 	newJob.skills = new Array();
@@ -546,7 +556,20 @@ pinternshipControllers.controller('previewJobPostController',['cacheService', '$
 		//console.log(newJob);
 	}
 
+	scope.getAlerts = function () {
+		return scope.alerts;
+	}
 
+	scope.addAlert = function(t,message) {
+		
+	    scope.alerts.push({'type':t, 'msg': message});
+	   
+	};
+
+	scope.closeAlert = function(index) {
+	   	scope.alerts.splice(index, 1);
+	    //console.log(scope.alerts);
+	};
 
 
 
