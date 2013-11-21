@@ -6,7 +6,7 @@
     <meta name="fragment" content="!">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=0">
     <link rel="stylesheet" href="<?php echo asset('bootstrap/css/bootstrap.css')?>"/>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset('css/font-awesome.min.css')?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/ng-tags-input.min.css')?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/pinternship.css')?>"/>
     <link rel="stylesheet" href="<?php echo asset('css/theme.css')?>"/>
@@ -14,14 +14,34 @@
 
 </head>
 <body ng-class="{'modal-open':isModalOpened}" >
-	<script type="text/ng-template" id="afterPost.html">
+	<script type="text/ng-template" id="postSuccessful.html">
+		<section class="pint-nav-bar">
+			<a class="action-button btn btn-primary col-xs-4" href="/">Home</a>
+			<a class="action-button btn btn-primary col-xs-4" href="/#/jobs">Browse Jobs</a>
+			<a class="action-button btn btn-primary col-xs-4" href="/#/jobs/post">Post another job</a>	
+		</section>
 		<section class="container">
 			<div class="row">
 				<div>
-					{{message}}
+					Thanks bro really appreciate it!
+					An email containing the identifier key has been sent to the email address used in the job ads for your future reference.
 				</div>
+				<div>
+					<a href="/#/jobs/post">Post another job</a>, or
+				</div>
+				<div>
+					<a ng-href="/jobs/{{job.id}}/{{job.slug}}">Click here to view your ad</a>, or
+				</div>
+				<div>
+					<a ng-href="/jobs/{{job.id}}/{{job.slug}}/edit?key={{job.edit_key}}">here to edit the ad</a>, or, if you changed yo mind,
+				</div>
+				<div>
+					<a ng-href="/jobs/{{job.id}}/{{job.slug}}/delete?key={{job.edit_key}}">here to delete the ad</a>
+				</div>
+
 			</div>
 		</section>
+
 	</script>
 	<script type="text/ng-template" id="home.html">
 		<section class="pint-home-view">
@@ -233,10 +253,15 @@
 		<section class="pint-action-bar" ng-hide="previewing">
 			<div class="container">
 				<div class="row">
-		        	<button class="btn-primary col-xs-12 action-button" ng-click="contactIsCollapsed = !contactIsCollapsed">Contact</button>
+					<button class="btn-primary col-xs-6 action-button" ng-click="toggleContact('email')">Email</button>
+		        
+		        	<button class="btn-primary col-xs-6 action-button" ng-click="toggleContact('phone')">Phone</button>
 		        </div>
-		        <div class="pint-job-item-contact col-xs-12" ng-class="{ 'collapsed' : contactIsCollapsed}">
-						Call <a class="phone">{{job.job_phone}}</a> or send an email to <a class="email">{{job.job_email}}</a>
+		        <div class="pint-job-item-contact col-xs-12" ng-hide="isCollapsed('email')">
+					<a class="email">{{job.job_email}}</a>
+				</div>
+				<div class="pint-job-item-contact col-xs-12" ng-hide="isCollapsed('phone')">
+					<a class="phone">{{job.job_phone}}</a>
 				</div>
 		    </div>
 		</section>
@@ -251,14 +276,14 @@
     
     <script src="<?php echo asset('js/holder.js')?>"></script>
    
-    <script src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
+    <script src="<?php echo asset('js/angular.js')?>"></script>
  	
  	<!-- encountered weird bug when trying to use ng-repeat in conjunction with animate.css because ng-animate automatically try to handle animation which it does like shit
  	AND add its own stupid classes to the dom element which some how messes up the DOM structure and hence prevent ng-repeat from updating itself
  	when an element is removed from the array
  	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-animate.min.js"></script>-->
 	
-	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-route.min.js"></script>
+	<script src="<?php echo asset('js/angular-route.min.js')?>"></script>
     
     <script src="<?php echo asset('js/ui-bootstrap-tpls-0.6.0.min.js')?>"></script>
 

@@ -68,8 +68,9 @@ pinternshipControllers.controller( 'PostJobController',[
 	'$scope',
 	'$http', 
 	'$timeout', 
-	'Restangular', 
-	function PostJobController(routeParams, cacheService, scope,http,timeout,restangular){
+	'Restangular',
+	'$location', 
+	function PostJobController(routeParams, cacheService, scope,http,timeout,restangular,$location){
 
 		scope.alerts = [];
 
@@ -163,6 +164,8 @@ pinternshipControllers.controller( 'PostJobController',[
 
 					console.log(response);
 					scope.postingJob = false;
+					cacheService.postedJob = response; 
+					$location.path('/jobs/post/successful');
 				},function(response){
 					console.log(response);
 					scope.addAlert('danger','Post unsuccessful! Please check post details for errors or try again later.');
@@ -477,10 +480,28 @@ pinternshipControllers.controller('ViewJobController',['cacheService', '$routePa
 		});
 	}
 
+	scope.contactShowed = "";
 
+	scope.toggleContact = function (contactType) {
+		if(scope.contactShowed === contactType) {
+			scope.contactShowed = "";
+		}
+		else {
+			scope.contactShowed = contactType;
+		}
+	};
+
+	scope.isCollapsed =  function (contactType) {
+		if(scope.contactShowed === contactType)
+		{
+			return false;
+		} else {
+			return true;
+		}
+	}
 }]);
 
-pinternshipControllers.controller('previewJobPostController',['$location','cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function JobsController($location,cacheService,routeParams,scope,http,timeout,restangular){
+pinternshipControllers.controller('PreviewJobPostController',['$location','cacheService', '$routeParams', '$scope','$http', '$timeout', 'Restangular', function PreviewJobPostController($location,cacheService,routeParams,scope,http,timeout,restangular){
 	
 
 	scope.alerts = [];
@@ -573,4 +594,14 @@ pinternshipControllers.controller('previewJobPostController',['$location','cache
 
 
 
+}]);
+
+
+pinternshipControllers.controller('PostSuccessfulController',['$location','cacheService', 'Slug', '$scope', function PostSuccessfulController($location,cacheService,Slug,scope){
+	scope.job =  cacheService.postedJob;	
+	if(scope.job===undefined) {
+		$location.path("/");
+	}
+	scope.job.slug = Slug.slugify(scope.job.job_title);
+	scope.job.edit_key = "mock_key";
 }]);

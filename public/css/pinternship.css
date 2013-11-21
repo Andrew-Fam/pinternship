@@ -106,7 +106,7 @@ body {
 	width: 100%;
 }
 
-.pint-action-bar .action-button {
+.pint-action-bar .action-button, .pint-nav-bar .action-button {
 	display: block;
 	padding: 15px;
 	border: none;

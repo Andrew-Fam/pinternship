@@ -20,7 +20,10 @@ app.config([ '$routeProvider','$locationProvider', function ( routeProvider , lo
 		controller: 'PostJobController'
 	}).when('/jobs/post/preview',{
 		templateUrl: 'viewJob.html',
-		controller: 'previewJobPostController'
+		controller: 'PreviewJobPostController'
+	}).when('/jobs/post/successful',{
+		templateUrl: 'postSuccessful.html',
+		controller: 'PostSuccessfulController'
 	}).
 	when('/jobs/:id/:slug', {
 		templateUrl: 'viewJob.html',
