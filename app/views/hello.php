@@ -16,29 +16,30 @@
 <body ng-class="{'modal-open':isModalOpened}" >
 	<script type="text/ng-template" id="postSuccessful.html">
 		<section class="pint-nav-bar">
-			<a class="action-button btn btn-primary col-xs-4" href="/">Home</a>
-			<a class="action-button btn btn-primary col-xs-4" href="/#/jobs">Browse Jobs</a>
-			<a class="action-button btn btn-primary col-xs-4" href="/#/jobs/post">Post another job</a>	
+			<a class="action-button btn-primary col-xs-4" href="/">Home</a>
+			<a class="action-button btn-primary col-xs-4" href="/#/jobs">Browse Jobs</a>
+			<a class="action-button btn-primary col-xs-4" href="/#/jobs/post">Post another job</a>	
 		</section>
-		<section class="container">
-			<div class="row">
-				<div>
-					Thanks bro really appreciate it!
-					An email containing the identifier key has been sent to the email address used in the job ads for your future reference.
+		<section class="container full-height">
+			<div class="css-table full-height">
+				<div class="css-table-cell">
+					<div>
+						Thanks bro! Your job ad is now available <a ng-href="/jobs/{{job.id}}/{{job.slug}}">here</a>.
+						An email containing the identifier key has been sent to the email address used in the job ads for your future reference.
+					</div>
+					<div>
+						<a href="/#/jobs/post">Post another job</a>, or
+					</div>
+					<div>
+						<a ng-href="/jobs/{{job.id}}/{{job.slug}}">Click here to view your ad</a>, or
+					</div>
+					<div>
+						<a ng-href="/jobs/{{job.id}}/{{job.slug}}/edit?key={{job.edit_key}}">here to edit the ad</a>, or, if you changed yo mind,
+					</div>
+					<div>
+						<a ng-href="/jobs/{{job.id}}/{{job.slug}}/delete?key={{job.edit_key}}">here to delete the ad</a>
+					</div>
 				</div>
-				<div>
-					<a href="/#/jobs/post">Post another job</a>, or
-				</div>
-				<div>
-					<a ng-href="/jobs/{{job.id}}/{{job.slug}}">Click here to view your ad</a>, or
-				</div>
-				<div>
-					<a ng-href="/jobs/{{job.id}}/{{job.slug}}/edit?key={{job.edit_key}}">here to edit the ad</a>, or, if you changed yo mind,
-				</div>
-				<div>
-					<a ng-href="/jobs/{{job.id}}/{{job.slug}}/delete?key={{job.edit_key}}">here to delete the ad</a>
-				</div>
-
 			</div>
 		</section>
 

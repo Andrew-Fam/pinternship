@@ -561,6 +561,8 @@ pinternshipControllers.controller('PreviewJobPostController',['$location','cache
 
 				console.log(response);
 				scope.postingJob = false;
+				cacheService.postedJob = response; 
+				$location.path('/jobs/post/successful');
 			},function(response){
 				console.log(response);
 				scope.addAlert('danger','Post unsuccessful! Please check post details for errors or try again later.');

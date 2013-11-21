@@ -94,6 +94,15 @@ body {
 .text-center {
 	text-align: center;
 }
+.css-table {
+	display: table;
+}
+.css-table-cell {
+	display: table-cell;
+}
+.full-height {
+	min-height: 100%;
+}
 
 .pint-nav-bar a, .pint-action-bar a {
 	text-decoration: none;
