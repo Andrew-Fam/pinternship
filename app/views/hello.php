@@ -117,7 +117,7 @@
 						    		typeahead-wait-ms="400" 
 						    		typeahead-loading="loadingLocation" 
 						    		typeahead-min-length="4"
-						    		typeahead=" item as  '+item.postcode +', '+ item.location +', '+item.state for item in getLocations($viewValue) | limitTo:6" 
+						    		typeahead=" item as   item.location +', '+item.state +', '+ item.postcode  for item in getLocations($viewValue) | limitTo:6" 
 						    		typeahead-editable="false" 
 						    		placeholder="eg. Post Code, Suburb, State">
 						    </div>
@@ -236,6 +236,11 @@
 						<h1 class="pint-job-item-title">
 							{{job.job_title}} - <span ng-repeat="industry in job.industries"> <a class="tag" title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span>
 						</h1>
+						<p class="pint-job-item-location">
+						<a ng-href="<?php echo route('home'); ?>#/jobs/?location={{job.job_suburb}}&postcode={{job.job_postcode}}"> 
+							{{job.job_suburb}}, {{job.job_state}}
+						</a>
+						</p>
 						<p class="pint-job-item-date"> this job was posted <span ng-show="previewing">a minute ago</span> <span am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"></span> </p>
 						<p class="pint-job-item-description center-block">
 							{{job.job_description}}

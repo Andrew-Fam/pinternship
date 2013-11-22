@@ -325,15 +325,15 @@ body {
 
 .pint-job-item-thumbnail {
 	display: table-cell;
-	vertical-align: middle;
+	vertical-align: top;
 	padding: 15px;
-	width: 100px;
-	min-width: 100px;
+	width: 60px;
+	min-width: 60px;
 }
 .pint-job-item-thumbnail img {
 	margin-top: 15px;
-	width: 100px;
-	min-width: 100px;
+	width: 60px;
+	min-width: 60px;
 	height: auto;
 	display: block;
 }
