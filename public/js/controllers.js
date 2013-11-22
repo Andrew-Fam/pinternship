@@ -488,6 +488,7 @@ pinternshipControllers.controller('ViewJobController',['cacheService', '$routePa
 	
 	scope.contactIsCollapsed = true;
 
+	window.scrollTo(0,0);
 	//try to set scope.job to the currentJob object in the cacheService
 
 	scope.job = cacheService.currentJob;
