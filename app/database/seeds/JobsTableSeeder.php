@@ -15,7 +15,11 @@ class JobsTableSeeder extends Seeder {
 				'job_description' => ' Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.',
 				'job_phone' => '+61402358934',
 				'job_email' => 'it.manager@web.lorem.ipsum',
+				'job_postcode' => '2213',
+				'job_suburb' => 'PANANIA',
+				'job_state' => 'NSW',
 				'job_logo' => 'http://yysource.com/wp-content/uploads/2013/08/ab8dfcd13b2beafc230b830228913a33.png?9d7bd4'
+			
 			)
 		);
 		$newJob->industries()->attach($web_dev_id);
@@ -31,6 +35,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 ',
 				'job_phone' => '+61401236932',
 				'job_email' => 'web.manager@centurions.ipsum',
+				'job_postcode' => '2213',
+				'job_suburb' => 'PANANIA',
+				'job_state' => 'NSW',
 				'job_logo' => 'http://t2.gstatic.com/images?q=tbn:ANd9GcTmULk9_XbYyhZlHga3MmZOj-TLE9zRUOgMh3LyPKojnHnUPQg3'
 			)
 		);
@@ -44,6 +51,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 Our workflow is comprised of three tools for improving your productivity and satisfaction when building a web app: yo (the scaffolding tool), grunt (the build tool) and bower (for package management).',
 				'job_phone' => '+61406256865',
 				'job_email' => 'yo.woman@yw.com',
+				'job_postcode' => '2213',
+				'job_suburb' => 'PANANIA',
+				'job_state' => 'NSW',
 				'job_logo' => 'http://yeoman.io/assets/img/yeoman-logo.png'
 			)
 		);
@@ -57,6 +67,9 @@ Our workflow is comprised of three tools for improving your productivity and sat
 Bower runs over Git, and is package-agnostic. A packaged component can be made up of any type of asset, and use any type of transport (e.g., AMD, CommonJS, etc.).',
 				'job_phone' => '+61404930584',
 				'job_email' => 'jobs.Opportunity@bower.io',
+				'job_postcode' => '2213',
+				'job_suburb' => 'PANANIA',
+				'job_state' => 'NSW',
 				'job_logo' => 'http://bower.io/img/bower-logo.png'
 			)
 		);
@@ -69,6 +82,9 @@ Bower runs over Git, and is package-agnostic. A packaged component can be made u
 				',
 				'job_phone' => '02 9382 6111',
 				'job_email' => 'maxine.hamilton@sesiahs.health.nsw.gov.au',
+				'job_postcode' => '3056',
+				'job_suburb' => 'BRUNSWICK',
+				'job_state' => 'VIC',
 				'job_logo' => 'http://www.sesiahs.health.nsw.gov.au/rhw/RHW_logo.jpg'
 			)
 		);
@@ -83,6 +99,9 @@ Bower runs over Git, and is package-agnostic. A packaged component can be made u
 From the collection of the State Library of New South Wales www.sl.nsw.gov.au ",
 				'job_phone' => '02 9382 6111',
 				'job_email' => 'glover@garage.com.au',
+				'job_postcode' => '2213',
+				'job_suburb' => 'PANANIA',
+				'job_state' => 'NSW',
 				'job_logo' => 'http://images.fromupnorth.com/471/5108c4f8b0902.jpg'
 			)
 		);
@@ -95,6 +114,9 @@ From the collection of the State Library of New South Wales www.sl.nsw.gov.au ",
 Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
 				'job_phone' => '3141',
 				'job_email' => 'bison@band.com.au',
+				'job_postcode' => '3056',
+				'job_suburb' => 'BRUNSWICK',
+				'job_state' => 'VIC',
 				'job_logo' => 'http://logopond.com/logos/1c7f79c1188bb0b6b1ccdcbada974e62.png'
 			)
 		);
@@ -107,6 +129,9 @@ Regarding the design, overall I'm happiest with the B and N, ultimately I decide
 Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
 				'job_phone' => '3141',
 				'job_email' => 'bison@band.com.au',
+				'job_postcode' => '3056',
+				'job_suburb' => 'BRUNSWICK',
+				'job_state' => 'VIC',
 				'job_logo' => 'http://d1r5i20o8cadcu.cloudfront.net/designs/images/107860/original/design-agency.jpg'
 			)
 		);
@@ -119,6 +144,9 @@ Regarding the design, overall I'm happiest with the B and N, ultimately I decide
 Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
 				'job_phone' => '3141',
 				'job_email' => 'bison@band.com.au',
+				'job_postcode' => '3056',
+				'job_suburb' => 'BRUNSWICK',
+				'job_state' => 'VIC',
 				'job_logo' => 'http://d1r5i20o8cadcu.cloudfront.net/designs/images/108356/original/fu-sfacade-fvjtvo.png'
 			)
 		);
@@ -133,6 +161,9 @@ Regarding the design, overall I'm happiest with the B and N, ultimately I decide
 Regarding the design, overall I'm happiest with the B and N, ultimately I decided to stop editing it as we needed to print T shirts. I did at one point try to use the 'I' for the front leg, but thought it took away from the over all shape of the bisons frame. I guess its a square peg that almost made it into a round hole ; )",
 				'job_phone' => '3141',
 				'job_email' => 'bison@band.com.au',
+				'job_postcode' => '3056',
+				'job_suburb' => 'BRUNSWICK',
+				'job_state' => 'VIC',
 				'job_logo' => 'http://www.thelogomix.com/files/imagecache/v3-logo-detail/SkillGuy.png'
 			)
 		);

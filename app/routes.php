@@ -68,4 +68,8 @@ Route::group(array('prefix' => 'api/v0.1'), function(){
 	Route::get('industries/{id}/jobs','IndustryController@jobs');
 
 	Route::resource('skills','SkillController');
+
+	Route::get('locations/query','LocationController@ausPostQuery');
+
+	Route::resource('locations','LocationController');
 });

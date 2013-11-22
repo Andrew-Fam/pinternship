@@ -19,6 +19,9 @@ class CreateJob extends Migration {
 			$table->string('job_phone',15);
 			$table->string('job_email',255);
 			$table->string('job_logo');
+			$table->string('job_postcode',6);
+			$table->string('job_suburb',50);
+			$table->string('job_state',3);
 			$table->timestamps();
 			$table->softDeletes();
 		});

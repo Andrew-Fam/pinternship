@@ -56,7 +56,9 @@ class JobController extends BaseController {
 		$job->job_logo = isset($inputs['job_logo'])?$inputs['job_logo']:"";
 		$job->job_email = $inputs['job_email'];
 		$job->job_phone = $inputs['job_phone'];
-		
+		$job->job_postcode = $inputs['job_postcode'];
+		$job->job_suburb = $inputs['job_suburb'];
+		$job->job_state = $inputs['job_state'];
 		$validator = Validator::make(
 			array(
 				'title' => $job->job_title,

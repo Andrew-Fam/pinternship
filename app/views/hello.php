@@ -96,7 +96,7 @@
 					    	
 
 					        <div class="form-group">
-					        	<label for="new-job-industry" name="skills" >Skills required <span class="form-error" ng-show="skillsInvalid()"> - type and select from suggestion</span> <span class="form-error" ng-show="skillsExceedLimit()"> - maximum 10</span></label>	
+					        	<label for="new-job-industry" name="skills" >Skills  <span class="form-error" ng-show="skillsInvalid()"> - type and select from suggestion</span> <span class="form-error" ng-show="skillsExceedLimit()"> - maximum 10</span></label>	
 					        	<tags-input id="new-job-skills" 
 					        		tags-input-source="getSkillTagsSource()" 
 					        		tags-input-type-ahead="skill as skill.skill_name for skill in source | filter: { skill_name : $viewValue } | limitTo:6" 
@@ -111,7 +111,18 @@
 					        		></tags-input>
 					    	</div>
 					    
-					         <div class="form-group">	
+					    	<div class="form-group">
+						    	<label for="new-job-location">Location <img alt="loading" ng-show="loadingLocation" src="<?php echo asset('images/loading.gif')?>" /><span class="form-error" ng-show="locationIsInvalid()"> - type at least 4 character and select from suggestion</span>  </label>	
+						    	<input id="new-job-location" name="location" type="text" class="form-control" ng-model="newJob.job_location" 
+						    		typeahead-wait-ms="400" 
+						    		typeahead-loading="loadingLocation" 
+						    		typeahead-min-length="4"
+						    		typeahead=" item as  '+item.postcode +', '+ item.location +', '+item.state for item in getLocations($viewValue) | limitTo:6" 
+						    		typeahead-editable="false" 
+						    		placeholder="eg. Post Code, Suburb, State">
+						    </div>
+
+					        <div class="form-group">	
 						    	<label for="new-job-phone">Phone - optional </label>	
 						    	<input id="new-job-phone" name="phone" type="text" class="form-control" ng-model="newJob.job_phone"/>
 						    </div>
@@ -177,7 +188,12 @@
 					</div>
 					<div class="pint-job-item-content">
 						<h1 class="pint-job-item-title"> <a title="{{job.job_title}}" ng-href="/#/jobs/{{job.id}}/{{job.job_title | slugify}}" ng-click="switchToJobView(job)">{{job.job_title}}</a> - <span ng-repeat="industry in job.industries"> <a class="tag"  title="search for jobs in {{industry.industry_name}}" ng-href="<?php echo route('home'); ?>#/jobs/?industry={{industry.id}}&industry_name={{industry.industry_name | slugify}}">{{industry.industry_name}}{{$last ? '' : ', '}}</a> </span></h1>
-						<p class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </p>
+						<p>
+						 	<span class="pint-job-item-date" am-time-ago="job.created_at" am-format="YYYY-MM-DD HH:mm:ss"> </span>
+							 - <a href="" class="pint-job-item-location">
+							 	{{job.job_suburb}}, {{job.job_state}}
+							</a>
+						</p>
 						<p class="pint-job-item-description hidden-xs">
 							{{job.job_description | truncate:140}}
 						</p>
@@ -296,7 +312,7 @@
 
 	<script src="<?php echo asset('js/lodash.min.js')?>"></script>
 
-	<script src="<?php echo asset('js/restangular.min.js')?>"></script>
+	<script src="<?php echo asset('js/restangular.js')?>"></script>
 
 	<script src="<?php echo asset('js/igTruncate.js')?>"></script>
 

@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.0.*",
 		"twitter/bootstrap": "dev-master",
-		"jasonlewis/basset": "4.0.*@dev"
+		"jasonlewis/basset": "4.0.*@dev",
+		"guzzle/guzzle":"dev-master"
 	},
 	"autoload": {
 		"classmap": [

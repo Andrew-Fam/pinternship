@@ -1,6 +1,6 @@
 var pinternshipControllers = angular.module('pinternship-controllers', [ 'slugifier' , 'igTruncate', 'ui.bootstrap','angularMoment','tags-input','restangular']);
 
-
+var ausPostAPIKey = '4fa3a420-2948-49ee-a620-8d7dc6f5294c';
 
 
 //set baseUrl for restangular. current api v0.1
@@ -118,6 +118,13 @@ pinternshipControllers.controller( 'PostJobController',[
 				
 			});
 		}
+		
+		
+
+		scope.getLocations = function (query) {
+
+			return restangular.all('locations/query').getList({q:query});
+		}
 
 		scope.cancel = function () {
 			// clear previewing Job from cache
@@ -125,9 +132,6 @@ pinternshipControllers.controller( 'PostJobController',[
 			cacheService.previewingJob = {};
 			//window.history.back();
 		}
-
-
-
 
 		scope.postJob = function () {
 		 	
@@ -156,7 +160,9 @@ pinternshipControllers.controller( 'PostJobController',[
 			 	newJob.job_description = scope.newJob.job_description;
 			 	newJob.job_phone = scope.newJob.job_phone;
 			 	newJob.job_email = scope.newJob.job_email;
-
+			 	newJob.job_postcode = scope.newJob.job_location.postcode;
+			 	newJob.job_suburb = scope.newJob.job_location.location;
+			 	newJob.job_state = scope.newJob.job_location.state;
 			 	baseJobs.post(newJob).then(function(response){
 					//after successful post, clear jobs from cache to refresh job list
 
@@ -202,7 +208,8 @@ pinternshipControllers.controller( 'PostJobController',[
 		// validation code
 
 		scope.formInvalid = function () {
-			return scope.industriesExceedLimit() || scope.skillsExceedLimit() || scope.postJobForm.email.$error.required || scope.postJobForm.email.$error.required || scope.postJobForm.description.$error.required || (scope.newJob.skills.length <= 0) || scope.postJobForm.title.$error.required || (scope.newJob.industries.length <= 0)
+
+			return scope.locationIsInvalid() || scope.industriesExceedLimit() || scope.skillsExceedLimit() || scope.postJobForm.email.$error.required || scope.postJobForm.email.$error.required || scope.postJobForm.description.$error.required || (scope.newJob.skills.length <= 0) || scope.postJobForm.title.$error.required || (scope.newJob.industries.length <= 0)
 		}
 
 		scope.industryIsInvalid = function () {
@@ -210,6 +217,20 @@ pinternshipControllers.controller( 'PostJobController',[
 
 			if( scope.newJob.industries.length <= 0 ){
 				invalid = true;
+				console.log('industry invalid');
+			}
+
+			return invalid;
+		}
+
+		scope.locationIsInvalid = function () {
+			var invalid = false;
+
+			if( scope.newJob.job_location === undefined){
+				invalid = true;
+				console.log(scope.newJob);
+				console.log(scope.newJob.job_location);
+				console.log('location invalid');
 			}
 
 			return invalid;
@@ -220,6 +241,7 @@ pinternshipControllers.controller( 'PostJobController',[
 
 			if( scope.newJob.skills.length <= 0 ){
 				invalid = true;
+				console.log('skill invalid');
 			}
 
 			return invalid;
@@ -527,7 +549,7 @@ pinternshipControllers.controller('PreviewJobPostController',['$location','cache
 	}
 
 	scope.postJob = function () {
-	 	
+		 	
 
 		scope.postingJob = true;
 
@@ -535,25 +557,27 @@ pinternshipControllers.controller('PreviewJobPostController',['$location','cache
 
 	 	var newJob = {};
 
-	 	scope.newJob = scope.job;
+	 
 
 	 	if(!scope.job.isInvalid){
 	 		
-		 	newJob.job_title = scope.newJob.job_title;
+		 	newJob.job_title = scope.job.job_title;
 		 	newJob.skills = new Array();
-		 	for(var i = 0; i < scope.newJob.skills.length;i++){
-		 		newJob.skills.push(scope.newJob.skills[i].id);
+		 	for(var i = 0; i < scope.job.skills.length;i++){
+		 		newJob.skills.push(scope.job.skills[i].id);
 		 	}
 		 	
 		 	newJob.industries = new Array();
-		 	for(var i = 0; i < scope.newJob.industries.length;i++){
-		 		newJob.industries.push(scope.newJob.industries[i].id);
+		 	for(var i = 0; i < scope.job.industries.length;i++){
+		 		newJob.industries.push(scope.job.industries[i].id);
 		 	}
-		 	newJob.job_logo = scope.newJob.job_logo;
-		 	newJob.job_description = scope.newJob.job_description;
-		 	newJob.job_phone = scope.newJob.job_phone;
-		 	newJob.job_email = scope.newJob.job_email;
-
+		 	newJob.job_logo = scope.job.job_logo;
+		 	newJob.job_description = scope.job.job_description;
+		 	newJob.job_phone = scope.job.job_phone;
+		 	newJob.job_email = scope.job.job_email;
+		 	newJob.job_postcode = scope.job.job_location.postcode;
+		 	newJob.job_suburb = scope.job.job_location.location;
+		 	newJob.job_state = scope.job.job_location.state;
 		 	baseJobs.post(newJob).then(function(response){
 				//after successful post, clear jobs from cache to refresh job list
 
@@ -575,6 +599,8 @@ pinternshipControllers.controller('PreviewJobPostController',['$location','cache
 			scope.addAlert('danger','Some details are invalid!');
 			scope.postingJob = false;
 		}
+
+		
 
 		//console.log(newJob);
 	}
